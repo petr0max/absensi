@@ -1,7 +1,7 @@
 from django.urls import path
-from .views import homeKasView
+from .views import HomeKasView
 
 
 urlpatterns = [
-    path('', homeKasView.as_view(), name='home')
+    path('', HomeKasView.as_view(), name='home')
 ]
