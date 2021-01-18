@@ -3,5 +3,5 @@ from .views import homeKasView
 
 
 urlpatterns = [
-    path('', homeKasView, name='home')
+    path('', homeKasView.as_view(), name='home')
 ]
