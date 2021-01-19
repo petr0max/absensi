@@ -3,5 +3,5 @@ from django.views.generic import TemplateView
 
 
 # Create your views here.
-def HomeKasView(TemplateView):
+class HomeKasView(TemplateView):
     template_name = 'home.html'
