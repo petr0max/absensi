@@ -1,0 +1,41 @@
+@startuml
+left to right direction
+
+actor Pegawai as emp
+
+package Viewer {
+	actor HRGA as hr1
+	actor Finance as fin1
+}
+
+package SuperAdmin as SupAdm {
+	actor SysAdmin as sys1
+	actor AdminHR as ahr1
+}
+
+package ValidasiUser as ValUser {
+	usecase "Login" as login
+	usecase "Logout" as logout
+	usecase "Validasi" as validasi
+	usecase "Memeriksa status login" as checkuser
+}
+
+package AbsensiApp as AbAp {
+	usecase "Pegawai Masuk" as UC1
+	usecase "Pegawai Pulang" as UC2
+	usecase "Izin" as UC3
+	usecase "Sakit" as UC4
+	usecase "Dinas" as UC5
+	usecase "Libur" as UC6
+	database "ReportAbsensi" as db1
+}
+
+validasi --> login
+validasi --> logout
+validasi --> checkuser
+SupAdm --> ValUser
+SupAdm --> AbAp
+hr1 --> db1
+fin1 --> db1
+emp --> validasi
+@enduml
