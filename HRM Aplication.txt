@@ -20,9 +20,15 @@ Manajemen Sistem HRM meliputi fungsi-fungsi sebagai berikut:
     c. Menghapus data pegawai
     d. Mencari data pegawai
     e. melihat data pegawai
-4. Mengelola data admin yang memiliki hak akses untuk mengelola data adminstrasi, meliputi :
-    a. Memasukkan data pegawai baru
-    b. mengubah data pegawai
-    c. Menghapus data pegawai
-    d. Mencari data pegawai
-    e. Melihat data pegawai
+4. Mengelola data SuperAdmin yang memiliki hak akses untuk mengelola data SuperAdmin, meliputi :
+    a. Memasukkan data SuperAdmin baru
+    b. mengubah data SuperAdmin
+    c. Menghapus data SuperAdmin
+    d. Mencari data SuperAdmin
+    e. Melihat data SuperAdmin
+5. Mengelola data Viewer yang memiliki hak akses untuk mengelola data Viewer, meliputi :
+    a. Memasukkan data Viewer baru
+    b. mengubah data Viewer
+    c. Menghapus data Viewer
+    d. Mencari data Viewer
+    e. Melihat data Viewer
