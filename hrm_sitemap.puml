@@ -1,0 +1,25 @@
+@startmindmap
+* Login Absensi 
+** Dashboard Absensi
+*** Dashboard 
+**** Data Kehadiran
+**** Grafik Kehadiran 
+**** Report Laporan Pekerjaan
+*** Kepegawaian
+**** Absensi
+***** Kehadiran
+***** Pulang
+***** Sakit
+***** Izin
+**** Dinas
+**** Lembur 
+**** Cuti 
+***** Cuti Tahunan 
+***** Cuti Nikah 
+***** Cuti Hamil
+*** Laporan 
+**** Tambah laporan 
+**** Ubah laporan
+**** Hapus laporan
+*** Pengaturan
+@endmindmap

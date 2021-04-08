@@ -32,3 +32,12 @@ Manajemen Sistem HRM meliputi fungsi-fungsi sebagai berikut:
     c. Menghapus data Viewer
     d. Mencari data Viewer
     e. Melihat data Viewer
+6. Fitur Data absensi untuk Kepegawaian, meliputi :
+    a. Memasukkan data pegawai Masuk
+    b. Memasukkan data pegawai Pulang
+    c. Memasukkan report kegiatan pegawai yang dilaksanakan hari ini
+    d. Memasukkan Pengajuan cuti
+    e. Memasukkan Izin tidak Masuk
+    f. Memasukkan laporan sakit beserta surat keterangan dokter
+    g. Memasukkan laporan dinas 
+    h. Memasukkan data libur 
