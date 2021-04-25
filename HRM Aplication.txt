@@ -1,0 +1,43 @@
+Nama Aplikasi: Sistem HRM Arto Langgeng Rejeki
+
+Deskripsi:
+Sistem HRM Arto untuk mengelola informasi yang diperlukan dalam mengelola kepegawaian
+dalam suatu perusahaan. Yang meliputi pendaftaran pegawai baru, absensi pegawai, payroll,
+cuti pegawai, progress kinerja pegawai dan laporan kas keuangan divisi.
+
+Manajemen Sistem HRM meliputi fungsi-fungsi sebagai berikut:
+1. Validasi pegawai
+    a. Login
+    b. Logout
+2. Mengelola data absensi, meliputi :
+    a. Memasukkan data hadir hari ini
+    b. Memasukkan data kepulangan pegawai
+    c. Melihat data absensi pegawai itu sendiri
+    d. Mencari data absensi yang telah di input
+3. Mengelola data pegawai, meliputi :
+    a. Memasukkan data pegawai
+    b. Mengubah data pegawai
+    c. Menghapus data pegawai
+    d. Mencari data pegawai
+    e. melihat data pegawai
+4. Mengelola data SuperAdmin yang memiliki hak akses untuk mengelola data SuperAdmin, meliputi :
+    a. Memasukkan data SuperAdmin baru
+    b. mengubah data SuperAdmin
+    c. Menghapus data SuperAdmin
+    d. Mencari data SuperAdmin
+    e. Melihat data SuperAdmin
+5. Mengelola data Viewer yang memiliki hak akses untuk mengelola data Viewer, meliputi :
+    a. Memasukkan data Viewer baru
+    b. mengubah data Viewer
+    c. Menghapus data Viewer
+    d. Mencari data Viewer
+    e. Melihat data Viewer
+6. Fitur Data absensi untuk Kepegawaian, meliputi :
+    a. Memasukkan data pegawai Masuk
+    b. Memasukkan data pegawai Pulang
+    c. Memasukkan report kegiatan pegawai yang dilaksanakan hari ini
+    d. Memasukkan Pengajuan cuti
+    e. Memasukkan Izin tidak Masuk
+    f. Memasukkan laporan sakit beserta surat keterangan dokter
+    g. Memasukkan laporan dinas 
+    h. Memasukkan data libur 
