@@ -1,2 +1,5 @@
 *.db
-absen/node-modules/
+*/__pycacche__/*
+absen/node_modules/
+migrations
+__pycache__/
