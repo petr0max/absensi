@@ -1,5 +1,5 @@
 *.db
-*/__pycacche__/*
+__pycacche__/
 absen/node_modules/
 migrations
 __pycache__/
