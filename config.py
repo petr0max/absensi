@@ -7,7 +7,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 class Config(object):
     SECRET_KEY = os.environ['SECRET_KEY'] or 'harus diubah'
     SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
     # Email Config
     MAIL_SERVER = os.environ['MAIL_SERVER']
     MAIL_USE_TLS = os.environ.get('MAIL_USE_TLS', 'true').lower() in \
@@ -17,6 +17,7 @@ class Config(object):
     MAIL_PASSWORD = os.environ['MAIL_PASSWORD']
     FLASKY_ADMIN = os.environ['FLASKY_ADMIN']
 
+    BCRYPT_LOG_ROUNDS = 15
 
     @staticmethod
     def init_app(app):
