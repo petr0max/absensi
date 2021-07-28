@@ -17,7 +17,7 @@ class Config(object):
     MAIL_PASSWORD = os.environ['MAIL_PASSWORD']
     FLASKY_ADMIN = os.environ['FLASKY_ADMIN']
 
-    BCRYPT_LOG_ROUNDS = 15
+    # BCRYPT_LOG_ROUNDS = 15
 
     @staticmethod
     def init_app(app):
