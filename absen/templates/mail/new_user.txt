@@ -1,0 +1,1 @@
+Hai ada pengguna baru nih. {{ name }}

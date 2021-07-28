@@ -1,9 +1,8 @@
-FLASK_APP=hello.py
+FLASK_APP=run.py
 FLASK_ENV=development
 DATABASE_URL="sqlite:///data.sqlite"
 SECRET_KEY='jknbjknwoins'
 MAIL_SERVER='smtp.gmail.com'
-MAIL_PORT=587
 MAIL_USERNAME='mardinwijaya46@gmail.com'
 MAIL_PASSWORD='basket26!@QWE'
-ABSENSI_ADMIN='dev@artolanggengrejeki.com'
+FLASKY_ADMIN='dev@artolanggengrejeki.com'
