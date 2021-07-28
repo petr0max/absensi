@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}Profile User{% endblock %}
+
+{% block body %}
+{% if name %}
+<h1>Hai {{ name }}!</h1>
+{% else %}
+<h1>Hai...</h1>
+{% endif %}
+{% endblock %}

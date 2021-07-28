@@ -1,4 +1,4 @@
-FLASK_APP=run.py
+FLASK_APP=hello.py
 FLASK_DEBUG=1
 DATABASE_URL="sqlite:///data.sqlite"
 SECRET_KEY='jknbjknwoins'
