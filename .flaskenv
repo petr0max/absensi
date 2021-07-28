@@ -1,5 +1,5 @@
 FLASK_APP=hello.py
-FLASK_DEBUG=1
+FLASK_ENV=development
 DATABASE_URL="sqlite:///data.sqlite"
 SECRET_KEY='jknbjknwoins'
 MAIL_SERVER='smtp.gmail.com'
