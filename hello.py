@@ -3,11 +3,12 @@ from flask import (Flask, make_response, render_template, session, redirect,
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
+from config import Config
 
 
 app = Flask(__name__)
 
-app.config['SECRET_KEY'] = 'need to change'
+app.config.from_object(Config)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
