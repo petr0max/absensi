@@ -39,11 +39,12 @@ class User(db.Model):
 
     @password.setter
     def password(self, password):
-        self.password_hash = bcrypt.generater_password_hash(password).decode('utf-8')
+        self.password_hash = bcrypt.hashpw(password.encode('utf-8'),
+                                           bcrypt.gensalt())
 
     # Verify user
     def verify_password(self, password):
-        return bcrypt.check_password_hash(password_hash, password)
+        return bcrypt.checkpw(password.encode('utf-8'), self.password_hash)
 
     @property
     def is_authenticated(self):
