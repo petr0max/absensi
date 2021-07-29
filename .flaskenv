@@ -1,6 +1,7 @@
 FLASK_APP=run.py
 FLASK_ENV=development
-DATABASE_URL="sqlite:///data.sqlite"
+DATABASE_URL="postgresql://petro/udin4j4@172.18.0.4/absenapp"
+DEV_DATABASE_URL="postgresql://petro/udin4j4@172.18.0.4/absendev"
 SECRET_KEY='jknbjknwoins'
 MAIL_SERVER='smtp.gmail.com'
 MAIL_USERNAME='mardinwijaya46@gmail.com'
