@@ -1,7 +1,6 @@
-from absen import db
+from absen import db, bcrypt
 from flask_login import UserMixin
 from . import login_manager
-import bcrypt
 
 
 @login_manager.user_loader
@@ -39,12 +38,11 @@ class User(db.Model):
 
     @password.setter
     def password(self, password):
-        self.password_hash = bcrypt.hashpw(password.encode('utf-8'),
-                                           bcrypt.gensalt())
+        self.password_hash = bcrypt.generate_password_hash(password)
 
     # Verify user
     def verify_password(self, password):
-        return bcrypt.checkpw(password.encode('utf-8'), self.password_hash)
+        return bcrypt.check_password_hash(self.password_hash, password)
 
     @property
     def is_authenticated(self):
@@ -58,7 +56,6 @@ class User(db.Model):
     def is_anonymous(self):
         return False
 
-    
     # Function get ID
     def get_id(self):
         return str(self.id)
