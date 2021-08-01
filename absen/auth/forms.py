@@ -36,4 +36,9 @@ class RegistrationForm(FlaskForm):
             raise ValidationError('Username telah digunakan.')
 
 
-
+class UpdatePasswordForm(FlaskForm):
+    old_password = PasswordField('Password Lama', validators=[DataRequired()])
+    password = PasswordField('Password Baru', validators=[
+        DataRequired(), EqualTo('password2', message='Password harus sama.')])
+    password2 = PasswordField('Ulangi Password', validators=[DataRequired()])
+    submit = SubmitField('Ubah Password')

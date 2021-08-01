@@ -47,9 +47,9 @@ class User(UserMixin, db.Model):
         return bcrypt.check_password_hash(self.password_hash, password)
 
 
-    def generate_confirmation_token(self, expiration=300):
+    def generate_confirmation_token(self, expiration=3600):
         secret_key = current_app.config['SECRET_KEY']
-        token = jwt.encode({'confirm': self.id, 'exp': time() + 3600},
+        token = jwt.encode({'confirm': self.id, 'exp': time() + expiration},
                            secret_key,
                            algorithm='HS256')
         return token
@@ -65,6 +65,28 @@ class User(UserMixin, db.Model):
         self.confirmed = True
         db.session.add(self)
         return True
+
+    def generate_reset_token(self, expiration=3600):
+        secret_key = current_app.config['SECRET_KEY']
+        token = jwt.encode({'reset': self.id, 'exp': time() + expiration},
+                           secret_key,
+                           algorithm='HS256')
+
+
+    @staticmethod
+    def reset_password(token, new_password):
+        secret_key = current_app.config['SECRET_KEY']
+        try:
+            data = jwt.decode(token, secret_key, algorithms=['HS256'])
+        except:
+            return False
+        user = User.query.get(data.get('reset'))
+        if user is None:
+            return False
+        user.password = new_password
+        db.session.add(user)
+        return True
+
 
     # Database representation
     def __repr__(self):
