@@ -18,7 +18,11 @@
                 <li><a class="dropdown-item" href="#!">Profil</a></li>
                 <li><a class="dropdown-item" href="#!">Setting</a></li>
                 <li><hr class="dropdown-divider" /></li>
-                <li><a class="dropdown-item" href="#!">Logout</a></li>
+                {% if current_user.is_authenticated %}
+                <li><a class="dropdown-item" href="{{ url_for('auth.login') }}">Logout</a></li>
+                {% else %}
+                <li><a class="dropdown-item" href="{{ url_for('auth.logout') }}">Login</a></li>
+                {% endif %}
             </ul>
         </li>
     </ul>
