@@ -1,0 +1,7 @@
+<p>Dear {{ user.username }}.</p>
+<p>Untuk konfirmasi alamat Email baru anda <a href="{{ url_for('auth.change_email', token=token, _external=True) }}">Klik Disini</a>.</p>
+<p>Alternative, anda dapat copy paste link ini di bar brower anda:</p>
+<p>{{ url_for('auth.change_email', token=token, _external=True) }}</p>
+<p>Have a Nice Day.</p>
+<p>AbsensiApp Tim</p>
+<p><small>Note: balas pesan ini apabila belum dapat email</small></p>

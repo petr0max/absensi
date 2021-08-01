@@ -17,7 +17,7 @@ class Config(object):
     MAIL_PASSWORD = os.environ['MAIL_PASSWORD']
     ABSEN_MAIL_SUBJECT_PREFIX ='[ABSENAPP]'
     ABSEN_MAIL_SENDER = 'AbsenApp Admin <mardinwijaya46@gmail.com>'
-    ABSEN_ADMIN = os.environ['FLASKY_ADMIN']
+    ABSEN_ADMIN = os.environ['ABSEN_ADMIN']
 
     # BCRYPT_LOG_ROUNDS = 15
 

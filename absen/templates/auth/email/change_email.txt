@@ -1,0 +1,8 @@
+Dear {{ user.username }}.
+Untuk konfirmasi alamat Email baru anda 
+{{ url_for('auth.change_email', token=token, _external=True) }}
+
+Have a Nice Day
+
+AbsensiApp Tim
+Note: balas pesan ini apabila belum dapat email

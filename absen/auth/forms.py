@@ -34,3 +34,6 @@ class RegistrationForm(FlaskForm):
     def validate_username(self, field):
         if User.query.filter_by(username=field.data).first():
             raise ValidationError('Username telah digunakan.')
+
+
+

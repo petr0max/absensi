@@ -30,6 +30,11 @@ def logout():
     return redirect(url_for('auth.login'))
 
 
+@auth.route('/password', methods=['GET', 'POST'])
+def reset_password():
+    return render_template('auth/password.html')
+
+
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()

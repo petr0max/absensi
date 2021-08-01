@@ -1,0 +1,15 @@
+<p>Dear {{ user.username }}</p>
+
+<p>Selamat Datang di <b>AbsenApp</b></p>
+
+<p>Untuk konfirmasi akun anda, silahkan klik link ini :
+  <a href="{{ url_for('auth.confirm', token=token, _external=True) }}">Klik Disini</a>.</p>
+
+<p>Alternative, kamu dapat paste link tersebut di browser:</p>
+<p>{{ url_for('auth.confirm', token=token, _external=True) }}</p>
+
+<p>Have a Nice Day</p>
+
+
+<p>Absensi Tim</p>
+<p><small>Note: balas pesan ini apabila belum dapat aktivasi</small></p>
