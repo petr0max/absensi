@@ -40,44 +40,51 @@
                                     <h3 class="text-center font-weight-light my-4">Pendaftaran Akun</h3>
                                 </div>
                                 <div class="card-body">
-                                    <form method="POST" novalidate>
+                                    <form method="POST">
+                                        {{ form.hidden_tag() }}
                                         <div class="row mb-3">
                                             <div class="col-md-6">
                                                 <div class="form-floating mb-3 mb-md-0">
-                                                    <input class="form-control" , placeholder="Enter your username" )>
-                                                    <label for="inputFirstName">Nama Lengkap</label>
+                                                    {{ form.email(size=64, class='form-control', placeholder='Email') }}
+                                                    {{ form.email.label(class='form-label') }}
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-floating">
-                                                    <input class="form-control" , placeholder="Enter your email">
-                                                    <label for="inputLastName">Alamat Email</label>
+                                                    {{ form.username(size=64, class='form-control') }}
+                                                    {{ form.username.label(class='form-label') }}
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row mb-3">
                                             <div class="col-md-6">
                                                 <div class="form-floating mb-3 mb-md-0">
-                                                    <input class="form-control" , type="password" , placeholder="Create Password" )>
-                                                    <label for="inputPassword">Kata Sandi</label>
+                                                    {{ form.password(size=128, class='form-control') }}
+                                                    {{ form.password.label(class='form-label') }}
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-floating mb-3 mb-md-0">
-                                                    <input class="form-control" , type="password" , placeholder="Check Password" )>
-                                                    <label for="inputPasswordConfirm">Ulangi Kata Sandi</label>
+                                                    {{ form.password2(size=128, class='form-control') }}
+                                                    {{ form.password2.label(class='form-label') }}
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="mt-4 mb-0">
                                             <div class="d-grid">
-                                                <button class="btn btn-primary btn-block" )>Daftar</button>
+                                                {{ form.submit(class='btn btn-primary btn-block') }}
                                             </div>
                                         </div>
                                     </form>
                                 </div>
+                                {% for message in get_flashed_messages() %}
+                                <div class="alert alert-warning">
+                                    {{ message }}
+                                </div>
+                                {% endfor %}
+
                                 <div class="card-footer text-center py-3">
-                                    <div class="small"><a href="login.html">Sudah daftar? Yuk Masuk!</a></div>
+                                    <div class="small"><a href="{{ url_for('auth.login') }}">Sudah daftar? Yuk Masuk!</a></div>
                                 </div>
                             </div>
                         </div>

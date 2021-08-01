@@ -7,8 +7,8 @@
 {% endblock %}
 
 {% block body %}
-{% if name %}
-<h1>hai {{ name }}</h1>
+{% if current_user.is_authenticated %}
+<h1>hai {{ current_user.username }}</h1>
 {% else %}
 <h1>Hai stranger</h1>
 {% endif %}
@@ -17,6 +17,4 @@
 {% else %}
 <p>Happy to see you again!</p>
 {% endif %}
-
-{% include 'wtf.html' %}
 {% endblock %}

@@ -1,4 +1,4 @@
-from absen import db, bcrypt
+from . import db, bcrypt
 from flask_login import UserMixin
 from . import login_manager
 
