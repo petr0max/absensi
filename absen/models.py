@@ -25,41 +25,8 @@ class Role(db.Model):
 class User(db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    email = db.Column(db.String(64), unique=True, index=True, nullable=False)
     username= db.Column(db.String(64), unique=True, index=True, nullable=False)
-    password_hash = db.Column(db.String(128), nullable=False)
-    authenticated = db.Column(db.Boolean, default=False)
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
-
-
-    @property
-    def password(self):
-        raise AttributeError('Password is not a readable attribute')
-
-    @password.setter
-    def password(self, password):
-        self.password_hash = bcrypt.generate_password_hash(password)
-
-    # Verify user
-    def verify_password(self, password):
-        return bcrypt.check_password_hash(self.password_hash, password)
-
-    @property
-    def is_authenticated(self):
-        return self.authenticated
-
-    @property
-    def is_active(self):
-        return True
-
-    @property
-    def is_anonymous(self):
-        return False
-
-    # Function get ID
-    def get_id(self):
-        return str(self.id)
-
 
     # Database representation
     def __repr__(self):
