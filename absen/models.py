@@ -1,6 +1,9 @@
 from . import db, bcrypt
 from flask_login import UserMixin
+from flask import current_app
+from time import time
 from . import login_manager
+import jwt
 
 
 @login_manager.user_loader
@@ -29,6 +32,7 @@ class User(UserMixin, db.Model):
     username= db.Column(db.String(64), unique=True, index=True, nullable=False)
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
     password_hash = db.Column(db.String(128), unique=True, nullable=False)
+    confirmed = db.Column(db.Boolean, default=False)
 
 
     @property
@@ -41,6 +45,26 @@ class User(UserMixin, db.Model):
 
     def verify_password(self, password):
         return bcrypt.check_password_hash(self.password_hash, password)
+
+
+    def generate_confirmation_token(self, expiration=300):
+        secret_key = current_app.config['SECRET_KEY']
+        token = jwt.encode({'confirm': self.id, 'exp': time() + 3600},
+                           secret_key,
+                           algorithm='HS256')
+        return token
+
+    def confirm(self, token):
+        secret_key = current_app.config['SECRET_KEY']
+        try:
+            data = jwt.decode(token, secret_key, algorithms=['HS256'])
+        except:
+            return False
+        if data.get('confirm') != self.id:
+            return False
+        self.confirmed = True
+        db.session.add(self)
+        return True
 
     # Database representation
     def __repr__(self):

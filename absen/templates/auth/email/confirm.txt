@@ -1,0 +1,13 @@
+Dear {{ user.username }}
+
+Selamat Datang di AbsenApp
+
+Untuk konfirmasi akun anda, tolong klik link ini :
+{{ url_for('auth.confirm', token=token, _external=True) }}
+
+
+Have a Nice Day
+
+
+Absensi Tim
+Note: balas pesan ini apabila belum dapat aktivasi

@@ -15,6 +15,8 @@ class Config(object):
     MAIL_PORT = int(os.environ.get('MAIL_PORT', '587'))
     MAIL_USERNAME = os.environ['MAIL_USERNAME']
     MAIL_PASSWORD = os.environ['MAIL_PASSWORD']
+    ABSEN_MAIL_SUBJECT_PREFIX ='[ABSENAPP]'
+    ABSEN_MAIL_SENDER = 'AbsenApp Admin <mardinwijaya46@gmail.com>'
     ABSEN_ADMIN = os.environ['FLASKY_ADMIN']
 
     # BCRYPT_LOG_ROUNDS = 15

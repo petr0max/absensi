@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Absensi - Confirm your account{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <h1>Hello, {{ current_user.username }}</h1>
+  <h3>Akun kakak belum terkonfirmasi</h3>
+  <p>Sebelum akses situs ini, silahkan konfirmasi terdahulu. Cek inbox email kakak yah</p>
+  <p>
+    Membutuhkan konfirmasi lagi <a href="{{ url_for('auth.resend_confirmation') }}">Klik Disini</a>
+  </p>
+</div>
+{% endblock %}
