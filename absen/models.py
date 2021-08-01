@@ -68,13 +68,14 @@ class User(UserMixin, db.Model):
 
     def generate_reset_token(self, expiration=3600):
         secret_key = current_app.config['SECRET_KEY']
-        token = jwt.encode({'reset': self.id, 'exp': time() + expiration},
+
+        return jwt.encode({'reset': self.id, 'exp': time() + expiration},
                            secret_key,
                            algorithm='HS256')
 
 
     @staticmethod
-    def reset_password(token, new_password):
+    def verify_reset_password_token(token, new_password):
         secret_key = current_app.config['SECRET_KEY']
         try:
             data = jwt.decode(token, secret_key, algorithms=['HS256'])

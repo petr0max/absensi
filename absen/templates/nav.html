@@ -20,9 +20,9 @@
                 <li><a class="dropdown-item" href="{{ url_for('auth.change_password') }}">Ubah Password</a></li>
                 <li><hr class="dropdown-divider" /></li>
                 {% if current_user.is_authenticated %}
-                <li><a class="dropdown-item" href="{{ url_for('auth.login') }}">Logout</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('auth.logout') }}">Logout</a></li>
                 {% else %}
-                <li><a class="dropdown-item" href="{{ url_for('auth.logout') }}">Login</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('auth.login') }}">Login</a></li>
                 {% endif %}
             </ul>
         </li>

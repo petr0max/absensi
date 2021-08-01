@@ -42,3 +42,16 @@ class UpdatePasswordForm(FlaskForm):
         DataRequired(), EqualTo('password2', message='Password harus sama.')])
     password2 = PasswordField('Ulangi Password', validators=[DataRequired()])
     submit = SubmitField('Ubah Password')
+
+
+class ForgetPasswordRequestForm(FlaskForm):
+    email = StringField('Email', validators=[DataRequired(), Length(1, 64),
+                                             Email()])
+    submit = SubmitField('Kirim')
+
+
+class ForgetPasswordForm(FlaskForm):
+    password = PasswordField('Password Baru', validators=[
+        DataRequired(), EqualTo('password2', message='Password harus sama.')])
+    password2 = PasswordField('Ulangi Password', validators=[DataRequired()])
+    submit = SubmitField('Reset Password')
