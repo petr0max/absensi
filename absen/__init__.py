@@ -30,6 +30,9 @@ def create_app(config_name):
     # config hash password
     bcrypt.init_app(app)
 
+    # Login Manager
+    login_manager.init_app(app)
+
     # Attach route for view and error
 
     from .main import main as main_blueprint
