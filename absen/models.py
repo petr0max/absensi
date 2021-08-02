@@ -69,7 +69,7 @@ class User(UserMixin, db.Model):
     def generate_reset_token(self, expiration=3600):
         secret_key = current_app.config['SECRET_KEY']
 
-        return jwt.encode({'reset': self.id, 'exp': time() + expiration},
+        return jwt.encode({'reset_password': self.id, 'exp': time() + expiration},
                            secret_key,
                            algorithm='HS256')
 
@@ -78,15 +78,11 @@ class User(UserMixin, db.Model):
     def verify_reset_password_token(token, new_password):
         secret_key = current_app.config['SECRET_KEY']
         try:
-            data = jwt.decode(token, secret_key, algorithms=['HS256'])
+            id = jwt.decode(token, secret_key,
+                            algorithms=['HS256'])['reset_password']
         except:
-            return False
-        user = User.query.get(data.get('reset'))
-        if user is None:
-            return False
-        user.password = new_password
-        db.session.add(user)
-        return True
+            return
+        return User.query.get(id)
 
 
     # Database representation

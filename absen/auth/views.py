@@ -103,7 +103,7 @@ def change_password():
     return render_template('auth/change_password.html', form=form)
 
 
-@auth.route('/reset', methods=['GET', 'POST'])
+@auth.route('/reset_password_request', methods=['GET', 'POST'])
 def reset_password_request():
     if not current_user.is_anonymous:
         return redirect(url_for('main.index'))
@@ -121,7 +121,7 @@ def reset_password_request():
     return render_template('auth/reset_password_request.html', form=form)
 
 
-@auth.route('/reset/<token>', methods=['GET', 'POST'])
+@auth.route('/reset_password/<token>', methods=['GET', 'POST'])
 def reset_password(token):
     if not current_user.is_anonymous:
         return redirect(url_for('main.index'))
