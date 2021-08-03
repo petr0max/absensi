@@ -9,10 +9,10 @@ import jwt
 class Permission:
     FOLLOW = 1
     COMMENT = 2
-    WRITE = 3
-    MODERATE = 10
+    WRITE = 4
+    MODERATE = 8
     ADMIN = 16
-    OWNER = 23
+    OWNER = 32
 
 
 # For models database
