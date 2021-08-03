@@ -1,5 +1,5 @@
 from . import db, bcrypt
-from flask_login import UserMixin
+from flask_login import UserMixin, AnonymousUserMixin
 from flask import current_app
 from time import time
 from . import login_manager
@@ -7,13 +7,9 @@ import jwt
 
 
 class Permission:
-    READ = 1
-    UPDATE = 2
-    DELETE = 3
-    CREATE = 4
-    FOLLOW = 5
-    COMMENT = 6
-    WRITE = 7
+    FOLLOW = 1
+    COMMENT = 2
+    WRITE = 3
     MODERATE = 10
     ADMIN = 16
     OWNER = 23
@@ -33,6 +29,32 @@ class Role(db.Model):
         if self.permissions is None:
             self.permissions = 0
 
+    @staticmethod
+    def insert_roles():
+        roles = {
+            'User': [Permission.FOLLOW, Permission.COMMENT, Permission.WRITE],
+            'Moderator': [Permission.FOLLOW, Permission.COMMENT,
+                          Permission.WRITE, Permission.MODERATE],
+            'Admin' : [Permission.FOLLOW, Permission.COMMENT,
+                       Permission.WRITE, Permission.MODERATE,
+                       Permission.ADMIN],
+            'Owner' : [Permission.FOLLOW, Permission.COMMENT,
+                       Permission.WRITE, Permission.MODERATE,
+                       Permission.ADMIN, Permission.OWNER],
+        }
+        default_role = 'User'
+        for r in roles:
+            role = Role.query.filter_by(name=r).first()
+            if role is None:
+                role = Role(name=r)
+            role.reset_permissions()
+            for perm in roles[r]:
+                role.add_permission(perm)
+            role.default = (role.name == default_role)
+            db.session.add(role)
+        db.session.commit()
+    
+    
     def add_permission(self, perm):
         if not self.has_permission(perm):
             self.permissions += perm
@@ -47,15 +69,7 @@ class Role(db.Model):
     def has_permission(self, perm):
         return self.permissions & perm == perm
 
-    @staticmethod
-    def insert_roles():
-        roles = {
-            'User': [Permission.FOLLOW, Permission.COMMENT. Permission.WRITE],
-            'Moderator': [Permission.FOLLOW, Permission.COMMENT,
-                          Permission.WRITE, , Permission.MODERATE],
-            'Admin' : [Permission.FOLLOW, Permission.COMMENT,
-                       Permission.]
-        }
+
     def __repr__(self):
         return f"<Role {self.name}>"
 
@@ -63,12 +77,19 @@ class Role(db.Model):
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    email = db.Column(db.String(64), unique=True, index=True, nullable=False)
-    username= db.Column(db.String(64), unique=True, index=True, nullable=False)
+    email = db.Column(db.String(64), unique=True, index=True)
+    username= db.Column(db.String(64), unique=True, index=True)
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
-    password_hash = db.Column(db.String(128), unique=True, nullable=False)
+    password_hash = db.Column(db.String(128), unique=True)
     confirmed = db.Column(db.Boolean, default=False)
 
+    def __init__(self, **kwargs):
+        super(User, self).__init__(**kwargs)
+        if self.role is None:
+            if self.email == current_app.config['ABSEN_ADMIN']:
+                self.role = Role.query.filter_by(name='Admin').first()
+            if self.role is None:
+                self.role = Role.query.filter_by(default=True).first()
 
     @property
     def password(self):
@@ -104,26 +125,46 @@ class User(UserMixin, db.Model):
     def generate_reset_token(self, expiration=3600):
         secret_key = current_app.config['SECRET_KEY']
 
-        return jwt.encode({'reset_password': self.id, 'exp': time() + expiration},
+        return jwt.encode({'reset': self.id, 'exp': time() + expiration},
                            secret_key,
                            algorithm='HS256')
 
 
     @staticmethod
-    def verify_reset_password_token(token, new_password):
+    def reset_password(token, new_password):
         secret_key = current_app.config['SECRET_KEY']
         try:
-            id = jwt.decode(token, secret_key,
-                            algorithms=['HS256'])['reset_password']
+            data = jwt.decode(token, secret_key,
+                            algorithms=['HS256'])['reset']
         except:
-            return
-        return User.query.get(id)
+            return False
+        user = User.query.get(data)
+        if user is None:
+            return False
+        user.password = new_password
+        db.session.add(user)
+        return True
 
 
     # Database representation
     def __repr__(self):
         return f"<User {self.email}"
 
+    def can(self, perm):
+        return self.role is not None and self.role.has_permission(perm)
+
+    def is_administrator(self):
+        return self.can(Permission.ADMIN)
+
+
+class AnonymousUser(AnonymousUserMixin):
+    def can(self, permissions):
+        return False
+
+    def is_administrator(self):
+        return False
+
+login_manager.anonymous_user = AnonymousUser
 
 @login_manager.user_loader
 def load_user(user_id):
