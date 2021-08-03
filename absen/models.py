@@ -6,9 +6,17 @@ from . import login_manager
 import jwt
 
 
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(int(user_id))
+class Permission:
+    READ = 1
+    UPDATE = 2
+    DELETE = 3
+    CREATE = 4
+    FOLLOW = 5
+    COMMENT = 6
+    WRITE = 7
+    MODERATE = 10
+    ADMIN = 16
+    OWNER = 23
 
 
 # For models database
@@ -16,11 +24,38 @@ class Role(db.Model):
     __tablename__ = 'roles'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), unique=True)
+    default = db.Column(db.Boolean, default=False, index=True)
+    permissions = db.Column(db.Integer)
     users = db.relationship('User', backref='role', lazy='dynamic')
 
-    def __init__(self, name):
-        self.name = name
+    def __init__(self, **kwargs):
+        super(Role, self).__init__(**kwargs)
+        if self.permissions is None:
+            self.permissions = 0
 
+    def add_permission(self, perm):
+        if not self.has_permission(perm):
+            self.permissions += perm
+
+    def remove_permission(self, perm):
+        if self.has_permission(perm):
+            self.permissions -= perm
+
+    def reset_permissions(self):
+        self.permissions = 0
+
+    def has_permission(self, perm):
+        return self.permissions & perm == perm
+
+    @staticmethod
+    def insert_roles():
+        roles = {
+            'User': [Permission.FOLLOW, Permission.COMMENT. Permission.WRITE],
+            'Moderator': [Permission.FOLLOW, Permission.COMMENT,
+                          Permission.WRITE, , Permission.MODERATE],
+            'Admin' : [Permission.FOLLOW, Permission.COMMENT,
+                       Permission.]
+        }
     def __repr__(self):
         return f"<Role {self.name}>"
 
@@ -88,3 +123,8 @@ class User(UserMixin, db.Model):
     # Database representation
     def __repr__(self):
         return f"<User {self.email}"
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
