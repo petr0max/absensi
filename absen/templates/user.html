@@ -1,11 +1,34 @@
 {% extends 'base.html' %}
 
-{% block title %}Profile User{% endblock %}
+{% block title %}Profile - {{ user.username }}{% endblock %}
 
 {% block body %}
-{% if name %}
-<h1>Hai {{ name }}!</h1>
-{% else %}
-<h1>Hai...</h1>
+
+<h1>Hai {{ user.username }}!</h1>
+{% if user.name or user.location %}
+<p>
+	{% if user.name %}{{ user.name }}{% endif %}
+	{% if user.location %}
+  From <a href="https://maps.google.com/?={{ user.location }}">{{ user.location }}</a>
+  {% endif %}
+</p>
 {% endif %}
+{% if current_user.is_administrator() %}
+<p><a href="mailto:{{ user.email }}">{{ user.email }}</a></p>
+{% endif %}
+{% if user.about_me %}
+<p>{{ user.about_me }}</p>
+{% endif %}
+<p>
+  Member since {{ user.member_since }}.
+  Last seen {{ user.last_seen }}.
+</p>
+<p>
+  {% if user == current_user %}
+  <a href="{{ url_for('.edit_profile') }}" class="btn btn-primary">Ubah Profil</a>
+  {% endif %}
+  {% if current_user.is_admininstrator %}
+  <a href="{{ url_for('.edit_profile_admin', id=user.id) }}">Ubah Profil [Admin]</a>
+  {% endif %}
+</p>
 {% endblock %}
