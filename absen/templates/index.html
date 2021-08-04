@@ -19,13 +19,6 @@
 {% endfor %}
 {% if current_user.is_authenticated %}
 <h3>Selamat datang {{ current_user.username.title() }}</h3>
-{% else %}
-<h1>Hai stranger</h1>
-{% endif %}
-{% if not known %}
-<p>Pleased to meet you!</p>
-{% else %}
-<p>Happy to see you again!</p>
 {% endif %}
                     <div class="row">
                         <div class="col-xl-12">
