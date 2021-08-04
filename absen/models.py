@@ -2,6 +2,7 @@ from . import db, bcrypt
 from flask_login import UserMixin, AnonymousUserMixin
 from flask import current_app
 from time import time
+from datetime import datetime
 from . import login_manager
 import jwt
 
@@ -82,6 +83,11 @@ class User(UserMixin, db.Model):
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
     password_hash = db.Column(db.String(128), unique=True)
     confirmed = db.Column(db.Boolean, default=False)
+    name = db.Column(db.String(64))
+    location = db.Column(db.String(64))
+    about_me = db.Column(db.Text())
+    member_since = db.Column(db.DateTime(), default=datetime.now())
+    last_seen = db.Column(db.DateTime(), default=datetime.now())
 
     def __init__(self, **kwargs):
         super(User, self).__init__(**kwargs)
@@ -155,6 +161,11 @@ class User(UserMixin, db.Model):
 
     def is_administrator(self):
         return self.can(Permission.ADMIN)
+
+    def ping(self):
+        self.last_seen = datetime.now()
+        db.session.add(self)
+        db.session.commit()
 
 
 class AnonymousUser(AnonymousUserMixin):
