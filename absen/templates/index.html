@@ -11,11 +11,14 @@
             <main>
                 <div class="container-fluid px-4">
                     <h1 class="mt-4">Dashboard</h1>
-                    <ol class="breadcrumb mb-4">
-                        <li class="breadcrumb-item active">Hello</li>
-                    </ol>
+{% for message in get_flashed_messages() %}
+<div class="alert alert-warning">
+    <button class="btn-close" type="button" aria-label="Close"></button>
+        {{ message }}
+</div>
+{% endfor %}
 {% if current_user.is_authenticated %}
-<h1>hai {{ current_user.username }}</h1>
+<h3>Selamat datang {{ current_user.username.title() }}</h3>
 {% else %}
 <h1>Hai stranger</h1>
 {% endif %}

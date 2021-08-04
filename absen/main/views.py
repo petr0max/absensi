@@ -1,5 +1,5 @@
 from datetime import datetime
-from flask import render_template, session, redirect, url_for, flash
+from flask import render_template, session, redirect, url_for, flash, abort
 from flask_login import login_required, current_user
 from . import main
 from .forms import NameForm, EditProfileAdminForm, EditProfileForm
@@ -29,7 +29,7 @@ def index():
     return render_template('index.html',
                            form=form, name=session.get('name'),
                            known=session.get('known', False),
-                           current_time=datetime.utcnow())
+                           current_time=datetime.now())
 
 
 @main.route('/admin')
