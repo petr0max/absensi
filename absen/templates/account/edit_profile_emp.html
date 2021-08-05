@@ -28,6 +28,66 @@
                                         {{ form.about_me(class='form-control', placeholder='Ceritakan tentang anda') }}
                                     </div>
                                 </div>
+                                <div class="row mb-3">
+                                    {{ form.study.label(class='col-form-label col-sm-2') }}
+                                    <div class="col-sm-4">
+                                        {{ form.study(class='form-control', placeholder='ex: SMK Bina Darma') }}
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    {{ form.jurusan.label(class='col-form-label col-sm-2') }}
+                                    <div class="col-sm-4">
+                                        {{ form.jurusan(class='form-control', placeholder='Desain Grafis' ) }}
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    {{ form.gelar.label(class='col-form-label col-sm-2') }}
+                                    <div class="col-sm-4">
+                                        {{ form.jurusan(class='form-control', placeholder='note: kosongkan bila tidak ada' ) }}
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    {{ form.address_before.label(class='col-form-label col-sm-2') }}
+                                    <div class="col-sm-4">
+                                        {{ form.address_before(class='form-control', placeholder='note: kosongkan bila tidak ada') }}
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    {{ form.address_now.label(class='col-form-label col-sm-2') }}
+                                    <div class="col-sm-4">
+                                        {{ form.address_now(class='form-control') }}
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    {{ form.blood.label(class='col-form-label col-sm-2') }}
+                                    <div class="col-sm-4">
+                                        {{ form.blood(class='form-select') }}
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    {{ form.nik.label(class='col-form-label col-sm-2') }}
+                                    <div class="col-sm-4">
+                                        {{ form.nik(class='form-control' ) }}
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    {{ form.npwp.label(class='col-form-label col-sm-2') }}
+                                    <div class="col-sm-4">
+                                        {{ form.npwp(class='form-control') }}
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    {{ form.no_hp.label(class='col-form-label col-sm-2') }}
+                                    <div class="col-sm-4">
+                                        {{ form.no_hp(class='form-control') }}
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    {{ form.zone.label(class='col-form-label col-sm-2') }}
+                                    <div class="col-sm-4">
+                                        {{ form.zone(class='form-select') }}
+                                    </div>
+                                </div>
 
                                 {% for message in get_flashed_messages() %}
                                 <div class="alert alert-success">

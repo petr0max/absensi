@@ -43,6 +43,18 @@ def edit_profile():
         current_user.name = form.name.data
         current_user.location = form.location.data
         current_user.about_me = form.about_me.data
+        current_user.study = form.study.data
+        current_user.jurusan = form.jurusan.data
+        current_user.gelar = form.gelar.data
+        current_user.address_before = form.address_before.data
+        current_user.address_now = form.address_now.data
+        current_user.blood = form.blood.data
+        current_user.religion = form.religion.data
+        current_user.warga_negara = form.warga_negara.data
+        current_user.nik = form.nik.data
+        current_user.npwp = form.npwp.data
+        current_user.no_hp = form.no_hp.data
+        current_user.zone = form.zone.data
         db.session.add(current_user._get_current_object())
         db.session.commit()
         flash('Your profile has been updated.')
@@ -50,6 +62,19 @@ def edit_profile():
     form.name.data = current_user.name
     form.location.data = current_user.location
     form.about_me.data = current_user.about_me
+    form.study.data = current_user.study
+    form.jurusan.data = current_user.jurusan
+    form.gelar.data = current_user.gelar
+    form.address_before.data = current_user.address_before
+    form.address_now.data = current_user.address_now
+    form.blood.data = current_user.blood
+    form.religion.data = current_user.religion
+    form.warga_negara.data = current_user.warga_negara
+    form.nik.data = current_user.nik
+    form.npwp.data = current_user.npwp
+    form.no_hp.data = current_user.no_hp
+    form.zone.data = current_user.zone
+
     return render_template('account/edit_profile_emp.html', form=form)
 
 
@@ -63,7 +88,7 @@ def edit_profile_admin(id):
         user.email = form.email.data
         user.username = form.username.data
         user.confirmed = form.confirmed.data
-        user.role = Role.query.get(form.role.data)
+        user.role = Role.query.get(form.role.ta)
         user.name = form.name.data
         user.location = form.location.data
         user.about_me = form.about_me.data

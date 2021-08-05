@@ -6,31 +6,180 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">Hai {{ user.username }}!</h1>
+                        <h1 class="mt-4">Profil {{ user.username }}</h1>
 {% if user.name or user.location %}
-<p>
-	{% if user.name %}{{ user.name }}{% endif %}
+<ol class="breadcrumb mb-4">
+  {% if user.name %}<li class="breadcrumb-item active">{{ user.name }}{% endif %}
 	{% if user.location %}
-  From <a href="https://google.com/maps/search/{{ user.location }}/">{{ user.location }}</a>
+  dari <a href="https://google.com/maps/search/{{ user.location }}/">{{ user.location }}</a>
   {% endif %}
-</p>
+  <li class="breadcrumb-item">
+  Terlihat {{ user.last_seen }}.
+  </li>
+  </li>
+</ol>
 {% endif %}
 {% if current_user.is_administrator() %}
 <p><a href="mailto:{{ user.email }}">{{ user.email }}</a></p>
 {% endif %}
-{% if user.about_me %}
-<p>{{ user.about_me }}</p>
-{% endif %}
-<p>
-  Member since {{ user.member_since }}.
-  Last seen {{ user.last_seen }}.
-</p>
+<div class="card p-4 mb-3 shadow">
+  <div class="body">
+    <div class="row mb-3">
+      <label class="col-form-label col-sm-3" for="">Nama Lengkap</label>
+      <div class="col-sm-4">
+        {% if user.name %}
+        <label class="col-form-label" for="ForFullname">: {{ user.name }}</label>
+        {% else %}
+        <label class="col-form-label" for="ForFullname">:</label>
+        {% endif %}
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label class="col-form-label col-sm-3" for="">Tentang Saya</label>
+      <div class="col-sm-4">
+        {% if user.about_me %}
+        <label class="col-form-label" for="ForAboutMe">: {{ user.about_me }}</label>
+        {% else %}
+        <label class="col-form-label" for="ForAboutMe">:</label>
+        {% endif %}
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label class="col-form-label col-sm-3" for="">Terdaftar Sejak</label>
+      <div class="col-sm-4">
+        {% if user.member_since %}
+        <label class="col-form-label" for="ForMemberSince">: {{ user.member_since }}</label>
+        {% else %}
+        <label class="col-form-label" for="ForMemberSince">:</label>
+        {% endif %}
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label class="col-form-label col-sm-3" for="ForAlmamater">Universitas / Sekolah</label>
+      <div class="col-sm-4">
+        {% if user.study %}
+        <label class="col-form-label" for="ForAlmamater">: {{ user.study }}</label>
+        {% else %}
+        <label class="col-form-label" for="ForAlmamater">:</label>
+        {% endif %}
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label class="col-form-label col-sm-3" for="ForJurusan">Jurusan</label>
+      <div class="col-sm-4">
+        {% if user.jurusan %}
+        <label class="col-form-label" for="ForJurusan">: {{ user.jurusan }}</label>
+        {% else %}
+        <label class="col-form-label" for="ForJurusan">:</label>
+        {% endif %}
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label class="col-form-label col-sm-3" for="ForGelar">Gelar Pendidikan</label>
+      <div class="col-sm-4">
+        {% if user.gelar %}
+        <label class="col-form-label" for="ForGelar">: {{ user.gelar }}</label>
+        {% else %}
+        <label class="col-form-label" for="ForGelar">:</label>
+        {% endif %}
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label class="col-form-label col-sm-3" for="ForAddresBefore">Alamat Asal</label>
+      <div class="col-sm-4">
+        {% if user.address_before %}
+        <label class="col-form-label" for="ForAddressBefore">: {{ user.address_before }}</label>
+        {% else %}
+        <label class="col-form-label" for="ForAddressBefore">:</label>
+        {% endif %}
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label class="col-form-label col-sm-3" for="ForAddresNow">Alamat Sekarang</label>
+      <div class="col-sm-4">
+        {% if user.address_now %}
+        <label class="col-form-label" for="ForAddressNow">: {{ user.address_now }}</label>
+        {% else %}
+        <label class="col-form-label" for="ForAddressNow">:</label>
+        {% endif %}
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label class="col-form-label col-sm-3" for="ForBlood">Golongan Darah</label>
+      <div class="col-sm-4">
+        {% if user.blood %}
+        <label class="col-form-label" for="ForBlood">: {{ user.blood }}</label>
+        {% else %}
+        <label class="col-form-label" for="ForBlood">:</label>
+        {% endif %}
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label class="col-form-label col-sm-3" for="ForReligion">Agama</label>
+      <div class="col-sm-4">
+        {% if user.religion %}
+        <label class="col-form-label" for="ForReligion">: {{ user.religion }}</label>
+        {% else %}
+        <label class="col-form-label" for="ForReligion">:</label>
+        {% endif %}
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label class="col-form-label col-sm-3" for="ForWargaNegara">Kewarganegaraan</label>
+      <div class="col-sm-4">
+        {% if user.warga_negara %}
+        <label class="col-form-label" for="ForWargaNegara">: {{ user.warga_negara }}</label>
+        {% else %}
+        <label class="col-form-label" for="ForWargaNegara">:</label>
+        {% endif %}
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label class="col-form-label col-sm-3" for="ForNIK">NIK</label>
+      <div class="col-sm-4">
+        {% if user.nik %}
+        <label class="col-form-label" for="ForNIK">: {{ user.nik }}</label>
+        {% else %}
+        <label class="col-form-label" for="ForNIK">:</label>
+        {% endif %}
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label class="col-form-label col-sm-3" for="ForNPWP">NPWP</label>
+      <div class="col-sm-4">
+        {% if user.npwp %}
+        <label class="col-form-label" for="ForNPWP" id="IdNpwp">: {{ user.npwp }}</label>
+        {% else %}
+        <label class="col-form-label" for="ForNPWP">:</label>
+        {% endif %}
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label class="col-form-label col-sm-3" for="ForNoHP">No Handphone</label>
+      <div class="col-sm-4">
+        {% if user.no_hp %}
+        <label class="col-form-label" for="ForNoHP">: {{ user.no_hp }}</label>
+        {% else %}
+        <label class="col-form-label" for="ForNoHP">:</label>
+        {% endif %}
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label class="col-form-label col-sm-3" for="ForZone">Zona Waktu</label>
+      <div class="col-sm-4">
+        {% if user.zone %}
+        <label class="col-form-label" for="ForZone">: {{ user.zone }}</label>
+        {% else %}
+        <label class="col-form-label" for="ForZone">:</label>
+        {% endif %}
+      </div>
+    </div>
 <p>
   {% if user == current_user %}
-  <a href="{{ url_for('.edit_profile') }}" class="btn btn-primary">Ubah Profil</a>
+  <a href="{{ url_for('.edit_profile') }}" class="btn btn-primary">Ubah Data</a>
   {% endif %}
-  {% if current_user.is_admin %}
-  <a href="{{ url_for('.edit_profile_admin', id=user.id) }}">Ubah Profil [Admin]</a>
+  {% if current_user.is_administrator() %}
+  <a href="{{ url_for('.edit_profile_admin', id=user.id) }}" class="btn btn-danger">Ubah Data [Admin]</a>
   {% endif %}
 </p>
                     </div>

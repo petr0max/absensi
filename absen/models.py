@@ -88,6 +88,18 @@ class User(UserMixin, db.Model):
     about_me = db.Column(db.Text())
     member_since = db.Column(db.DateTime(), default=datetime.now())
     last_seen = db.Column(db.DateTime(), default=datetime.now())
+    study = db.Column(db.String(64), index=True)
+    jurusan = db.Column(db.String(64), index=True)
+    gelar = db.Column(db.String(64), index=True)
+    address_before = db.Column(db.String(64), index=True)
+    address_now = db.Column(db.String(64), index=True)
+    blood = db.Column(db.String(64), index=True)
+    religion = db.Column(db.String(64), index=True)
+    warga_negara = db.Column(db.String(64), index=True)
+    nik = db.Column(db.Integer, index=True)
+    npwp = db.Column(db.String(64), index=True)
+    no_hp = db.Column(db.Integer, index=True)
+    zone = db.Column(db.String(64), index=True)
 
     def __init__(self, **kwargs):
         super(User, self).__init__(**kwargs)
