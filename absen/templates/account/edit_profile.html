@@ -49,11 +49,11 @@
                                 <div class="row mb-3">
                                     {{ form.address_before.label(class='col-form-label col-sm-2') }}
                                     <div class="col-sm-4">
-                                        {{ form.address_before(class='form-control', placeholder='note: kosongkan bila tidak ada') }}
+                                        {{ form.address_before(class='form-control') }}
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                    {{ form.address_now.label(class='col-form-label col-sm-2') }}
+                                    {{ form.address_now.label(class='col-form-label col-sm-2', placeholder='note: kosongkan bila tidak ada') }}
                                     <div class="col-sm-4">
                                         {{ form.address_now(class='form-control') }}
                                     </div>
@@ -94,8 +94,9 @@
                                     {{ message }}
                                 </div>
                                 {% endfor %}
-                                <div class="col-12">
+                                <div class="col-6">
                                     {{ form.submit(class="mb-3 btn btn-primary") }}
+                                    <a href="{{ url_for('main.index') }}" class="mb-3 btn btn-warning text-white">Kembali</a>
                                 </div>
                             </form>
                         </div>
