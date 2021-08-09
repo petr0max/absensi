@@ -4,6 +4,7 @@ from flask import current_app
 from time import time
 from datetime import datetime
 from . import login_manager
+from .hadir.models import Leave
 import jwt
 
 
@@ -80,7 +81,6 @@ class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     email = db.Column(db.String(64), unique=True, index=True)
     username= db.Column(db.String(64), unique=True, index=True)
-    role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
     password_hash = db.Column(db.String(128), unique=True)
     confirmed = db.Column(db.Boolean, default=False)
     name = db.Column(db.String(64))
@@ -100,6 +100,8 @@ class User(UserMixin, db.Model):
     npwp = db.Column(db.String(64), index=True)
     no_hp = db.Column(db.Integer, index=True)
     zone = db.Column(db.String(64), index=True)
+    role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
+    leaves = db.relationship('Leaves', backref='user', lazy='dynamic')
 
     def __init__(self, **kwargs):
         super(User, self).__init__(**kwargs)
@@ -194,6 +196,7 @@ class AnonymousUser(AnonymousUserMixin):
         return False
 
 login_manager.anonymous_user = AnonymousUser
+
 
 @login_manager.user_loader
 def load_user(user_id):
