@@ -16,7 +16,6 @@ class CheckIn(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     tgl = db.Column(db.DateTime(), default=datetime.now())
     jam_datang = db.Column(db.Time(), default=datetime.now())
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
 
 class CheckOut(db.Model):
@@ -24,4 +23,3 @@ class CheckOut(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     tgl = db.Column(db.DateTime(), default=datetime.now())
     jam_pulang = db.Column(db.Time(), default=datetime.now())
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
