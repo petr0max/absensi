@@ -170,9 +170,15 @@ class User(UserMixin, db.Model):
 
     def can(self, perm):
         return self.role is not None and self.role.has_permission(perm)
+    
+    def is_moderate(self):
+        return self.can(Permission.MODERATE)
 
     def is_administrator(self):
         return self.can(Permission.ADMIN)
+    
+    def is_owner(self):
+        return self.can(Permission.OWNER)
 
     def ping(self):
         self.last_seen = datetime.now()

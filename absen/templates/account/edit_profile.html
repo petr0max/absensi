@@ -28,143 +28,74 @@
                                         {{ form.about_me(class='form-control', placeholder='Ceritakan tentang anda') }}
                                     </div>
                                 </div>
-
                                 <div class="row mb-3">
-                                        <label class="col-form-label col-sm-2" for="ForPosition">Posisi</label>
+                                    {{ form.study.label(class='col-form-label col-sm-2') }}
                                     <div class="col-sm-4">
-                                        <input type="text" class="form-control" for="ForPosition" placeholder="Staff IT">
+                                        {{ form.study(class='form-control', placeholder='ex: SMK Bina Darma') }}
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                        <label class="col-form-label col-sm-2" for="ForDepartment">Divisi</label>
+                                    {{ form.jurusan.label(class='col-form-label col-sm-2') }}
                                     <div class="col-sm-4">
-                                        <input type="text" class="form-control" for="ForDepartment" placeholder="R&D Businesses Project">
+                                        {{ form.jurusan(class='form-control', placeholder='Desain Grafis' ) }}
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                        <label class="col-form-label col-sm-2" for="ForHourWOrk">Jam Kerja</label>
+                                    {{ form.gelar.label(class='col-form-label col-sm-2') }}
                                     <div class="col-sm-4">
-                                        <input type="number" class="form-control" for="ForTime" placeholder="8">
+                                        {{ form.jurusan(class='form-control', placeholder='note: kosongkan bila tidak ada' ) }}
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                    <label for="" class="col-form-label col-sm-2">Zona Waktu</label>
+                                    {{ form.address_before.label(class='col-form-label col-sm-2') }}
                                     <div class="col-sm-4">
-                                        <select name="" id="" class="form-select">
-                                            <option value="WIB">WIB</option>
-                                            <option value="WITA">WITA</option>
-                                            <option value="WIT">WIT</option>
-                                        </select></div>
-                                </div>
-                        
-                                <div class="row g-3 mb-3">
-                                    <div class="col-md-6">
-                                        <label for="startTimeWork" class="col-form-label col-md-6">Start Time Work</label>
-                                        <input type="time" for="StartTime" class="text-primary form-control col-md-6" required>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="endTimeWork" class="col-form-label col-md-6">End Time Work</label>
-                                        <input type="time" for="endTime" class="text-warning form-control col-md-6" required>
-                                    </div>
-                                </div>
-                                
-                                <div class="row mb-3">
-                                        <label class="col-form-label col-sm-2" for="ForStatusWork">Status Pekerjaan</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" class="form-control" for="ForStatus" placeholder="kontrak">
-                                    </div>
-                                </div>
-                                
-                                <div class="row mb-3">
-                                        <label class="col-form-label col-sm-2" for="ForHourWOrk">No. BPJS Ketenagakerjaan</label>
-                                    <div class="col-sm-4">
-                                        <input type="number" class="form-control" for="ForTime">
+                                        {{ form.address_before(class='form-control', placeholder='note: kosongkan bila tidak ada') }}
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                        <label class="col-form-label col-sm-2" for="ForStudy">No. BPJS Kesehatan</label>
+                                    {{ form.address_now.label(class='col-form-label col-sm-2') }}
                                     <div class="col-sm-4">
-                                        <input type="text" class="form-control" for="ForFullname">
-                                    </div>
-                                </div>
-                                
-                                <div class="row mb-3">
-                                        <label class="col-form-label col-sm-2" for="ForStudy">Pendidikan Terakhir</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" class="form-control" for="ForFullname" placeholder="SMA/SMK/S1">
+                                        {{ form.address_now(class='form-control') }}
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                        <label class="col-form-label col-sm-2" for="ForStudy">Nama Almamater</label>
+                                    {{ form.blood.label(class='col-form-label col-sm-2') }}
                                     <div class="col-sm-4">
-                                        <input type="text" class="form-control" for="ForFullname" placeholder="Univ. Apa">
+                                        {{ form.blood(class='form-select') }}
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                        <label class="col-form-label col-sm-2" for="ForStudy">Jurusan</label>
+                                    {{ form.nik.label(class='col-form-label col-sm-2') }}
                                     <div class="col-sm-4">
-                                        <input type="text" class="form-control" for="ForFullname" placeholder="Teknik Elektro">
+                                        {{ form.nik(class='form-control' ) }}
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                        <label class="col-form-label col-sm-2" for="ForStudy">Gelar Pendidikan</label>
+                                    {{ form.npwp.label(class='col-form-label col-sm-2') }}
                                     <div class="col-sm-4">
-                                        <input type="text" class="form-control" for="ForFullname" placeholder="S.Si">
+                                        {{ form.npwp(class='form-control') }}
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    {{ form.no_hp.label(class='col-form-label col-sm-2') }}
+                                    <div class="col-sm-4">
+                                        {{ form.no_hp(class='form-control') }}
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    {{ form.zone.label(class='col-form-label col-sm-2') }}
+                                    <div class="col-sm-4">
+                                        {{ form.zone(class='form-select') }}
                                     </div>
                                 </div>
 
-                                <div class="row mb-3">
-                                        <label class="col-form-label col-sm-2" for="ForStudy">Alamat Asal</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" class="form-control" for="ForFullname" placeholder="Jl. Asal Saya">
-                                    </div>
+                                {% for message in get_flashed_messages() %}
+                                <div class="alert alert-success">
+                                    {{ message }}
                                 </div>
-                                <div class="row mb-3">
-                                        <label class="col-form-label col-sm-2" for="ForStudy">Alamat Sekarang</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" class="form-control" for="ForFullname" placeholder="Jl. Alamat Sekarang">
-                                    </div>
-                                </div>
-
-                                <div class="row mb-3">
-                                        <label class="col-form-label col-sm-2" for="ForStudy">Golongan Darah</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" class="form-control" for="ForFullname" placeholder="A/B/AB/O">
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                        <label class="col-form-label col-sm-2" for="ForStudy">Agama</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" class="form-control" for="ForFullname" placeholder="Islam/Kristen/Budha">
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                        <label class="col-form-label col-sm-2" for="ForStudy">Kewarganegaraan</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" class="form-control" for="ForFullname" placeholder="Indonesia">
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                        <label class="col-form-label col-sm-2" for="ForStudy">NIK</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" class="form-control" for="ForFullname" placeholder="Nomor Induk Kependudukan">
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                        <label class="col-form-label col-sm-2" for="ForStudy">NPWP</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" class="form-control" for="ForFullname" placeholder="Nomor Pokok Wajib Pajak">
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                        <label class="col-form-label col-sm-2" for="ForStudy">No. Handphone</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" class="form-control" for="ForFullname" placeholder="0813xxxxxx">
-                                    </div>
-                                </div>
-
+                                {% endfor %}
                                 <div class="col-12">
-                                    <button class="mb-3 btn btn-primary">Simpan</button>
+                                    {{ form.submit(class="mb-3 btn btn-primary") }}
                                 </div>
                             </form>
                         </div>

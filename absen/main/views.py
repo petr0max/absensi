@@ -75,7 +75,7 @@ def edit_profile():
     form.no_hp.data = current_user.no_hp
     form.zone.data = current_user.zone
 
-    return render_template('account/edit_profile_emp.html', form=form)
+    return render_template('account/edit_profile.html', form=form)
 
 
 @main.route('/edit_profile/<int:id>', methods=['GET', 'POST'])
@@ -88,10 +88,22 @@ def edit_profile_admin(id):
         user.email = form.email.data
         user.username = form.username.data
         user.confirmed = form.confirmed.data
-        user.role = Role.query.get(form.role.ta)
+        user.role = Role.query.get(form.role.data)
         user.name = form.name.data
         user.location = form.location.data
         user.about_me = form.about_me.data
+        user.study = form.study.data
+        user.jurusan = form.jurusan.data
+        user.gelar = form.gelar.data
+        user.address_before = form.address_before.data
+        user.address_now = form.address_now.data
+        user.blood = form.blood.data
+        user.religion = form.religion.data
+        user.warga_negara = form.warga_negara.data
+        user.nik = form.nik.data
+        user.npwp = form.npwp.data
+        user.no_hp = form.no_hp.data
+        user.zone = form.zone.data
         db.session.add(user)
         db.session.commit()
         flash('The profile has been updated.')
@@ -103,4 +115,16 @@ def edit_profile_admin(id):
     form.name.data = user.name
     form.location.data = user.location
     form.about_me.data = user.about_me
+    form.study.data = user.study
+    form.jurusan.data = user.jurusan
+    form.gelar.data = user.gelar
+    form.address_before.data = user.address_before
+    form.address_now.data = user.address_now
+    form.blood.data = user.blood
+    form.religion.data = user.religion
+    form.warga_negara.data = user.warga_negara
+    form.nik.data = user.nik
+    form.npwp.data = user.npwp
+    form.no_hp.data = user.no_hp
+    form.zone.data = user.zone
     return render_template('account/edit_profile.html', form=form, user=user)
