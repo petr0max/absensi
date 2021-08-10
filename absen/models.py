@@ -4,7 +4,7 @@ from flask import current_app
 from time import time
 from datetime import datetime
 from . import login_manager
-from .hadir.models import Leave
+from .hadir.models import Permit
 import jwt
 
 
@@ -101,7 +101,7 @@ class User(UserMixin, db.Model):
     no_hp = db.Column(db.Integer, index=True)
     zone = db.Column(db.String(64), index=True)
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
-    leaves = db.relationship('Leaves', backref='user', lazy='dynamic')
+    permits = db.relationship('Permit', backref='permit', lazy='dynamic')
 
     def __init__(self, **kwargs):
         super(User, self).__init__(**kwargs)

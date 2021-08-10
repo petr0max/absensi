@@ -2,13 +2,13 @@ from .. import db
 from datetime import datetime
 
 
-class Leave(db.Model):
-    __tablename__ = 'leaves'
+class Permit(db.Model):
+    __tablename__ = 'permits'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    leave = db.Column(db.String(64), index=True)
+    permit = db.Column(db.String(64), index=True)
     long_date = db.Column(db.Integer)
     start_date = db.Column(db.DateTime(), default=datetime.now())
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id')) 
+    permit_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
 
 class CheckIn(db.Model):
