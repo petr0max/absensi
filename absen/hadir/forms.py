@@ -15,3 +15,10 @@ class CheckInForm(FlaskForm):
     tgl = DateField('Tanggal', validators=[DataRequired()])
     jam_datang = TimeField('Jam Datang', validators=[DataRequired()],
                            format='%H:%M')
+
+
+class CheckOutForm(FlaskForm):
+    tgl = DateField('Tanggal', validators=[DataRequired()])
+    jam_pulang = TimeField('Jam Pulang', validators=[DataRequired()])
+    keterangan = StringField('Keterangan Lemburan / Pekerjaan',
+                             validators=[DataRequired(), Length(1, 64)])

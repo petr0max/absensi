@@ -24,4 +24,5 @@ class CheckOut(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     tgl = db.Column(db.DateTime(), default=datetime.now())
     jam_pulang = db.Column(db.Time(), default=datetime.now())
+    keterangan = db.Column(db.String(64), index=True)
     checkout_id = db.Column(db.Integer, db.ForeignKey('users.id'))
