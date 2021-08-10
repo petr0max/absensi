@@ -1,7 +1,7 @@
 import os
 from absen import create_app, db
 from absen.models import User, Role, Permission
-from absen.hadir.models import Permit
+from absen.hadir.models import Permit, CheckIn, CheckOut
 from flask_migrate import Migrate
 
 
@@ -12,7 +12,7 @@ migrate = Migrate(app, db)
 @app.shell_context_processor
 def make_shell_context():
     return dict(db=db, User=User, Role=Role, Permission=Permission,
-                Permit=Permit)
+                Permit=Permit, CheckIn=CheckIn, CheckOut=CheckOut)
 
 @app.cli.command()
 def test():
