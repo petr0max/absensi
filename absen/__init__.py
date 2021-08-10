@@ -42,6 +42,6 @@ def create_app(config_name):
     app.register_blueprint(auth_blueprint, url_prefix='/auth')
 
     from .hadir import hadir as hadir_blueprint
-    app.register_blueprint(hadir_blueprint)
+    app.register_blueprint(hadir_blueprint, url_prefix='/hadir')
 
     return app

@@ -5,4 +5,7 @@ from .. import db
 from .forms import (PermitForm, CheckInForm, CheckOutForm)
 
 
-@hadir.route('/hadir', methods=['GET', 'POST'])
+@hadir.route('/', methods=['GET', 'POST'])
+@login_required
+def index():
+    return render_template('hadir/hadir.html')
