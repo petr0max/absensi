@@ -9,3 +9,15 @@ from .forms import (PermitForm, CheckInForm, CheckOutForm)
 @login_required
 def index():
     return render_template('hadir/hadir.html')
+
+
+@hadir.route('/checkin', methods=['GET', 'POST'])
+@login_required
+def checkin():
+    return render_template('hadir/masuk.html')
+
+
+@hadir.route('/checkout', methods=['GET', 'POST'])
+@login_required
+def checkout():
+    return render_template('hadir/pulang.html')
