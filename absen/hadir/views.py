@@ -21,3 +21,9 @@ def checkin():
 @login_required
 def checkout():
     return render_template('hadir/pulang.html')
+
+
+@hadir.route('/permit', methods=['GET', 'POST'])
+@login_required
+def permit():
+    return render_template('hadir/izin.html')
