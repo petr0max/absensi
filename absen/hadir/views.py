@@ -27,3 +27,8 @@ def checkout():
 @login_required
 def permit():
     return render_template('hadir/izin.html')
+
+@hadir.route('/sick', methods=['GET', 'POST'])
+@login_required
+def sick():
+    return render_template('hadir/sakit.html')
