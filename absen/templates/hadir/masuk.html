@@ -16,10 +16,11 @@
                         </ol>
                         <div class="row">
                             <form action="#" method="POST">
+                                {{ form.hidden_tag() }}
                                 <div class="row mb-3">
                                     <label for="" class="col-form-label col-sm-2">Nama Pengguna</label>
                                     <div class="col-sm-4">
-                                        <label type="text" class="col-form-label">Mardin Wijaya</label>
+                                        <label type="text" class="col-form-label">{{ current_user.username.title() }}</label>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
@@ -42,26 +43,20 @@
                                 </div>
                                 
                                 <div class="row mb-3">
-                                    <label for="" class="col-form-label col-sm-2">Tanggal</label>
+                                    {{ form.tgl.label(class='col-form-label col-sm-2') }}
                                     <div class="col-sm-4">
-                                        <input type="date" class="form-control">
+                                        {{ form.tgl(type='date', class='form-control') }}
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                    <label for="" class="col-form-label col-sm-2">Pukul</label>
+                                    {{ form.jam_datang.label(class='col-form-label col-sm-2') }}
                                     <div class="col-sm-4">
-                                        <input type="time" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <label for="" class="col-form-label col-sm-2">Keterangan</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" class="form-control">
+                                        {{ form.jam_datang(type='time', class='form-control') }}
                                     </div>
                                 </div>
 
                                 <div class="col-12">
-                                    <button class="mb-3 btn btn-primary">Hadir</button>
+                                    {{ form.submit(class='mb-3 btn btn-primary') }}
                                     <a href="./" class="mb-3 btn btn-warning text-white">Kembali</a>
                                 </div>
                             </form>

@@ -4,7 +4,7 @@ from flask import current_app
 from time import time
 from datetime import datetime
 from . import login_manager
-from .hadir.models import Permit, CheckIn, CheckOut
+from .hadir.models import Permit, CheckOut, CheckIn, Sick
 import jwt
 
 

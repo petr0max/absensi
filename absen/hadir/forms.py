@@ -9,12 +9,14 @@ class PermitForm(FlaskForm):
     start_date = DateField('Mulai Tanggal', validators=[DataRequired()])
     permit = StringField('Keperluan Izin', validators=[DataRequired(),
                                                        Length(1, 125)])
+    submit = SubmitField('Kirim')
 
 
 class CheckInForm(FlaskForm):
     tgl = DateField('Tanggal', validators=[DataRequired()])
     jam_datang = TimeField('Jam Datang', validators=[DataRequired()],
                            format='%H:%M')
+    submit = SubmitField('Kirim')
 
 
 class CheckOutForm(FlaskForm):
@@ -22,9 +24,12 @@ class CheckOutForm(FlaskForm):
     jam_pulang = TimeField('Jam Pulang', validators=[DataRequired()])
     keterangan = StringField('Keterangan Lemburan / Pekerjaan',
                              validators=[DataRequired(), Length(1, 64)])
+    submit = SubmitField('Kirim')
 
 
 class SickForm(FlaskForm):
     tgl = DateField('Tanggal', validators=[DataRequired()])
     long_date = IntegerField('Izin Berapa Hari', validatprs=[DataRequired()])
-    diagnose = StringField('Diagnosa', validators=[DataRequired(), Length(1, 64)])
+    diagnose = StringField('Diagnosa', validators=[DataRequired(),
+                                                   Length(1, 64)])
+    submit = SubmitField('Kirim')
