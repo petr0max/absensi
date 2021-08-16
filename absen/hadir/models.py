@@ -26,3 +26,12 @@ class CheckOut(db.Model):
     jam_pulang = db.Column(db.Time(), default=datetime.now())
     keterangan = db.Column(db.String(64), index=True)
     checkout_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+
+
+class Sick(db.Model):
+    __tablename__ = 'sicks'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    tgl = db.Column(db.DateTime(), default=datetime.now())
+    long_date = db.Column(db.Integer)
+    diagnose = db.Column(db.String(64), index=True)
+    sick_id = db.Column(db.Integer, db.ForeignKey('users.id'))

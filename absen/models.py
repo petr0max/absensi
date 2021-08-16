@@ -104,6 +104,7 @@ class User(UserMixin, db.Model):
     permits = db.relationship('Permit', backref='user', lazy='dynamic')
     checkins = db.relationship('CheckIn', backref='user', lazy='dynamic')
     checkouts = db.relationship('CheckOut', backref='user', lazy='dynamic')
+    sicks = db.relationship('Sick', backref='user', lazy='dynamic')
 
     def __init__(self, **kwargs):
         super(User, self).__init__(**kwargs)

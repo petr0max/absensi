@@ -22,3 +22,9 @@ class CheckOutForm(FlaskForm):
     jam_pulang = TimeField('Jam Pulang', validators=[DataRequired()])
     keterangan = StringField('Keterangan Lemburan / Pekerjaan',
                              validators=[DataRequired(), Length(1, 64)])
+
+
+class SickForm(FlaskForm):
+    tgl = DateField('Tanggal', validators=[DataRequired()])
+    long_date = IntegerField('Izin Berapa Hari', validatprs=[DataRequired()])
+    diagnose = StringField('Diagnosa', validators=[DataRequired(), Length(1, 64)])
