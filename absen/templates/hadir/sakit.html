@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 
-{% block title %}Input Data Sakit{% endblock %}
+{% block title %}Absen - Sakit{% endblock %}
 
 {% block head %}
 {{ super() }}
@@ -17,10 +17,11 @@
                         </ol>
                         <div class="row">
                             <form action="#" method="POST">
+                                {{ form.hidden_tag() }}
                                 <div class="row mb-3">
                                     <label for="" class="col-form-label col-sm-2">Nama Pengguna</label>
                                     <div class="col-sm-4">
-                                        <label type="text" class="col-form-label">Mardin Wijaya</label>
+                                        <label type="text" class="col-form-label">{{ current_user.username.title() }}</label>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
@@ -37,21 +38,21 @@
                                 </div>
                                 
                                 <div class="row mb-3">
-                                    <label for="" class="col-form-label col-sm-2">Tanggal</label>
+                                    {{ form.tgl.label(class='col-form-label col-sm-2') }}
                                     <div class="col-sm-4">
-                                        <input type="date" class="form-control">
+                                        {{ form.tgl(type='date', class='form-control') }}
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                    <label for="" class="col-form-label col-sm-2">Pukul</label>
+                                    {{ form.long_date.label(class='col-form-label col-sm-2') }}
                                     <div class="col-sm-4">
-                                        <input type="time" class="form-control">
+                                        {{ form.long_date(type='number', class='form-control') }}
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                    <label for="" class="col-form-label col-sm-2">Keterangan</label>
+                                    {{ form.keterangan.label(class='col-form-label col-sm-2') }}
                                     <div class="col-sm-4">
-                                        <input type="text" class="form-control">
+                                        {{ form.keterangan(class='form-control') }}
                                     </div>
                                 </div>
                                 <div class="row mb-3">
@@ -60,7 +61,9 @@
                                         <input type="file" class="form-control">
                                     </div>
                                 </div>
-
+                                <div id="progress_div" class="progres"></div>
+                                <div id="bar1" class="bar"></div>
+                                <div id="percent1" class="percent"></div>
                                 <div class="col-12">
                                     <button class="mb-3 btn btn-info text-white">Izin</button>
                                     <a class="mb-3 btn btn-warning text-white" href="./">Kembali</a>

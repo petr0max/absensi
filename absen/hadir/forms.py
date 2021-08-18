@@ -29,7 +29,7 @@ class CheckOutForm(FlaskForm):
 
 class SickForm(FlaskForm):
     tgl = DateField('Tanggal', validators=[DataRequired()])
-    long_date = IntegerField('Izin Berapa Hari', validatprs=[DataRequired()])
+    long_date = IntegerField('Izin Berapa Hari', validators=[DataRequired()])
     keterangan = StringField('Diagnosa', validators=[DataRequired(),
                                                    Length(1, 64)])
     submit = SubmitField('Kirim')

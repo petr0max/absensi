@@ -72,20 +72,37 @@ def permit():
         permitnow = Permit.query.filter_by(
             start_date=form.start_date.data).first()
         if permitnow is None:
-            permit = Permit(start_date=form.start_date.data,
-                            long_date=form.long_date.data,
-                            keterangan=form.keterangan.data
-                            )
+            permit = Permit(long_date=form.long_date.data,
+                            start_date=form.start_date.data,
+                            keterangan=form.keterangan.data,
+                            permit_id=g.user)
             db.session.add(permit)
             db.session.commit()
-            flash('Kita coba review')
+            flash('Kita coba review yah...')
             return redirect(url_for('.index'))
         flash('Data telah ada')
         return redirect(url_for('.index'))
     permits = Permit.query.order_by(Permit.start_date.desc()).all()
     return render_template('hadir/izin.html', form=form, permits=permits)
 
+
 @hadir.route('/sick', methods=['GET', 'POST'])
 @login_required
 def sick():
-    return render_template('hadir/sakit.html')
+    form = SickForm()
+    if form.validate_on_submit():
+        g.user = current_user.get_id()
+        sicknow = Sick.query.filter_by(tgl=form.tgl.data).first()
+        if sicknow is None:
+            sick = Sick(tgl=form.tgl.data,
+                        long_date=form.long_date.data,
+                        keterangan=form.keterangan.data,
+                        sick_id=g.user)
+            db.session.add(sick)
+            db.session.commit()
+            flash('Semoga Lekas Sembuh...')
+            return redirect(url_for('.index'))
+        flash('Tanggal sudah ada')
+        return redirect(url_for('.index'))
+    sicks= Sick.query.order_by(Sick.tgl.desc()).all()
+    return render_template('hadir/sakit.html', form=form, sicks=sicks)
