@@ -25,6 +25,11 @@
 <div class="card p-4 mb-3 shadow">
   <div class="body">
     <div class="row mb-3">
+      {% for message in get_flashed_messages() %}
+      <div class="alert alert-success">
+          {{ message }}
+      </div>
+      {% endfor %}
       <label class="col-form-label col-sm-3" for="">Nama Lengkap</label>
       <div class="col-sm-4">
         {% if user.name %}
@@ -108,7 +113,7 @@
       <label class="col-form-label col-sm-3" for="ForBlood">Golongan Darah</label>
       <div class="col-sm-4">
         {% if user.blood %}
-        <label class="col-form-label" for="ForBlood">: {{ user.blood }}</label>
+        <label class="col-form-label" for="ForBlood">: {{ user.blood.title() }}</label>
         {% else %}
         <label class="col-form-label" for="ForBlood">:</label>
         {% endif %}
@@ -168,19 +173,17 @@
       <label class="col-form-label col-sm-3" for="ForZone">Zona Waktu</label>
       <div class="col-sm-4">
         {% if user.zone %}
-        <label class="col-form-label" for="ForZone">: {{ user.zone }}</label>
+        <label class="col-form-label" for="ForZone">: {{ user.zone.upper() }}</label>
         {% else %}
         <label class="col-form-label" for="ForZone">:</label>
         {% endif %}
       </div>
     </div>
 <p>
-  {% if current_user.is_administrator() %}
-  <a href="{{ url_for('.edit_profile_admin', id=user.id) }}" class="mb-3 btn btn-danger">Ubah Data [Admin]</a>
-  {% else %}
-  <a href="{{ url_for('.edit_profile') }}" class="mb-3 btn btn-primary">Ubah Data</a>
+  {% if user == current_user %}
+    <a href="{{ url_for('.edit_profile') }}" class="mb-3 btn btn-primary">Ubah Data</a>
+    <a href="{{ url_for('main.index') }}" class="mb-3 btn btn-warning text-white">Kembali</a>
   {% endif %}
-  <a href="{{ url_for('main.index') }}" class="mb-3 btn btn-warning text-white">Kembali</a>
 </p>
                     </div>
                 </main>

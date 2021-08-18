@@ -97,7 +97,7 @@ class User(UserMixin, db.Model):
     religion = db.Column(db.String(64), index=True)
     warga_negara = db.Column(db.String(64), index=True)
     nik = db.Column(db.Integer, index=True)
-    npwp = db.Column(db.String(64), index=True)
+    npwp = db.Column(db.Integer, index=True)
     no_hp = db.Column(db.Integer, index=True)
     zone = db.Column(db.String(64), index=True)
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))

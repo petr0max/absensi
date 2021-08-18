@@ -1,7 +1,8 @@
 from flask_wtf import FlaskForm
 from wtforms import (StringField, SubmitField, BooleanField, TextAreaField,
                      SelectField, IntegerField)
-from wtforms.validators import DataRequired, Length, Email, Regexp
+from wtforms.validators import (DataRequired, Length, Email, Regexp, 
+                                NumberRange, Optional)
 from . import main
 from ..models import Role, User
 
@@ -25,9 +26,9 @@ class EditProfileForm(FlaskForm):
         (None, 'Tidak Tahu')])
     religion = StringField('Agama', validators=[Length(0, 64)])
     warga_negara = StringField('Kewarganegaraan', validators=[Length(0, 64)])
-    nik = IntegerField('NIK', validators=[Length(0, 64)])
-    npwp = IntegerField('NPWP', validators=[Length(0, 64)])
-    no_hp = IntegerField('No Handphone', validators=[Length(0, 64)])
+    nik = IntegerField('NIK', validators=[Optional()])
+    npwp = IntegerField('NPWP', validators=[Optional()])
+    no_hp = IntegerField('No Handphone', validators=[Optional()])
     zone = SelectField('Zona Waktu', choices=[('wib', 'WIB'),
                                               ('wita', 'WITA'),
                                               ('wit', 'WIT')])

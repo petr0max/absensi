@@ -1,5 +1,6 @@
 from datetime import datetime
-from flask import render_template, session, redirect, url_for, flash, abort
+from flask import (render_template, session, redirect, url_for, flash, abort,
+                   request)
 from flask_login import login_required, current_user
 from . import main
 from .forms import EditProfileAdminForm, EditProfileForm
@@ -60,21 +61,22 @@ def edit_profile():
         db.session.commit()
         flash('Your profile has been updated.')
         return redirect(url_for('.user', username=current_user.username))
-    form.name.data = current_user.name
-    form.location.data = current_user.location
-    form.about_me.data = current_user.about_me
-    form.study.data = current_user.study
-    form.jurusan.data = current_user.jurusan
-    form.gelar.data = current_user.gelar
-    form.address_before.data = current_user.address_before
-    form.address_now.data = current_user.address_now
-    form.blood.data = current_user.blood
-    form.religion.data = current_user.religion
-    form.warga_negara.data = current_user.warga_negara
-    form.nik.data = current_user.nik
-    form.npwp.data = current_user.npwp
-    form.no_hp.data = current_user.no_hp
-    form.zone.data = current_user.zone
+    elif request.method == 'GET':
+        form.name.data = current_user.name
+        form.location.data = current_user.location
+        form.about_me.data = current_user.about_me
+        form.study.data = current_user.study
+        form.jurusan.data = current_user.jurusan
+        form.gelar.data = current_user.gelar
+        form.address_before.data = current_user.address_before
+        form.address_now.data = current_user.address_now
+        form.blood.data = current_user.blood
+        form.religion.data = current_user.religion
+        form.warga_negara.data = current_user.warga_negara
+        form.nik.data = current_user.nik
+        form.npwp.data = current_user.npwp
+        form.no_hp.data = current_user.no_hp
+        form.zone.data = current_user.zone
 
     return render_template('account/edit_profile.html', form=form)
 
