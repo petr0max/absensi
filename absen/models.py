@@ -2,9 +2,9 @@ from . import db, bcrypt
 from flask_login import UserMixin, AnonymousUserMixin
 from flask import current_app
 from time import time
-from datetime import datetime
 from . import login_manager
 from .hadir.models import Permit, CheckOut, CheckIn, Sick
+import datetime
 import jwt
 
 
@@ -83,11 +83,11 @@ class User(UserMixin, db.Model):
     username= db.Column(db.String(64), unique=True, index=True)
     password_hash = db.Column(db.String(128), unique=True)
     confirmed = db.Column(db.Boolean, default=False)
-    name = db.Column(db.String(64))
+    name = db.Column(db.String(64), index=True)
     location = db.Column(db.String(64))
     about_me = db.Column(db.Text())
-    member_since = db.Column(db.DateTime(), default=datetime.now())
-    last_seen = db.Column(db.DateTime(), default=datetime.now())
+    member_since = db.Column(db.Date(), default=datetime.date.today())
+    last_seen = db.Column(db.DateTime(), default=datetime.datetime.now())
     study = db.Column(db.String(64), index=True)
     jurusan = db.Column(db.String(64), index=True)
     gelar = db.Column(db.String(64), index=True)
@@ -186,7 +186,7 @@ class User(UserMixin, db.Model):
         return self.can(Permission.OWNER)
 
     def ping(self):
-        self.last_seen = datetime.now()
+        self.last_seen = datetime.datetime.now()
         db.session.add(self)
         db.session.commit()
 

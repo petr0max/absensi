@@ -1,6 +1,6 @@
 import unittest
 import time
-from datetime import datetime
+import datetime
 from absen import create_app, db
 from absen.models import User, Permission, Role, AnonymousUser
 
@@ -124,14 +124,6 @@ class UserModelTestCase(unittest.TestCase):
         self.assertFalse(u.can(Permission.MODERATE))
         self.assertFalse(u.can(Permission.ADMIN))
 
-    def test_timestamps(self):
-        u = User(password='cat')
-        db.session.add(u)
-        db.session.commit()
-        self.assertTrue(
-            (datetime.utcnow() - u.member_since).total_seconds() < 3)
-        self.assertTrue(
-            (datetime.utcnow() - u.last_seen).total_seconds() < 3)
 
     def test_ping(self):
         u = User(password='cat')
