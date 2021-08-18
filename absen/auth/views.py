@@ -1,4 +1,4 @@
-from flask import render_template, redirect, request, url_for, flash
+from flask import (render_template, redirect, request, url_for, flash, session)
 from flask_login import login_user, logout_user, login_required, current_user
 from . import auth
 from ..models import User
@@ -27,6 +27,7 @@ def login():
 @login_required
 def logout():
     logout_user()
+    session.pop('username', None)
     flash('You have been logged out.')
     return redirect(url_for('auth.login'))
 
