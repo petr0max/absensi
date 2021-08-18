@@ -5,9 +5,10 @@ import datetime
 class Permit(db.Model):
     __tablename__ = 'permits'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    permit = db.Column(db.String(64), index=True)
+    keterangan = db.Column(db.String(64), index=True)
     long_date = db.Column(db.Integer)
     start_date = db.Column(db.Date(), default=datetime.date.today())
+    disetujui = db.Column(db.Boolean, default=False)
     permit_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
 
@@ -33,5 +34,5 @@ class Sick(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     tgl = db.Column(db.Date(), default=datetime.date.today())
     long_date = db.Column(db.Integer)
-    diagnose = db.Column(db.String(64), index=True)
+    keterangan = db.Column(db.String(64), index=True)
     sick_id = db.Column(db.Integer, db.ForeignKey('users.id'))

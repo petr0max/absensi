@@ -7,7 +7,7 @@ from wtforms.validators import DataRequired, Length
 class PermitForm(FlaskForm):
     long_date = IntegerField('Izin Berapa Hari', validators=[DataRequired()])
     start_date = DateField('Mulai Tanggal', validators=[DataRequired()])
-    permit = StringField('Keperluan Izin', validators=[DataRequired(),
+    keterangan = StringField('Keperluan Izin', validators=[DataRequired(),
                                                        Length(1, 125)])
     submit = SubmitField('Kirim')
 
@@ -22,7 +22,7 @@ class CheckInForm(FlaskForm):
 class CheckOutForm(FlaskForm):
     tgl = DateField('Tanggal', validators=[DataRequired()])
     jam_pulang = TimeField('Jam Pulang', validators=[DataRequired()])
-    keterangan = StringField('Keterangan Lemburan / Pekerjaan',
+    keterangan = StringField('Keterangan',
                              validators=[DataRequired(), Length(1, 64)])
     submit = SubmitField('Kirim')
 
@@ -30,6 +30,6 @@ class CheckOutForm(FlaskForm):
 class SickForm(FlaskForm):
     tgl = DateField('Tanggal', validators=[DataRequired()])
     long_date = IntegerField('Izin Berapa Hari', validatprs=[DataRequired()])
-    diagnose = StringField('Diagnosa', validators=[DataRequired(),
+    keterangan = StringField('Diagnosa', validators=[DataRequired(),
                                                    Length(1, 64)])
     submit = SubmitField('Kirim')

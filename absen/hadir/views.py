@@ -25,12 +25,16 @@ def checkin():
     form = CheckInForm()
     if form.validate_on_submit():
         g.user = current_user.get_id()
-        checkin = CheckIn(tgl=form.tgl.data,
-                          jam_datang=form.jam_datang.data,
-                          checkin_id=g.user)
-        db.session.add(checkin)
-        db.session.commit()
-        flash('Selamat Berkreativas!')
+        checknow = CheckIn.query.filter_by(tgl=form.tgl.data).first()
+        if checknow is None:
+            checkin = CheckIn(tgl=form.tgl.data,
+                              jam_datang=form.jam_datang.data,
+                              checkin_id=g.user)
+            db.session.add(checkin)
+            db.session.commit()
+            flash('Selamat Berkreativas!')
+            return redirect(url_for('.index'))
+        flash('Data telah ada')
         return redirect(url_for('.index'))
     checkins = CheckIn.query.order_by(CheckIn.jam_datang.desc()).all()
     return render_template('hadir/masuk.html', form=form, checkins=checkins)
@@ -39,13 +43,47 @@ def checkin():
 @hadir.route('/checkout', methods=['GET', 'POST'])
 @login_required
 def checkout():
-    return render_template('hadir/pulang.html')
+    form = CheckOutForm()
+    if form.validate_on_submit():
+        g.user = current_user.get_id()
+        leavenow = CheckOut.query.filter_by(tgl=form.tgl.data).first()
+        if leavenow is None:
+            checkout = CheckOut(tgl=form.tgl.data,
+                                jam_pulang=form.jam_pulang.data,
+                                keterangan=form.keterangan.data,
+                                checkout_id=g.user
+                                )
+            db.session.add(checkout)
+            db.session.commit()
+            flash('Selamat Beristirahat...')
+            return redirect(url_for('.index'))
+        flash('Data telah ada')
+        return redirect(url_for('.index'))
+    checkouts = CheckOut.query.order_by(CheckOut.jam_pulang.desc()).all()
+    return render_template('hadir/pulang.html', form=form, checkouts=checkouts)
 
 
 @hadir.route('/permit', methods=['GET', 'POST'])
 @login_required
 def permit():
-    return render_template('hadir/izin.html')
+    form = PermitForm()
+    if form.validate_on_submit():
+        g.user = current_user.get_id()
+        permitnow = Permit.query.filter_by(
+            start_date=form.start_date.data).first()
+        if permitnow is None:
+            permit = Permit(start_date=form.start_date.data,
+                            long_date=form.long_date.data,
+                            keterangan=form.keterangan.data
+                            )
+            db.session.add(permit)
+            db.session.commit()
+            flash('Kita coba review')
+            return redirect(url_for('.index'))
+        flash('Data telah ada')
+        return redirect(url_for('.index'))
+    permits = Permit.query.order_by(Permit.start_date.desc()).all()
+    return render_template('hadir/izin.html', form=form, permits=permits)
 
 @hadir.route('/sick', methods=['GET', 'POST'])
 @login_required

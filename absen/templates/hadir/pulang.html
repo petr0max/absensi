@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Input Pulang{% endblock %}
+{% block title %}Report - Pulang{% endblock %}
 
 {% block head %}
 {{ super() }}
@@ -16,10 +16,11 @@
                         </ol>
                         <div class="row">
                             <form action="#" method="POST">
+                                {{ form.hidden_tag() }}
                                 <div class="row mb-3">
                                     <label for="" class="col-form-label col-sm-2">Nama Pengguna</label>
                                     <div class="col-sm-4">
-                                        <label type="text" class="col-form-label">Mardin Wijaya</label>
+                                        <label type="text" class="col-form-label">{{ current_user.username.title() }}</label>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
@@ -42,27 +43,27 @@
                                 </div>
                                 
                                 <div class="row mb-3">
-                                    <label for="" class="col-form-label col-sm-2">Tanggal</label>
+                                    {{ form.tgl.label(class='col-form-label col-sm-2') }}
                                     <div class="col-sm-4">
-                                        <input type="date" class="form-control">
+                                        {{ form.tgl(type='date', class='form-control') }}
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                    <label for="" class="col-form-label col-sm-2">Pukul</label>
+                                    {{ form.jam_pulang.label(class='col-form-label col-sm-2') }}
                                     <div class="col-sm-4">
-                                        <input type="time" class="form-control">
+                                        {{ form.jam_pulang(type='time', class='form-control') }}
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                    <label for="" class="col-form-label col-sm-2">Keterangan</label>
+                                    {{ form.keterangan.label(class='col-form-label col-sm-2') }}
                                     <div class="col-sm-4">
-                                        <input type="text" class="form-control">
+                                        {{ form.keterangan(type='text', class='form-control') }}
                                     </div>
                                 </div>
 
                                 <div class="col-12">
-                                    <button class="mb-3 btn btn-success">Pulang</button>
-                                    <a href="./" class="mb-3 btn btn-warning text-white">Kembali</a>
+                                    {{ form.submit(class='mb-3 btn btn-success') }}
+                                    <a href="{{ url_for('.index') }}" class="mb-3 btn btn-warning text-white">Kembali</a>
                                 </div>
                             </form>
                         </div>
