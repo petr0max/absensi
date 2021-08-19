@@ -54,8 +54,8 @@ class Role(db.Model):
             role.default = (role.name == default_role)
             db.session.add(role)
         db.session.commit()
-    
-    
+
+
     def add_permission(self, perm):
         if not self.has_permission(perm):
             self.permissions += perm
@@ -84,28 +84,13 @@ class User(UserMixin, db.Model):
     confirmed = db.Column(db.Boolean, default=False)
     member_since = db.Column(db.Date(), default=datetime.date.today())
     last_seen = db.Column(db.DateTime(), default=datetime.datetime.now())
-    name = db.Column(db.String(64), index=True)
-    location = db.Column(db.String(64))
-    about_me = db.Column(db.Text())
-    study = db.Column(db.String(64), index=True)
-    jurusan = db.Column(db.String(64), index=True)
-    gelar = db.Column(db.String(64), index=True)
-    address_before = db.Column(db.String(64), index=True)
-    address_now = db.Column(db.String(64), index=True)
-    blood = db.Column(db.String(64), index=True)
-    religion = db.Column(db.String(64), index=True)
-    warga_negara = db.Column(db.String(64), index=True)
-    nik = db.Column(db.Integer, index=True)
-    npwp = db.Column(db.Integer, index=True)
-    no_hp = db.Column(db.Integer, index=True)
-    zone = db.Column(db.String(64), index=True)
-   
-    
+
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
     permits = db.relationship('Permit', backref='user', lazy='dynamic')
     checkins = db.relationship('CheckIn', backref='user', lazy='dynamic')
     checkouts = db.relationship('CheckOut', backref='user', lazy='dynamic')
     sicks = db.relationship('Sick', backref='user', lazy='dynamic')
+
 
     def __init__(self, **kwargs):
         super(User, self).__init__(**kwargs)
@@ -176,17 +161,17 @@ class User(UserMixin, db.Model):
 
     def can(self, perm):
         return self.role is not None and self.role.has_permission(perm)
-    
+
     def is_moderate(self):
         return self.can(Permission.MODERATE)
 
     def is_administrator(self):
         return self.can(Permission.ADMIN)
-    
+
     def is_owner(self):
         return self.can(Permission.OWNER)
 
-    
+
     def ping(self):
         self.last_seen = datetime.datetime.now()
         db.session.add(self)
