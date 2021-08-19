@@ -11,10 +11,10 @@
                             <form action="" method="POST" novalidate>
                                 {{ form.hidden_tag() }}
                                 <div class="row mb-3">
-                                    {{ form.name.label(class='col-form-label col-sm-2') }}
+                                    {{ form.realname.label(class='col-form-label col-sm-2') }}
                                     <div class="col-sm-4">
-                                        {{ form.name(class='form-control', placeholder='Nama Lengkap Anda') }}
-                                    {% for error in form.name.errors %}
+                                        {{ form.realname(class='form-control', placeholder='Nama Lengkap Anda') }}
+                                    {% for error in form.realname.errors %}
                                     <span style="color:red;">[{{ error }}]</span>
                                     {% endfor %}
                                     </div>
@@ -86,6 +86,27 @@
                                     {{ form.blood.label(class='col-form-label col-sm-2') }}
                                     <div class="col-sm-4">
                                         {{ form.blood(class='form-select') }}
+                                    {% for error in form.blood.errors %}
+                                    <span style="color:red;">[{{ error }}]</span>
+                                    {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    {{ form.religion.label(class='col-form-label col-sm-2') }}
+                                    <div class="col-sm-4">
+                                        {{ form.religion(class='form-control') }}
+                                    {% for error in form.religion.errors %}
+                                    <span style="color:red;">[{{ error }}]</span>
+                                    {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    {{ form.warga_negara.label(class='col-form-label col-sm-2') }}
+                                    <div class="col-sm-4">
+                                        {{ form.warga_negara(class='form-select') }}
+                                    {% for error in form.warga_negara.errors %}
+                                    <span style="color:red;">[{{ error }}]</span>
+                                    {% endfor %}
                                     </div>
                                 </div>
                                 <div class="row mb-3">
@@ -127,7 +148,7 @@
 
                                 <div class="col-6">
                                     {{ form.submit(class="mb-3 btn btn-primary") }}
-                                    <a href="{{ url_for('profil.user', username=current_user.username) }}" class="mb-3 btn btn-warning text-white">Kembali</a>
+                                    <a href="{{ url_for('profile.index', username=current_user.username) }}" class="mb-3 btn btn-warning text-white">Kembali</a>
                                 </div>
                             </form>
                         </div>

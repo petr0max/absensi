@@ -18,7 +18,8 @@ class EditProfileForm(FlaskForm):
     blood = SelectField('Golongan Darah', choices=[
         ('A', 'A'), ('B', 'B'), ('AB', 'AB'), ('O', 'O')])
     religion = StringField('Agama', validators=[Length(0, 64)])
-    warga_negara = StringField('Kewarganegaraan', validators=[Length(0, 64)])
+    warga_negara = SelectField('Kewarganegaraan', choices=[
+        ('WNI', 'WNI'), ('WNA', 'WNA')])
     no_hp = IntegerField('No. Handphone', validators=[Optional()])
     nik = IntegerField('NIK', validators=[Optional()])
     npwp = IntegerField('NPWP', validators=[Optional()])

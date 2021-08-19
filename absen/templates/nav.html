@@ -17,7 +17,7 @@
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                 {% if current_user.is_authenticated %}
                 <li>
-                    <a class="dropdown-item" href="{{ url_for('main.user', username=current_user.username) }}">Profil</a>
+                    <a class="dropdown-item" href="{{ url_for('profile.index', username=current_user.username) }}">Profil</a>
                 </li>
                 {% endif %}
                 <li><a class="dropdown-item" href="#!">Setting</a></li>

@@ -4,6 +4,7 @@ import datetime
 
 class Profile(db.Model):
     __tablename__ = 'profiles'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     realname = db.Column(db.String(64), index=True)
     location = db.Column(db.String(64))
     about_me = db.Column(db.Text())
@@ -19,4 +20,4 @@ class Profile(db.Model):
     npwp = db.Column(db.Integer, index=True)
     no_hp = db.Column(db.Integer, index=True)
     zone = db.Column(db.String(64), index=True)
-    member_id = db.Column(db.Integer, unique=True, db.ForeignKey('users.id'))
+    member_id = db.Column(db.Integer, db.ForeignKey('users.id'), unique=True)

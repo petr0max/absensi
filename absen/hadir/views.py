@@ -13,11 +13,6 @@ from .forms import (PermitForm, CheckInForm, CheckOutForm, SickForm)
 def index():
     return render_template('hadir/hadir.html')
 
-@hadir.route('/report/<string:username>', methods=['GET', 'POST'])
-@login_required
-def report():
-    user = User.query.filter_by(username=username).first_or_404()
-    return render_template('hadir/hadir.html', user=user)
 
 @hadir.route('/checkin', methods=['GET', 'POST'])
 @login_required
@@ -25,11 +20,11 @@ def checkin():
     form = CheckInForm()
     if form.validate_on_submit():
         g.user = current_user.get_id()
-        checknow = CheckIn.query.filter_by(user_id=g.user).first()
+        checknow = CheckIn.query.filter_by(member_id=g.user).first()
         if checknow is None:
             checkin = CheckIn(tgl=form.tgl.data,
                               jam_datang=form.jam_datang.data,
-                              user_id=g.user)
+                              member_id=g.user)
             db.session.add(checkin)
             db.session.commit()
             flash('Semangat ...!')
@@ -45,12 +40,12 @@ def checkout():
     form = CheckOutForm()
     if form.validate_on_submit():
         g.user = current_user.get_id()
-        checknow = CheckOut.query.filter_by(user_id=g.user).first()
+        checknow = CheckOut.query.filter_by(member_id=g.user).first()
         if checknow is None:
             checkout = CheckOut(tgl=form.tgl.data,
                                 jam_pulang=form.jam_pulang.data,
                                 keterangan=form.keterangan.data,
-                                user_id=g.user
+                                member_id=g.user
                                 )
             db.session.add(checkout)
             db.session.commit()
@@ -67,12 +62,12 @@ def permit():
     form = PermitForm()
     if form.validate_on_submit():
         g.user = current_user.get_id()
-        checknow = Permit.query.filter_by(user_id=g.user).first()
+        checknow = Permit.query.filter_by(member_id=g.user).first()
         if checknow is None:
             permit = Permit(long_date=form.long_date.data,
                             start_date=form.start_date.data,
                             keterangan=form.keterangan.data,
-                            user_id=g.user)
+                            member_id=g.user)
             db.session.add(permit)
             db.session.commit()
             flash('Kita coba review yah...')
@@ -88,12 +83,12 @@ def sick():
     form = SickForm()
     if form.validate_on_submit():
         g.user = current_user.get_id()
-        checknow = Sick.query.filter_by(user_id=g.user).first()
+        checknow = Sick.query.filter_by(member_id=g.user).first()
         if checknow is None:
             sick = Sick(tgl=form.tgl.data,
                         long_date=form.long_date.data,
                         keterangan=form.keterangan.data,
-                        user_id=g.user)
+                        member_id=g.user)
             db.session.add(sick)
             db.session.commit()
             flash('Semoga Lekas Sembuh...')

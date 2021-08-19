@@ -84,8 +84,9 @@ class User(UserMixin, db.Model):
     confirmed = db.Column(db.Boolean, default=False)
     member_since = db.Column(db.Date(), default=datetime.date.today())
     last_seen = db.Column(db.DateTime(), default=datetime.datetime.now())
-
+    
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
+    profiles = db.relationship('Profile', backref='user', uselist=False)
     permits = db.relationship('Permit', backref='user', lazy='dynamic')
     checkins = db.relationship('CheckIn', backref='user', lazy='dynamic')
     checkouts = db.relationship('CheckOut', backref='user', lazy='dynamic')
