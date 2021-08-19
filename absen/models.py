@@ -83,8 +83,10 @@ class User(UserMixin, db.Model):
     username= db.Column(db.String(64), unique=True, index=True)
     password_hash = db.Column(db.String(128), unique=True)
     confirmed = db.Column(db.Boolean, default=False)
+    member_since = db.Column(db.Date(), default=datetime.date.today())
+    last_seen = db.Column(db.DateTime(), default=datetime.datetime.now())
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
-    profiles = db.relationship('Profile', backref='user', lazy='dynamic')
+    profiles = db.relationship('Profile', backref='user')
     permits = db.relationship('Permit', backref='user', lazy='dynamic')
     checkins = db.relationship('CheckIn', backref='user', lazy='dynamic')
     checkouts = db.relationship('CheckOut', backref='user', lazy='dynamic')
@@ -168,6 +170,12 @@ class User(UserMixin, db.Model):
     
     def is_owner(self):
         return self.can(Permission.OWNER)
+
+    
+    def ping(self):
+        self.last_seen = datetime.datetime.now()
+        db.session.add(self)
+        db.session.commit()
 
 
 class AnonymousUser(AnonymousUserMixin):

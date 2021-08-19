@@ -8,8 +8,6 @@ class Profile(db.Model):
     name = db.Column(db.String(64), index=True)
     location = db.Column(db.String(64))
     about_me = db.Column(db.Text())
-    member_since = db.Column(db.Date(), default=datetime.date.today())
-    last_seen = db.Column(db.DateTime(), default=datetime.datetime.now())
     study = db.Column(db.String(64), index=True)
     jurusan = db.Column(db.String(64), index=True)
     gelar = db.Column(db.String(64), index=True)
@@ -22,10 +20,4 @@ class Profile(db.Model):
     npwp = db.Column(db.Integer, index=True)
     no_hp = db.Column(db.Integer, index=True)
     zone = db.Column(db.String(64), index=True)
-    profile_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    
-    
-    def ping(self):
-        self.last_seen = datetime.datetime.now()
-        db.session.add(self)
-        db.session.commit()
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))

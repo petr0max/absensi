@@ -29,7 +29,7 @@ def checkin():
         if checknow is None:
             checkin = CheckIn(tgl=form.tgl.data,
                               jam_datang=form.jam_datang.data,
-                              checkin_id=g.user)
+                              user_id=g.user)
             db.session.add(checkin)
             db.session.commit()
             flash('Semangat ...!')
@@ -50,7 +50,7 @@ def checkout():
             checkout = CheckOut(tgl=form.tgl.data,
                                 jam_pulang=form.jam_pulang.data,
                                 keterangan=form.keterangan.data,
-                                checkout_id=g.user
+                                user_id=g.user
                                 )
             db.session.add(checkout)
             db.session.commit()
@@ -73,7 +73,7 @@ def permit():
             permit = Permit(long_date=form.long_date.data,
                             start_date=form.start_date.data,
                             keterangan=form.keterangan.data,
-                            permit_id=g.user)
+                            user_id=g.user)
             db.session.add(permit)
             db.session.commit()
             flash('Kita coba review yah...')
@@ -94,7 +94,7 @@ def sick():
             sick = Sick(tgl=form.tgl.data,
                         long_date=form.long_date.data,
                         keterangan=form.keterangan.data,
-                        sick_id=g.user)
+                        user_id=g.user)
             db.session.add(sick)
             db.session.commit()
             flash('Semoga Lekas Sembuh...')
