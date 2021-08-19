@@ -25,7 +25,7 @@ def checkin():
     form = CheckInForm()
     if form.validate_on_submit():
         g.user = current_user.get_id()
-        checknow = CheckIn.query.filter_by(tgl=form.tgl.data).first()
+        checknow = CheckIn.query.filter_by(user_id=g.user).first()
         if checknow is None:
             checkin = CheckIn(tgl=form.tgl.data,
                               jam_datang=form.jam_datang.data,
@@ -45,8 +45,8 @@ def checkout():
     form = CheckOutForm()
     if form.validate_on_submit():
         g.user = current_user.get_id()
-        leavenow = CheckOut.query.filter_by(tgl=form.tgl.data).first()
-        if leavenow is None:
+        checknow = CheckOut.query.filter_by(user_id=g.user).first()
+        if checknow is None:
             checkout = CheckOut(tgl=form.tgl.data,
                                 jam_pulang=form.jam_pulang.data,
                                 keterangan=form.keterangan.data,
@@ -67,9 +67,8 @@ def permit():
     form = PermitForm()
     if form.validate_on_submit():
         g.user = current_user.get_id()
-        permitnow = Permit.query.filter_by(
-            start_date=form.start_date.data).first()
-        if permitnow is None:
+        checknow = Permit.query.filter_by(user_id=g.user).first()
+        if checknow is None:
             permit = Permit(long_date=form.long_date.data,
                             start_date=form.start_date.data,
                             keterangan=form.keterangan.data,
@@ -89,8 +88,8 @@ def sick():
     form = SickForm()
     if form.validate_on_submit():
         g.user = current_user.get_id()
-        sicknow = Sick.query.filter_by(tgl=form.tgl.data).first()
-        if sicknow is None:
+        checknow = Sick.query.filter_by(user_id=g.user).first()
+        if checknow is None:
             sick = Sick(tgl=form.tgl.data,
                         long_date=form.long_date.data,
                         keterangan=form.keterangan.data,
