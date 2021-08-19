@@ -7,11 +7,11 @@
                 <main>
                     <div class="container-fluid px-4">
                         <h1 class="mt-4">Profil {{ profil.realname }}</h1>
-{% if user.name or user.location %}
+{% if profil.realname or profil.location %}
 <ol class="breadcrumb mb-4">
-  {% if user.name %}<li class="breadcrumb-item active">{{ user.name }}{% endif %}
-	{% if user.location %}
-  dari <a href="https://google.com/maps/search/{{ user.location }}/">{{ user.location }}</a>
+  {% if profil.realname %}<li class="breadcrumb-item active">{{ profil.realname }}{% endif %}
+	{% if profil.location %}
+  dari <a href="https://google.com/maps/search/{{ profil.location }}/">{{ profil.location }}</a>
   {% endif %}
   <li class="breadcrumb-item">
   Terlihat {{ user.last_seen }}.
@@ -32,8 +32,8 @@
       {% endfor %}
       <label class="col-form-label col-sm-3" for="">Nama Lengkap</label>
       <div class="col-sm-4">
-        {% if user.name %}
-        <label class="col-form-label" for="ForFullname">: {{ user.name }}</label>
+        {% if profil.realname %}
+        <label class="col-form-label" for="ForFullname">: {{ profil.realname }}</label>
         {% else %}
         <label class="col-form-label" for="ForFullname">:</label>
         {% endif %}
@@ -42,8 +42,8 @@
     <div class="row mb-3">
       <label class="col-form-label col-sm-3" for="">Tentang Saya</label>
       <div class="col-sm-4">
-        {% if user.about_me %}
-        <label class="col-form-label" for="ForAboutMe">: {{ user.about_me }}</label>
+        {% if profil.about_me %}
+        <label class="col-form-label" for="ForAboutMe">: {{ profil.about_me }}</label>
         {% else %}
         <label class="col-form-label" for="ForAboutMe">:</label>
         {% endif %}
@@ -62,8 +62,8 @@
     <div class="row mb-3">
       <label class="col-form-label col-sm-3" for="ForAlmamater">Universitas / Sekolah</label>
       <div class="col-sm-4">
-        {% if user.study %}
-        <label class="col-form-label" for="ForAlmamater">: {{ user.study }}</label>
+        {% if profil.study %}
+        <label class="col-form-label" for="ForAlmamater">: {{ profil.study }}</label>
         {% else %}
         <label class="col-form-label" for="ForAlmamater">:</label>
         {% endif %}
@@ -72,8 +72,8 @@
     <div class="row mb-3">
       <label class="col-form-label col-sm-3" for="ForJurusan">Jurusan</label>
       <div class="col-sm-4">
-        {% if user.jurusan %}
-        <label class="col-form-label" for="ForJurusan">: {{ user.jurusan }}</label>
+        {% if profil.jurusan %}
+        <label class="col-form-label" for="ForJurusan">: {{ profil.jurusan }}</label>
         {% else %}
         <label class="col-form-label" for="ForJurusan">:</label>
         {% endif %}
@@ -82,8 +82,8 @@
     <div class="row mb-3">
       <label class="col-form-label col-sm-3" for="ForGelar">Gelar Pendidikan</label>
       <div class="col-sm-4">
-        {% if user.gelar %}
-        <label class="col-form-label" for="ForGelar">: {{ user.gelar }}</label>
+        {% if profil.gelar %}
+        <label class="col-form-label" for="ForGelar">: {{ profil.gelar }}</label>
         {% else %}
         <label class="col-form-label" for="ForGelar">:</label>
         {% endif %}
@@ -92,8 +92,8 @@
     <div class="row mb-3">
       <label class="col-form-label col-sm-3" for="ForAddresBefore">Alamat Asal</label>
       <div class="col-sm-4">
-        {% if user.address_before %}
-        <label class="col-form-label" for="ForAddressBefore">: {{ user.address_before }}</label>
+        {% if profil.address_before %}
+        <label class="col-form-label" for="ForAddressBefore">: {{ profil.address_before }}</label>
         {% else %}
         <label class="col-form-label" for="ForAddressBefore">:</label>
         {% endif %}
@@ -102,8 +102,8 @@
     <div class="row mb-3">
       <label class="col-form-label col-sm-3" for="ForAddresNow">Alamat Sekarang</label>
       <div class="col-sm-4">
-        {% if user.address_now %}
-        <label class="col-form-label" for="ForAddressNow">: {{ user.address_now }}</label>
+        {% if profil.address_now %}
+        <label class="col-form-label" for="ForAddressNow">: {{ profil.address_now }}</label>
         {% else %}
         <label class="col-form-label" for="ForAddressNow">:</label>
         {% endif %}
@@ -112,8 +112,8 @@
     <div class="row mb-3">
       <label class="col-form-label col-sm-3" for="ForBlood">Golongan Darah</label>
       <div class="col-sm-4">
-        {% if user.blood %}
-        <label class="col-form-label" for="ForBlood">: {{ user.blood }}</label>
+        {% if profil.blood %}
+        <label class="col-form-label" for="ForBlood">: {{ profil.blood }}</label>
         {% else %}
         <label class="col-form-label" for="ForBlood">:</label>
         {% endif %}
@@ -122,8 +122,8 @@
     <div class="row mb-3">
       <label class="col-form-label col-sm-3" for="ForReligion">Agama</label>
       <div class="col-sm-4">
-        {% if user.religion %}
-        <label class="col-form-label" for="ForReligion">: {{ user.religion }}</label>
+        {% if profil.religion %}
+        <label class="col-form-label" for="ForReligion">: {{ profil.religion }}</label>
         {% else %}
         <label class="col-form-label" for="ForReligion">:</label>
         {% endif %}
@@ -132,8 +132,8 @@
     <div class="row mb-3">
       <label class="col-form-label col-sm-3" for="ForWargaNegara">Kewarganegaraan</label>
       <div class="col-sm-4">
-        {% if user.warga_negara %}
-        <label class="col-form-label" for="ForWargaNegara">: {{ user.warga_negara }}</label>
+        {% if profil.warga_negara %}
+        <label class="col-form-label" for="ForWargaNegara">: {{ profil.warga_negara }}</label>
         {% else %}
         <label class="col-form-label" for="ForWargaNegara">:</label>
         {% endif %}
@@ -142,8 +142,8 @@
     <div class="row mb-3">
       <label class="col-form-label col-sm-3" for="ForNIK">NIK</label>
       <div class="col-sm-4">
-        {% if user.nik %}
-        <label class="col-form-label" for="ForNIK">: {{ user.nik }}</label>
+        {% if profil.nik %}
+        <label class="col-form-label" for="ForNIK">: {{ profil.nik }}</label>
         {% else %}
         <label class="col-form-label" for="ForNIK">:</label>
         {% endif %}
@@ -152,8 +152,8 @@
     <div class="row mb-3">
       <label class="col-form-label col-sm-3" for="ForNPWP">NPWP</label>
       <div class="col-sm-4">
-        {% if user.npwp %}
-        <label class="col-form-label" for="ForNPWP" id="IdNpwp">: {{ user.npwp }}</label>
+        {% if profil.npwp %}
+        <label class="col-form-label" for="ForNPWP" id="IdNpwp">: {{ profil.npwp }}</label>
         {% else %}
         <label class="col-form-label" for="ForNPWP">:</label>
         {% endif %}
@@ -162,8 +162,8 @@
     <div class="row mb-3">
       <label class="col-form-label col-sm-3" for="ForNoHP">No Handphone</label>
       <div class="col-sm-4">
-        {% if user.no_hp %}
-        <label class="col-form-label" for="ForNoHP">: {{ user.no_hp }}</label>
+        {% if profil.no_hp %}
+        <label class="col-form-label" for="ForNoHP">: {{ profil.no_hp }}</label>
         {% else %}
         <label class="col-form-label" for="ForNoHP">:</label>
         {% endif %}
@@ -172,8 +172,8 @@
     <div class="row mb-3">
       <label class="col-form-label col-sm-3" for="ForZone">Zona Waktu</label>
       <div class="col-sm-4">
-        {% if user.zone %}
-        <label class="col-form-label" for="ForZone">: {{ user.zone }}</label>
+        {% if profil.zone %}
+        <label class="col-form-label" for="ForZone">: {{ profil.zone }}</label>
         {% else %}
         <label class="col-form-label" for="ForZone">:</label>
         {% endif %}
