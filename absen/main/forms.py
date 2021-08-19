@@ -6,6 +6,22 @@ from wtforms.validators import (DataRequired, Length, Email, Regexp,
 from . import main
 
 
-class NameForm(FlaskForm):
-    name = StringField('Coba input', validators=[DataRequired()])
-    submit = SubmitField('Kirim')
+class EditProfileForm(FlaskForm):
+    name = StringField('Nama Lengkap', validators=[Length(0, 64)])
+    location = StringField('Lokasi Kantor', validators=[Length(0, 64)])
+    about_me = TextAreaField('Tentang Saya', validators=[Length(0, 64)])
+    study = StringField('Universitas / Sekolah', validators=[Length(0, 64)])
+    jurusan = StringField('Jurusan', validators=[Length(0, 64)])
+    gelar = StringField('Gelar Pendidikan', validators=[Length(0, 64)])
+    address_before = StringField('Alamat Asal', validators=[Length(0, 64)])
+    address_now = StringField('Alamat Sekarang', validators=[Length(0, 64)])
+    blood = SelectField('Golongan Darah', choices=[
+        ('A', 'A'), ('B', 'B'), ('AB', 'AB'), ('O', 'O')])
+    religion = StringField('Agama', validators=[Length(0, 64)])
+    warga_negara = StringField('Kewarganegaraan', validators=[Length(0, 64)])
+    no_hp = IntegerField('No. Handphone', validators=[Optional()])
+    nik = IntegerField('NIK', validators=[Optional()])
+    npwp = IntegerField('NPWP', validators=[Optional()])
+    zone = SelectField('Zona Waktu', choices=[
+        ('WIB', 'WIB'), ('WITA', 'WITA'), ('WIT', 'WIT')])
+    submit = SubmitField('Ubah')
