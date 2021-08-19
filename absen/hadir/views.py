@@ -8,7 +8,7 @@ from .models import CheckIn, CheckOut, Permit, Sick
 from .forms import (PermitForm, CheckInForm, CheckOutForm, SickForm)
 
 
-@hadir.route('/', methods=['GET', 'POST'])
+@hadir.route('/')
 @login_required
 def index():
     return render_template('hadir/hadir.html')

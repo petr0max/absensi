@@ -83,24 +83,8 @@ class User(UserMixin, db.Model):
     username= db.Column(db.String(64), unique=True, index=True)
     password_hash = db.Column(db.String(128), unique=True)
     confirmed = db.Column(db.Boolean, default=False)
-    name = db.Column(db.String(64), index=True)
-    location = db.Column(db.String(64))
-    about_me = db.Column(db.Text())
-    member_since = db.Column(db.Date(), default=datetime.date.today())
-    last_seen = db.Column(db.DateTime(), default=datetime.datetime.now())
-    study = db.Column(db.String(64), index=True)
-    jurusan = db.Column(db.String(64), index=True)
-    gelar = db.Column(db.String(64), index=True)
-    address_before = db.Column(db.String(64), index=True)
-    address_now = db.Column(db.String(64), index=True)
-    blood = db.Column(db.String(64), index=True)
-    religion = db.Column(db.String(64), index=True)
-    warga_negara = db.Column(db.String(64), index=True)
-    nik = db.Column(db.Integer, index=True)
-    npwp = db.Column(db.Integer, index=True)
-    no_hp = db.Column(db.Integer, index=True)
-    zone = db.Column(db.String(64), index=True)
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
+    profiles = db.relationship('Profile', backref='user', lazy='dynamic')
     permits = db.relationship('Permit', backref='user', lazy='dynamic')
     checkins = db.relationship('CheckIn', backref='user', lazy='dynamic')
     checkouts = db.relationship('CheckOut', backref='user', lazy='dynamic')
@@ -184,11 +168,6 @@ class User(UserMixin, db.Model):
     
     def is_owner(self):
         return self.can(Permission.OWNER)
-
-    def ping(self):
-        self.last_seen = datetime.datetime.now()
-        db.session.add(self)
-        db.session.commit()
 
 
 class AnonymousUser(AnonymousUserMixin):

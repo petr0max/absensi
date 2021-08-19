@@ -44,4 +44,7 @@ def create_app(config_name):
     from .hadir import hadir as hadir_blueprint
     app.register_blueprint(hadir_blueprint, url_prefix='/absen')
 
+    from .profil import profil as profil_blueprint
+    app.register_blueprint(profil_blueprint)
+
     return app
