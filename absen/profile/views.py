@@ -9,8 +9,7 @@ from ..models import User
 from .forms import EditProfileForm
 
 
-@profile.route('/<username>')
-@login_required
+@profile.route('/<username>', methods=['GET', 'POST'])
 def index(username):
     user = User.query.filter_by(username=username).first_or_404()
     g.user = current_user.get_id()
