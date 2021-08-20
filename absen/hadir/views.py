@@ -63,7 +63,7 @@ def checkout():
         elif checkouts:
             if checkdates is None:
                 checkout = CheckOut(tgl=form.tgl.data,
-                                    jam_pulang=form.jam_datang.data,
+                                    jam_pulang=form.jam_pulang.data,
                                     keterangan=form.keterangan.data,
                                     member_id=g.user)
                 db.session.add(checkout)
@@ -113,6 +113,7 @@ def sick():
     if form.validate_on_submit():
         g.user = current_user.get_id()
         sicks = Sick.query.filter_by(member_id=g.user).first()
+        checkdate = Sick.query.filter(Sick.tgl==form.tgl.data).first()
         if sicks is None:
             sick = Sick(tgl=form.tgl.data,
                         long_date=form.long_date.data,
@@ -122,6 +123,16 @@ def sick():
             db.session.commit()
             flash('Semoga Lekas Sembuh...')
             return redirect(url_for('.index'))
-        flash('Data sudah ada')
+        elif sicks:
+            if checkdate is None:
+                sick = Sick(tgl=form.tgl.data,
+                            long_date=form.long_date.data,
+                            keterangan=form.keterangan.data,
+                            member_id=g.user)
+                db.session.add(sick)
+                db.session.commit()
+                flash('Semoga Lekas Sembuh...')
+                return redirect(url_for('.index'))
+            flash('Data sudah ada')
     sicks= Sick.query.order_by(Sick.tgl.desc()).all()
     return render_template('hadir/sakit.html', form=form, sicks=sicks)
