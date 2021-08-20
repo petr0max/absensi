@@ -20,8 +20,9 @@ def checkin():
     form = CheckInForm()
     if form.validate_on_submit():
         g.user = current_user.get_id()
-        checknow = CheckIn.query.filter_by(member_id=g.user).first()
-        if checknow is None:
+        checkins = CheckIn.query.filter_by(member_id=g.user).first()
+        checkdates = CheckIn.query.filter(CheckIn.tgl==form.tgl.data).first()
+        if checkins is None:
             checkin = CheckIn(tgl=form.tgl.data,
                               jam_datang=form.jam_datang.data,
                               member_id=g.user)
@@ -29,9 +30,17 @@ def checkin():
             db.session.commit()
             flash('Semangat ...!')
             return redirect(url_for('.index'))
-        flash('Data sudah ada')
-    checkins = CheckIn.query.order_by(CheckIn.jam_datang.desc()).all()
-    return render_template('hadir/masuk.html', form=form, checkins=checkins)
+        elif checkins:
+            if checkdates is None:
+                checkin = CheckIn(tgl=form.tgl.data,
+                                  jam_datang=form.jam_datang.data,
+                                  member_id=g.user)
+                db.session.add(checkin)
+                db.session.commit()
+                flash('Semangat ...!')
+                return redirect(url_for('.index'))
+            flash('Data sudah ada')
+    return render_template('hadir/masuk.html', form=form)
 
 
 @hadir.route('/checkout', methods=['GET', 'POST'])
@@ -40,20 +49,29 @@ def checkout():
     form = CheckOutForm()
     if form.validate_on_submit():
         g.user = current_user.get_id()
-        checknow = CheckOut.query.filter_by(member_id=g.user).first()
-        if checknow is None:
-            checkout = CheckOut(tgl=form.tgl.data,
+        checkouts = CheckOut.query.filter_by(member_id=g.user).first()
+        checkdates = CheckOut.query.filter(CheckOut.tgl==form.tgl.data).first()
+        if checkouts is None:
+            checkout = CheckOut(tgl = form.tgl.data,
                                 jam_pulang=form.jam_pulang.data,
                                 keterangan=form.keterangan.data,
-                                member_id=g.user
-                                )
+                                member_id=g.user)
             db.session.add(checkout)
             db.session.commit()
             flash('Selamat Beristirahat...')
             return redirect(url_for('.index'))
-        flash('Data sudah ada')
-    checkouts = CheckOut.query.order_by(CheckOut.jam_pulang.desc()).all()
-    return render_template('hadir/pulang.html', form=form, checkouts=checkouts)
+        elif checkouts:
+            if checkdates is None:
+                checkout = CheckOut(tgl=form.tgl.data,
+                                    jam_pulang=form.jam_datang.data,
+                                    keterangan=form.keterangan.data,
+                                    member_id=g.user)
+                db.session.add(checkout)
+                db.session.commit()
+                flash('Semangat ...!')
+                return redirect(url_for('.index'))
+            flash('Data sudah ada')
+    return render_template('hadir/pulang.html', form=form)
 
 
 @hadir.route('/permit', methods=['GET', 'POST'])
@@ -62,8 +80,9 @@ def permit():
     form = PermitForm()
     if form.validate_on_submit():
         g.user = current_user.get_id()
-        checknow = Permit.query.filter_by(member_id=g.user).first()
-        if checknow is None:
+        permits = Permit.query.filter_by(member_id=g.user).first()
+        checkdates = Permit.query.filter(Permit.start_date==form.start_date.data).first()
+        if permits is None:
             permit = Permit(long_date=form.long_date.data,
                             start_date=form.start_date.data,
                             keterangan=form.keterangan.data,
@@ -72,7 +91,17 @@ def permit():
             db.session.commit()
             flash('Kita coba review yah...')
             return redirect(url_for('.index'))
-        flash('Data sudah ada')
+        elif permits:
+            if checkdates is None:
+                permit = Permit(long_date=form.long_date.data,
+                                start_date=form.start_date.data,
+                                keterangan=form.keterangan.data,
+                                member_id=g.user)
+                db.session.add(permit)
+                db.session.commit()
+                flash('Kita coba review yah...')
+                return redirect(url_for('.index'))
+            flash('Data sudah ada')
     permits = Permit.query.order_by(Permit.start_date.desc()).all()
     return render_template('hadir/izin.html', form=form, permits=permits)
 
@@ -83,8 +112,8 @@ def sick():
     form = SickForm()
     if form.validate_on_submit():
         g.user = current_user.get_id()
-        checknow = Sick.query.filter_by(member_id=g.user).first()
-        if checknow is None:
+        sicks = Sick.query.filter_by(member_id=g.user).first()
+        if sicks is None:
             sick = Sick(tgl=form.tgl.data,
                         long_date=form.long_date.data,
                         keterangan=form.keterangan.data,
