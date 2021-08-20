@@ -25,4 +25,4 @@ class EditProfileForm(FlaskForm):
     npwp = IntegerField('NPWP', validators=[Optional()])
     zone = SelectField('Zona Waktu', choices=[
         ('WIB', 'WIB'), ('WITA', 'WITA'), ('WIT', 'WIT')])
-    submit = SubmitField('Ubah')
+    submit = SubmitField('Ubah Data')

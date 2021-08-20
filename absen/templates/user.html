@@ -25,166 +25,140 @@
 <div class="card p-4 mb-3 shadow">
   <div class="body">
     <div class="row mb-3">
+      <form action="" method="post" novalidate>
       {% for message in get_flashed_messages() %}
       <div class="alert alert-success">
           {{ message }}
       </div>
       {% endfor %}
-      <label class="col-form-label col-sm-3" for="">Nama Lengkap</label>
+    </div>
+    <div class="row mb-3">
+      <label class="col-form-label col-sm-3 form_text" for=""><span>Nama Lengkap</span>:</label>
       <div class="col-sm-4">
         {% if profil.realname %}
-        <label class="col-form-label" for="ForFullname">: {{ profil.realname }}</label>
-        {% else %}
-        <label class="col-form-label" for="ForFullname">:</label>
+        <label class="form-control shadow-sm text-center" for="ForFullname">{{ profil.realname }}</label>
         {% endif %}
       </div>
     </div>
     <div class="row mb-3">
-      <label class="col-form-label col-sm-3" for="">Tentang Saya</label>
+      <label class="col-form-label col-sm-3 form_text" for=""><span>Tentang Saya</span>:</label>
       <div class="col-sm-4">
         {% if profil.about_me %}
-        <label class="col-form-label" for="ForAboutMe">: {{ profil.about_me }}</label>
-        {% else %}
-        <label class="col-form-label" for="ForAboutMe">:</label>
+        <label class="form-control shadows=-sm text-center" for="ForAboutMe">{{ profil.about_me }}</label>
         {% endif %}
       </div>
     </div>
     <div class="row mb-3">
-      <label class="col-form-label col-sm-3" for="">Terdaftar Sejak</label>
+      <label class="col-form-label col-sm-3 form_text" for=""><span>Terdaftar Sejak</span>:</label>
       <div class="col-sm-4">
         {% if user.member_since %}
-        <label class="col-form-label" for="ForMemberSince">: {{ user.member_since }}</label>
-        {% else %}
-        <label class="col-form-label" for="ForMemberSince">:</label>
+        <label class="form-control shadow-sm text-center" for="ForMemberSince">{{ user.member_since }}</label>
         {% endif %}
       </div>
     </div>
     <div class="row mb-3">
-      <label class="col-form-label col-sm-3" for="ForAlmamater">Universitas / Sekolah</label>
+      <label class="col-form-label col-sm-3 form_text" for="ForAlmamater"><span>Universitas / Sekolah</span>:</label>
       <div class="col-sm-4">
         {% if profil.study %}
-        <label class="col-form-label" for="ForAlmamater">: {{ profil.study }}</label>
-        {% else %}
-        <label class="col-form-label" for="ForAlmamater">:</label>
+        <label class="form-control shadow-sm text-center" for="ForAlmamater">{{ profil.study }}</label>
         {% endif %}
       </div>
     </div>
     <div class="row mb-3">
-      <label class="col-form-label col-sm-3" for="ForJurusan">Jurusan</label>
+      <label class="col-form-label col-sm-3 form_text" for="ForJurusan"><span>Jurusan</span>:</label>
       <div class="col-sm-4">
         {% if profil.jurusan %}
-        <label class="col-form-label" for="ForJurusan">: {{ profil.jurusan }}</label>
-        {% else %}
-        <label class="col-form-label" for="ForJurusan">:</label>
+        <label class="form-control shadow-sm text-center" for="ForJurusan">{{ profil.jurusan }}</label>
         {% endif %}
       </div>
     </div>
     <div class="row mb-3">
-      <label class="col-form-label col-sm-3" for="ForGelar">Gelar Pendidikan</label>
+      <label class="col-form-label col-sm-3 form_text" for="ForGelar"><span>Gelar Pendidikan</span>:</label>
       <div class="col-sm-4">
         {% if profil.gelar %}
-        <label class="col-form-label" for="ForGelar">: {{ profil.gelar }}</label>
-        {% else %}
-        <label class="col-form-label" for="ForGelar">:</label>
+        <label class="form-control shadow-sm text-center" for="ForGelar">{{ profil.gelar }}</label>
         {% endif %}
       </div>
     </div>
     <div class="row mb-3">
-      <label class="col-form-label col-sm-3" for="ForAddresBefore">Alamat Asal</label>
+      <label class="col-form-label col-sm-3 form_text" for="ForAddresBefore"><span>Alamat Asal</span>:</label>
       <div class="col-sm-4">
         {% if profil.address_before %}
-        <label class="col-form-label" for="ForAddressBefore">: {{ profil.address_before }}</label>
-        {% else %}
-        <label class="col-form-label" for="ForAddressBefore">:</label>
+        <label class="form-control shadow-sm text-center" for="ForAddressBefore">{{ profil.address_before }}</label>
         {% endif %}
       </div>
     </div>
     <div class="row mb-3">
-      <label class="col-form-label col-sm-3" for="ForAddresNow">Alamat Sekarang</label>
+      <label class="col-form-label col-sm-3 form_text" for="ForAddresNow"><span>Alamat Sekarang</span>:</label>
       <div class="col-sm-4">
         {% if profil.address_now %}
-        <label class="col-form-label" for="ForAddressNow">: {{ profil.address_now }}</label>
-        {% else %}
-        <label class="col-form-label" for="ForAddressNow">:</label>
+        <label class="form-control shadow-sm text-center" for="ForAddressNow">{{ profil.address_now }}</label>
         {% endif %}
       </div>
     </div>
     <div class="row mb-3">
-      <label class="col-form-label col-sm-3" for="ForBlood">Golongan Darah</label>
+      <label class="col-form-label col-sm-3 form_text" for="ForBlood"><span>Golongan Darah</span>:</label>
       <div class="col-sm-4">
         {% if profil.blood %}
-        <label class="col-form-label" for="ForBlood">: {{ profil.blood }}</label>
-        {% else %}
-        <label class="col-form-label" for="ForBlood">:</label>
+        <label class="form-control shadow-sm text-center" for="ForBlood">{{ profil.blood }}</label>
         {% endif %}
       </div>
     </div>
     <div class="row mb-3">
-      <label class="col-form-label col-sm-3" for="ForReligion">Agama</label>
+      <label class="col-form-label col-sm-3 form_text" for="ForReligion"><span>Agama</span>:</label>
       <div class="col-sm-4">
         {% if profil.religion %}
-        <label class="col-form-label" for="ForReligion">: {{ profil.religion }}</label>
-        {% else %}
-        <label class="col-form-label" for="ForReligion">:</label>
+        <label class="form-control shadow-sm text-center" for="ForReligion">{{ profil.religion }}</label>
         {% endif %}
       </div>
     </div>
     <div class="row mb-3">
-      <label class="col-form-label col-sm-3" for="ForWargaNegara">Kewarganegaraan</label>
+      <label class="col-form-label col-sm-3 form_text" for="ForWargaNegara"><span>Kewarganegaraan</span>:</label>
       <div class="col-sm-4">
         {% if profil.warga_negara %}
-        <label class="col-form-label" for="ForWargaNegara">: {{ profil.warga_negara }}</label>
-        {% else %}
-        <label class="col-form-label" for="ForWargaNegara">:</label>
+        <label class="form-control shadow-sm text-center" for="ForWargaNegara">{{ profil.warga_negara }}</label>
         {% endif %}
       </div>
     </div>
     <div class="row mb-3">
-      <label class="col-form-label col-sm-3" for="ForNIK">NIK</label>
+      <label class="col-form-label col-sm-3 form_text" for="ForNIK"><span>NIK</span>:</label>
       <div class="col-sm-4">
         {% if profil.nik %}
-        <label class="col-form-label" for="ForNIK">: {{ profil.nik }}</label>
-        {% else %}
-        <label class="col-form-label" for="ForNIK">:</label>
+        <label class="form-control shadow-sm text-center" for="ForNIK">{{ profil.nik }}</label>
         {% endif %}
       </div>
     </div>
     <div class="row mb-3">
-      <label class="col-form-label col-sm-3" for="ForNPWP">NPWP</label>
+      <label class="col-form-label col-sm-3 form_text" for="ForNPWP"><span>NPWP</span>:</label>
       <div class="col-sm-4">
         {% if profil.npwp %}
-        <label class="col-form-label" for="ForNPWP" id="IdNpwp">: {{ profil.npwp }}</label>
-        {% else %}
-        <label class="col-form-label" for="ForNPWP">:</label>
+        <label class="form-control shadow-sm text-center" for="ForNPWP" id="IdNpwp">{{ profil.npwp }}</label>
         {% endif %}
       </div>
     </div>
     <div class="row mb-3">
-      <label class="col-form-label col-sm-3" for="ForNoHP">No Handphone</label>
+      <label class="col-form-label col-sm-3 form_text" for="ForNoHP"><span>No Handphone</span>:</label>
       <div class="col-sm-4">
         {% if profil.no_hp %}
-        <label class="col-form-label" for="ForNoHP">: {{ profil.no_hp }}</label>
-        {% else %}
-        <label class="col-form-label" for="ForNoHP">:</label>
+        <label class="form-control shadow-sm text-center" for="ForNoHP">{{ profil.no_hp }}</label>
         {% endif %}
       </div>
     </div>
     <div class="row mb-3">
-      <label class="col-form-label col-sm-3" for="ForZone">Zona Waktu</label>
+      <label class="col-form-label col-sm-3 form_text" for="ForZone"><span>Zona Waktu</span>:</label>
       <div class="col-sm-4">
         {% if profil.zone %}
-        <label class="col-form-label" for="ForZone">: {{ profil.zone }}</label>
-        {% else %}
-        <label class="col-form-label" for="ForZone">:</label>
+        <label class="form-control shadow-sm text-center" for="ForZone">{{ profil.zone }}</label>
         {% endif %}
       </div>
     </div>
-<p>
+<div class='col-8 col-sm-4'>
   {% if user == current_user %}
     <a href="{{ url_for('profile.edit_profile') }}" class="mb-3 btn btn-primary">Ubah Data</a>
     <a href="{{ url_for('main.index') }}" class="mb-3 btn btn-warning text-white">Kembali</a>
   {% endif %}
-</p>
+</div>
+      </form>
                     </div>
                 </main>
                 <footer class="py-4 bg-light mt-auto">
