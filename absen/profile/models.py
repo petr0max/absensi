@@ -14,6 +14,8 @@ class Profile(db.Model):
     address_before = db.Column(db.String(64), index=True)
     address_now = db.Column(db.String(64), index=True)
     blood = db.Column(db.String(64), index=True)
+    gender = db.Column(db.String(64), index=True)
+    married = db.Column(db.String(64), index=True)
     religion = db.Column(db.String(64), index=True)
     warga_negara = db.Column(db.String(64), index=True)
     nik = db.Column(db.Integer, index=True)

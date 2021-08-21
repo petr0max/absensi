@@ -125,6 +125,26 @@
       </div>
     </div>
     <div class="row mb-3">
+      <label class="col-form-label col-sm-3 form_text" for="ForBlood"><span>Jenis Kelamin</span>:</label>
+      <div class="col-sm-4">
+        {% if user == current_user %}
+          {% if profil.gender %}
+          <label class="form-control shadow-sm text-center" for="ForGender">{{ profil.gender }}</label>
+          {% endif %}
+        {% endif %}
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label class="col-form-label col-sm-3 form_text" for="ForBlood"><span>Status Menikah</span>:</label>
+      <div class="col-sm-4">
+        {% if user == current_user %}
+          {% if profil.married %}
+          <label class="form-control shadow-sm text-center" for="ForBlood">{{ profil.married }}</label>
+          {% endif %}
+        {% endif %}
+      </div>
+    </div>
+    <div class="row mb-3">
       <label class="col-form-label col-sm-3 form_text" for="ForReligion"><span>Agama</span>:</label>
       <div class="col-sm-4">
         {% if user == current_user %}
@@ -145,7 +165,7 @@
       </div>
     </div>
     <div class="row mb-3">
-      <label class="col-form-label col-sm-3 form_text" for="ForNIK"><span>NIK</span>:</label>
+      <label class="col-form-label col-sm-3 form_text" for="ForNIK"><span>NIK KTP</span>:</label>
       <div class="col-sm-4">
         {% if user == current_user %}
           {% if profil.nik %}

@@ -35,6 +35,8 @@ def edit_profile():
                 address_before = form.address_before.data,
                 address_now = form.address_now.data,
                 blood = form.blood.data,
+                gender = form.gender.data,
+                married = form.married.data,
                 religion = form.religion.data,
                 warga_negara = form.warga_negara.data,
                 nik = form.nik.data,
@@ -56,6 +58,8 @@ def edit_profile():
             profiles.address_before = form.address_before.data
             profiles.address_now = form.address_now.data
             profiles.blood = form.blood.data
+            profiles.gender = form.gender.data
+            profiles.married = form.married.data
             profiles.religion = form.religion.data
             profiles.warga_negara = form.warga_negara.data
             profiles.nik = form.nik.data
@@ -65,4 +69,5 @@ def edit_profile():
             db.session.commit()
             flash('Update Profil Berhasil!')
             return redirect(url_for('profile.index', username=current_user.username))
+        flash('Uppss... bermasalah...')
     return render_template('account/edit_profile.html', form=form)

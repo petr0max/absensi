@@ -11,6 +11,11 @@
                                 <div class="body">
                                     <div class="row">
                                         <form action="" method="POST" novalidate>
+                                          {% for message in get_flashed_messages() %}
+                                          <div class="alert alert-warning">
+                                              {{ message }}
+                                          </div>
+                                          {% endfor %}
                                             {{ form.hidden_tag() }}
                                             <div class="row mb-3">
                                                 {{ form.realname.label(class='col-form-label col-sm-2') }}
@@ -89,6 +94,24 @@
                                                 <div class="col-sm-4">
                                                     {{ form.blood(class='form-select') }}
                                                 {% for error in form.blood.errors %}
+                                                <span style="color:red;">[{{ error }}]</span>
+                                                {% endfor %}
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                {{ form.gender.label(class='col-form-label col-sm-2') }}
+                                                <div class="col-sm-4">
+                                                    {{ form.gender(class='form-select') }}
+                                                {% for error in form.gender.errors %}
+                                                <span style="color:red;">[{{ error }}]</span>
+                                                {% endfor %}
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                {{ form.married.label(class='col-form-label col-sm-2') }}
+                                                <div class="col-sm-4">
+                                                    {{ form.married(class='form-select') }}
+                                                {% for error in form.married.errors %}
                                                 <span style="color:red;">[{{ error }}]</span>
                                                 {% endfor %}
                                                 </div>
