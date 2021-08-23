@@ -20,7 +20,7 @@
                     <a class="dropdown-item" href="{{ url_for('profil.index', username=current_user.username) }}">Profil</a>
                 </li>
                 {% endif %}
-                {% if current_user.is_administrator %}
+                {% if current_user.is_administrator() %}
                 <li>
                     <a class="dropdown-item" href="{{ url_for('admin.index', username=current_user.username) }}">Akses Admin</a>
                 </li>
