@@ -9,7 +9,7 @@ class LoginForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(),
                                                     Length(1, 64),
                                                     Email()])
-    password = PasswordField('Kata Sandi', validators=[DataRequired()])
+    pass_hash = PasswordField('Kata Sandi', validators=[DataRequired()])
     remember_me = BooleanField('Ingat saya')
     submit = SubmitField('Masuk')
 
@@ -22,7 +22,7 @@ class RegistrationForm(FlaskForm):
         Regexp('^[A-Za-z][A-Za-z0-9_.]*$', 0,
                'Usernames must have only letters, numbers, dots or '
                'underscores')])
-    password = PasswordField('Password', validators=[
+    pass_hash = PasswordField('Password', validators=[
         DataRequired(), EqualTo('password2', message='Password harus sama.')])
     password2 = PasswordField('Ulangi Password', validators=[DataRequired()])
     submit = SubmitField('Daftar')
@@ -38,7 +38,7 @@ class RegistrationForm(FlaskForm):
 
 class UpdatePasswordForm(FlaskForm):
     old_password = PasswordField('Password Lama', validators=[DataRequired()])
-    password = PasswordField('Password Baru', validators=[
+    pass_hash = PasswordField('Password Baru', validators=[
         DataRequired(), EqualTo('password2', message='Password harus sama.')])
     password2 = PasswordField('Ulangi Password', validators=[DataRequired()])
     submit = SubmitField('Ubah Password')
@@ -51,7 +51,7 @@ class ForgetPasswordRequestForm(FlaskForm):
 
 
 class ForgetPasswordForm(FlaskForm):
-    password = PasswordField('Password Baru', validators=[
+    pass_hash = PasswordField('Password Baru', validators=[
         DataRequired(), EqualTo('password2', message='Password harus sama.')])
     password2 = PasswordField('Ulangi Password', validators=[DataRequired()])
     submit = SubmitField('Reset Password')

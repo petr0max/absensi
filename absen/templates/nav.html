@@ -17,7 +17,12 @@
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                 {% if current_user.is_authenticated %}
                 <li>
-                    <a class="dropdown-item" href="{{ url_for('profile.index', username=current_user.username) }}">Profil</a>
+                    <a class="dropdown-item" href="{{ url_for('profil.index', username=current_user.username) }}">Profil</a>
+                </li>
+                {% endif %}
+                {% if current_user.is_administrator %}
+                <li>
+                    <a class="dropdown-item" href="{{ url_for('admin.index', username=current_user.username) }}">Akses Admin</a>
                 </li>
                 {% endif %}
                 <li><a class="dropdown-item" href="#!">Setting</a></li>

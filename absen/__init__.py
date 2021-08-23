@@ -18,7 +18,7 @@ db = SQLAlchemy()
 bcrypt = Bcrypt()
 login_manager = LoginManager()
 login_manager.login_view = 'auth.login'
-admin = flask_admin.Admin()
+admin = flask_admin.Admin(template_mode='bootstrap3')
 
 def create_app(config_name):
     app = Flask(__name__)
@@ -51,7 +51,10 @@ def create_app(config_name):
     from .hadir import hadir as hadir_blueprint
     app.register_blueprint(hadir_blueprint, url_prefix='/absen')
 
-    from .profile import profile as profile_blueprint
-    app.register_blueprint(profile_blueprint, url_prefix='/profil')
+    from .profil import profil as profil_blueprint
+    app.register_blueprint(profil_blueprint, url_prefix='/profile')
+
+    from .admin import adm as adm_blueprint
+    app.register_blueprint(adm_blueprint, url_prefix='/admin')
 
     return app

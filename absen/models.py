@@ -19,7 +19,6 @@ class Permission:
 # For models database
 class Role(db.Model):
     __tablename__ = 'roles'
-    __table_args__ = {'extend_existing': True}
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), unique=True)
     default = db.Column(db.Boolean, default=False, index=True)
@@ -78,11 +77,10 @@ class Role(db.Model):
 
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
-    __table_args__ = {'extend_existing': True}
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     email = db.Column(db.String(64), unique=True, index=True)
     username= db.Column(db.String(64), unique=True, index=True)
-    password_hash = db.Column(db.String(128), unique=True)
+    password = db.Column(db.String(128), unique=True)
     confirmed = db.Column(db.Boolean, default=False)
     member_since = db.Column(db.Date(), default=datetime.date.today())
     last_seen = db.Column(db.DateTime(), default=datetime.datetime.now())
@@ -104,16 +102,15 @@ class User(UserMixin, db.Model):
                 self.role = Role.query.filter_by(default=True).first()
 
     @property
-    def password(self):
+    def pass_hash(self):
         raise AttributeError('password is not readable attribute')
 
-    @password.setter
-    def password(self, password):
-        self.password_hash = bcrypt.generate_password_hash(password, rounds=10)
+    @pass_hash.setter
+    def pass_hash(self, pass_hash):
+        self.password = bcrypt.generate_password_hash(pass_hash, rounds=10)
 
-    def verify_password(self, password):
-        return bcrypt.check_password_hash(self.password_hash, password)
-
+    def verify_password(self, pass_hash):
+        return bcrypt.check_password_hash(self.password, pass_hash)
 
     def generate_confirmation_token(self, expiration=3600):
         secret_key = current_app.config['SECRET_KEY']

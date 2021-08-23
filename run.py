@@ -2,7 +2,7 @@ import os
 from absen import create_app, db
 from absen.models import User, Role, Permission
 from absen.hadir.models import Permit, CheckOut, CheckIn, Sick
-from absen.profile.models import Profile
+from absen.profil.models import Profile
 from flask_migrate import Migrate
 
 

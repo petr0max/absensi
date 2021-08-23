@@ -2,14 +2,14 @@ from datetime import datetime
 from flask import (render_template, session, redirect, url_for, flash, abort,
                    request, g)
 from flask_login import login_required, current_user
-from . import profile
+from . import profil
 from .. import db
 from .models import Profile
 from ..models import User
 from .forms import EditProfileForm
 
 
-@profile.route('/<username>', methods=['GET', 'POST'])
+@profil.route('/<username>', methods=['GET', 'POST'])
 def index(username):
     user = User.query.filter_by(username=username).first_or_404()
     g.user = current_user.get_id()
@@ -17,7 +17,7 @@ def index(username):
     return render_template('user.html', user=user, profil=profil)
 
 
-@profile.route('/edit_profile', methods=['GET', 'POST'])
+@profil.route('/edit_profile', methods=['GET', 'POST'])
 @login_required
 def edit_profile():
     form = EditProfileForm()

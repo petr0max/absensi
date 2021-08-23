@@ -3,7 +3,7 @@ from wtforms import (StringField, SubmitField, BooleanField, TextAreaField,
                      SelectField, IntegerField, DateField)
 from wtforms.validators import (DataRequired, Length, Email, Regexp,
                                 NumberRange, Optional)
-from . import profile
+from . import profil
 
 
 class EditProfileForm(FlaskForm):

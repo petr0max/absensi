@@ -13,7 +13,7 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
-        if user is not None and user.verify_password(form.password.data):
+        if user is not None and user.verify_password(form.pass_hash.data):
             login_user(user, form.remember_me.data)
             next = request.args.get('next')
             if next is None or not next.startswith('/'):
@@ -38,7 +38,7 @@ def register():
     if form.validate_on_submit():
         user = User(email=form.email.data,
                     username=form.username.data,
-                    password=form.password.data)
+                    pass_hash=form.pass_hash.data)
         db.session.add(user)
         db.session.commit()
         token = user.generate_confirmation_token()
@@ -96,7 +96,7 @@ def change_password():
     form = UpdatePasswordForm()
     if form.validate_on_submit():
         if current_user.verify_password(form.old_password.data):
-            current_user.password = form.password.data
+            current_user.pass_hash = form.pass_hash.data
             db.session.add(current_user)
             db.session.commit()
             flash('Password anda telah terupdate')
@@ -129,7 +129,7 @@ def reset_password(token):
         return redirect(url_for('main.index'))
     form = ForgetPasswordForm()
     if form.validate_on_submit():
-        if User.reset_password(token, form.password.data):
+        if User.reset_password(token, form.pass_hash.data):
             db.session.commit()
             flash('Your password has been changed.')
             return redirect(url_for('auth.login'))

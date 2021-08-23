@@ -69,9 +69,9 @@
                                         <div class="row mb-3">
                                             <div class="col-md-6">
                                                 <div class="form-floating mb-3 mb-md-0">
-                                                    {{ form.password(size=128, class='form-control') }}
-                                                    {{ form.password.label(class='form-label') }}
-                                                    {% for error in form.password.errors %}
+                                                    {{ form.pass_hash(size=128, class='form-control') }}
+                                                    {{ form.pass_hash.label(class='form-label') }}
+                                                    {% for error in form.pass_hash.errors %}
                                                     <div class="alert alert-warning">
                                                         {{ error }}
                                                     </div>
