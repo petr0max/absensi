@@ -6,6 +6,7 @@ class Profile(db.Model):
     __tablename__ = 'profiles'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     realname = db.Column(db.String(64), index=True)
+    birthday = db.Column(db.Date(), default=datetime.date.today())
     location = db.Column(db.String(64))
     about_me = db.Column(db.Text())
     study = db.Column(db.String(64), index=True)

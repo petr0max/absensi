@@ -45,6 +45,16 @@
       </div>
     </div>
     <div class="row mb-3">
+      <label class="col-form-label col-sm-3 form_text" for=""><span>Tanggal Lahir</span>:</label>
+      <div class="col-sm-4">
+        {% if user == current_user %}
+          {% if profil.birthday %}
+          <label class="form-control shadows=-sm text-center" for="ForAboutMe">{{ profil.birthday }}</label>
+          {% endif %}
+        {% endif %}
+      </div>
+    </div>
+    <div class="row mb-3">
       <label class="col-form-label col-sm-3 form_text" for=""><span>Tentang Saya</span>:</label>
       <div class="col-sm-4">
         {% if user == current_user %}

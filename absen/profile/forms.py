@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import (StringField, SubmitField, BooleanField, TextAreaField,
-                     SelectField, IntegerField)
+                     SelectField, IntegerField, DateField)
 from wtforms.validators import (DataRequired, Length, Email, Regexp,
                                 NumberRange, Optional)
 from . import profile
@@ -10,6 +10,7 @@ class EditProfileForm(FlaskForm):
     realname = StringField('Nama Lengkap', validators=[
         Length(0, 64),
         Regexp(r'^[A-Za-z\s\-\']+$', message='Upss... pakai huruf yah')])
+    birthday = DateField('Tanggal Lahir')
     location = StringField('Lokasi Kantor', validators=[Length(0, 64)])
     about_me = TextAreaField('Tentang Saya', validators=[Length(0, 64)])
     study = StringField('Universitas / Sekolah', validators=[Length(0, 64)])
