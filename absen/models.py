@@ -157,7 +157,7 @@ class User(UserMixin, db.Model):
 
     # Database representation
     def __repr__(self):
-        return f"<User {self.email}"
+        return f"<User {self.email}>"
 
     def can(self, perm):
         return self.role is not None and self.role.has_permission(perm)

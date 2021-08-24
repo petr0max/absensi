@@ -4,6 +4,7 @@ from flask_login import login_required, current_user
 from datetime import datetime
 from . import hadir
 from .. import db
+from ..models import User
 from .models import CheckIn, CheckOut, Permit, Sick
 from .forms import (PermitForm, CheckInForm, CheckOutForm, SickForm)
 
@@ -11,7 +12,13 @@ from .forms import (PermitForm, CheckInForm, CheckOutForm, SickForm)
 @hadir.route('/')
 @login_required
 def index():
-    return render_template('hadir/hadir.html')
+    g.user = current_user.get_id()
+    qamt = db.select(User, CheckIn, CheckOut).select_from(User).join(
+        CheckOut).order_by(CheckIn.tgl.desc(), CheckOut.tgl.desc()).where(
+            CheckIn.member_id==g.user, CheckIn.member_id==g.user)
+    query_absen = db.session.execute(qamt)
+    return render_template(
+        'hadir/hadir.html', query_absen=query_absen)
 
 
 @hadir.route('/checkin', methods=['GET', 'POST'])

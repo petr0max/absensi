@@ -14,7 +14,7 @@ class UserView(ModelView):
     can_create = True
     can_edit = True
     can_delete = True
-    can_export = False
+    can_export = True
 
     def on_model_change(self, form, model, is_created):
         model.password = bcrypt.generate_password_hash(
