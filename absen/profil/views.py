@@ -68,6 +68,6 @@ def edit_profile():
             profiles.zone = form.zone.data
             db.session.commit()
             flash('Update Profil Berhasil!')
-            return redirect(url_for('profile.index', username=current_user.username))
+            return redirect(url_for('profil.index', username=current_user.username))
         flash('Uppss... bermasalah...')
     return render_template('account/edit_profile.html', form=form)
