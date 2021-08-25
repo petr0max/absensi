@@ -14,6 +14,12 @@
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item active">Nama Pengguna</li>
                         </ol>
+{% for message in get_flashed_messages() %}
+<div class="alert alert-warning">
+    <button class="btn-close" type="button" aria-label="Close"></button>
+        {{ message }}
+</div>
+{% endfor %}
                         <div class="row">
                             <form action="#" method="POST">
                                 {{ form.hidden_tag() }}
@@ -58,8 +64,8 @@
                                 </div>
 
                                 <div class="col-12">
-                                    <button class="mb-3 btn btn-primary">Izin</button>
-                                    <a class="mb-3 btn btn-warning text-white" href="./">Kembali</a>
+                                    {{ form.submit(class='mb-3 btn btn-primary text-white') }}
+                                    <a class="mb-3 btn btn-warning text-white" href="{{ url_for('hadir.izin') }}">Kembali</a>
                                 </div>
                             </form>
                         </div>

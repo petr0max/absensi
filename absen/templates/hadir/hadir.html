@@ -49,7 +49,7 @@
                             <div class="card bg-warning text-white mb-4 shadow-sm">
                                 <div class="card-body text-center">Izin</div>
                                 <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <a class="small text-white stretched-link" href="{{ url_for('hadir.permit') }}"></a>
+                                    <a class="small text-white stretched-link" href="{{ url_for('hadir.izin') }}"></a>
                                     <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                 </div>
                             </div>
@@ -76,25 +76,23 @@
                                   </tr>
                               </thead>
                               <tbody>
-                                  {% if query_absen %}
-                                  {% for user, checkin, checkout in query_absen %}
-                                  <tr>
-                                      {% if checkin.tgl == checkout.tgl %}
-                                      <td>{{ user.email }}</td>
+                                  {% for user, absens in query_absen %}
+                                    {% if current_user.id == absens.member_id %}
+                                    {% if absens.dates %}
+                                      <tr>
+                                      <td>{{ user.username }}</td>
                                       <td>Staff IT</td>
-                                      <td>R&D Development Business</td>
+                                      <td>RD Development Business</td>
                                       <td>Bandung</td>
-                                      <td>{{ checkin.tgl }}</td>
-                                      <td>{{ checkin.jam_datang }}</td>
-                                      {% endif %}
-                                      {% if checkout.tgl == checkin.tgl %}
-                                      <td>{{ checkout.jam_pulang }}</td>
-                                      <td>1:20</td>
-                                      <td>{{ checkout.keterangan }}</td>
-                                      {% endif %}
-                                  </tr>
+                                      <td>{{ absens.dates }}</td>
+                                      <td>{{ absens.jam_datang }}</td>
+                                      <td>{{ absens.jam_pulang }}</td>
+                                      <td></td>
+                                      <td>{{ absens.keterangan }}</td>
+                                      </tr>
+                                    {% endif %}
+                                    {% endif %}
                                   {% endfor %}
-                                  {% endif %}
                               </tbody>
                               <tfoot>
                                   <tr>

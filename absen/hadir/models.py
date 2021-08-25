@@ -12,27 +12,15 @@ class Permit(db.Model):
     member_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
 
-class CheckIn(db.Model):
-    __tablename__ = 'checkins'
+class Absen(db.Model):
+    __tablename__ = 'absens'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    tgl = db.Column(db.Date(), default=datetime.date.today())
-    jam_datang = db.Column(db.Time(), default=datetime.time())
-    member_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-
-
-class CheckOut(db.Model):
-    __tablename__ = 'checkouts'
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    tgl = db.Column(db.Date(), default=datetime.date.today())
-    jam_pulang = db.Column(db.Time(), default=datetime.time())
+    dates = db.Column(db.Date())
+    jam_datang = db.Column(db.Time())
+    jam_pulang = db.Column(db.Time())
     keterangan = db.Column(db.String(64), index=True)
+    #surat_sakit
     member_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
-
-class Sick(db.Model):
-    __tablename__ = 'sicks'
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    tgl = db.Column(db.Date(), default=datetime.date.today())
-    long_date = db.Column(db.Integer)
-    keterangan = db.Column(db.String(64), index=True)
-    member_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    def __repr__(self):
+        return f"<{self.dates}>"

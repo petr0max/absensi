@@ -5,7 +5,7 @@ from flask_login import current_user
 from flask_admin import AdminIndexView, expose
 from ..models import User
 from ..profil.models import Profile
-from ..hadir.models import CheckIn, CheckOut, Permit, Sick
+from ..hadir.models import Permit, Absen
 
 
 class UserView(ModelView):
@@ -39,7 +39,5 @@ class AdminView(AdminIndexView):
 
 admin.add_view(UserView(User, db.session))
 admin.add_view(ModelView(Profile, db.session))
-admin.add_view(ModelView(CheckIn, db.session))
-admin.add_view(ModelView(CheckOut, db.session))
-admin.add_view(ModelView(Sick, db.session))
+admin.add_view(ModelView(Absen, db.session))
 admin.add_view(ModelView(Permit, db.session))

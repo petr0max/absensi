@@ -88,9 +88,7 @@ class User(UserMixin, db.Model):
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
     profiles = db.relationship('Profile', backref='user', uselist=False)
     permits = db.relationship('Permit', backref='user', lazy='dynamic')
-    checkins = db.relationship('CheckIn', backref='user', lazy='dynamic')
-    checkouts = db.relationship('CheckOut', backref='user', lazy='dynamic')
-    sicks = db.relationship('Sick', backref='user', lazy='dynamic')
+    absens = db.relationship('Absen', backref='user', lazy='dynamic')
 
 
     def __init__(self, **kwargs):
@@ -157,7 +155,7 @@ class User(UserMixin, db.Model):
 
     # Database representation
     def __repr__(self):
-        return f"<User {self.email}>"
+        return f"{self.username.upper()}"
 
     def can(self, perm):
         return self.role is not None and self.role.has_permission(perm)

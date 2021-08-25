@@ -44,15 +44,9 @@
                                 </div>
                                 
                                 <div class="row mb-3">
-                                    {{ form.tgl.label(class='col-form-label col-sm-2') }}
+                                    {{ form.dates.label(class='col-form-label col-sm-2') }}
                                     <div class="col-sm-4">
-                                        {{ form.tgl(type='date', class='form-control') }}
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    {{ form.long_date.label(class='col-form-label col-sm-2') }}
-                                    <div class="col-sm-4">
-                                        {{ form.long_date(type='number', class='form-control') }}
+                                        {{ form.dates(type='date', class='form-control') }}
                                     </div>
                                 </div>
                                 <div class="row mb-3">
@@ -71,7 +65,7 @@
                                 <div id="bar1" class="bar"></div>
                                 <div id="percent1" class="percent"></div>
                                 <div class="col-12">
-                                    {{ form.submit(class='mb-3 btn btn-info text-white') }}
+                                    {{ form.submit(class='mb-3 btn btn-primary text-white') }}
                                     <a class="mb-3 btn btn-warning text-white" href="./">Kembali</a>
                                 </div>
                             </form>

@@ -49,9 +49,9 @@
                                 </div>
                                 
                                 <div class="row mb-3">
-                                    {{ form.tgl.label(class='col-form-label col-sm-2') }}
+                                    {{ form.dates.label(class='col-form-label col-sm-2') }}
                                     <div class="col-sm-4">
-                                        {{ form.tgl(type='date', class='form-control') }}
+                                        {{ form.dates(type='date', class='form-control') }}
                                     </div>
                                 </div>
                                 <div class="row mb-3">
@@ -68,7 +68,7 @@
                                 </div>
 
                                 <div class="col-12">
-                                    {{ form.submit(class='mb-3 btn btn-success') }}
+                                    {{ form.submit(class='mb-3 btn btn-primary') }}
                                     <a href="{{ url_for('.index') }}" class="mb-3 btn btn-warning text-white">Kembali</a>
                                 </div>
                             </form>

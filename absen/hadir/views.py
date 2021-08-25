@@ -5,7 +5,7 @@ from datetime import datetime
 from . import hadir
 from .. import db
 from ..models import User
-from .models import CheckIn, CheckOut, Permit, Sick
+from .models import Permit, Absen
 from .forms import (PermitForm, CheckInForm, CheckOutForm, SickForm)
 
 
@@ -13,12 +13,8 @@ from .forms import (PermitForm, CheckInForm, CheckOutForm, SickForm)
 @login_required
 def index():
     g.user = current_user.get_id()
-    qamt = db.select(User, CheckIn, CheckOut).select_from(User).join(
-        CheckOut).order_by(CheckIn.tgl.desc(), CheckOut.tgl.desc()).where(
-            CheckIn.member_id==g.user, CheckIn.member_id==g.user)
-    query_absen = db.session.execute(qamt)
-    return render_template(
-        'hadir/hadir.html', query_absen=query_absen)
+    query_absen = db.session.query(User, Absen).join(Absen).order_by(Absen.dates.desc())
+    return render_template('hadir/hadir.html', query_absen=query_absen)
 
 
 @hadir.route('/checkin', methods=['GET', 'POST'])
@@ -27,26 +23,16 @@ def checkin():
     form = CheckInForm()
     if form.validate_on_submit():
         g.user = current_user.get_id()
-        checkins = CheckIn.query.filter_by(member_id=g.user).first()
-        checkdates = CheckIn.query.filter(CheckIn.tgl==form.tgl.data).first()
-        if checkins is None:
-            checkin = CheckIn(tgl=form.tgl.data,
-                              jam_datang=form.jam_datang.data,
-                              member_id=g.user)
+        checkdates = Absen.query.filter(Absen.dates==form.dates.data, Absen.member_id==g.user).first()
+        if checkdates is None:
+            checkin = Absen(dates=form.dates.data,
+                            jam_datang=form.jam_datang.data,
+                            member_id=g.user)
             db.session.add(checkin)
             db.session.commit()
             flash('Semangat ...!')
             return redirect(url_for('.index'))
-        elif checkins:
-            if checkdates is None:
-                checkin = CheckIn(tgl=form.tgl.data,
-                                  jam_datang=form.jam_datang.data,
-                                  member_id=g.user)
-                db.session.add(checkin)
-                db.session.commit()
-                flash('Semangat ...!')
-                return redirect(url_for('.index'))
-            flash('Data sudah ada')
+        flash('Upss.. data sudah ada')
     return render_template('hadir/masuk.html', form=form)
 
 
@@ -56,61 +42,15 @@ def checkout():
     form = CheckOutForm()
     if form.validate_on_submit():
         g.user = current_user.get_id()
-        checkouts = CheckOut.query.filter_by(member_id=g.user).first()
-        checkdates = CheckOut.query.filter(CheckOut.tgl==form.tgl.data).first()
-        if checkouts is None:
-            checkout = CheckOut(tgl = form.tgl.data,
-                                jam_pulang=form.jam_pulang.data,
-                                keterangan=form.keterangan.data,
-                                member_id=g.user)
-            db.session.add(checkout)
+        checkdates = Absen.query.filter(Absen.dates==form.dates.data, Absen.member_id==g.user).first()
+        if checkdates:
+            checkdates.jam_pulang = form.jam_pulang.data
+            checkdates.keterangan = form.keterangan.data
             db.session.commit()
             flash('Selamat Beristirahat...')
             return redirect(url_for('.index'))
-        elif checkouts:
-            if checkdates is None:
-                checkout = CheckOut(tgl=form.tgl.data,
-                                    jam_pulang=form.jam_pulang.data,
-                                    keterangan=form.keterangan.data,
-                                    member_id=g.user)
-                db.session.add(checkout)
-                db.session.commit()
-                flash('Semangat ...!')
-                return redirect(url_for('.index'))
-            flash('Data sudah ada')
+        flash('Anda belum checkin tanggal tersebut...')
     return render_template('hadir/pulang.html', form=form)
-
-
-@hadir.route('/permit', methods=['GET', 'POST'])
-@login_required
-def permit():
-    form = PermitForm()
-    if form.validate_on_submit():
-        g.user = current_user.get_id()
-        permits = Permit.query.filter_by(member_id=g.user).first()
-        checkdates = Permit.query.filter(Permit.start_date==form.start_date.data).first()
-        if permits is None:
-            permit = Permit(long_date=form.long_date.data,
-                            start_date=form.start_date.data,
-                            keterangan=form.keterangan.data,
-                            member_id=g.user)
-            db.session.add(permit)
-            db.session.commit()
-            flash('Kita coba review yah...')
-            return redirect(url_for('.index'))
-        elif permits:
-            if checkdates is None:
-                permit = Permit(long_date=form.long_date.data,
-                                start_date=form.start_date.data,
-                                keterangan=form.keterangan.data,
-                                member_id=g.user)
-                db.session.add(permit)
-                db.session.commit()
-                flash('Kita coba review yah...')
-                return redirect(url_for('.index'))
-            flash('Data sudah ada')
-    permits = Permit.query.order_by(Permit.start_date.desc()).all()
-    return render_template('hadir/izin.html', form=form, permits=permits)
 
 
 @hadir.route('/sick', methods=['GET', 'POST'])
@@ -119,27 +59,44 @@ def sick():
     form = SickForm()
     if form.validate_on_submit():
         g.user = current_user.get_id()
-        sicks = Sick.query.filter_by(member_id=g.user).first()
-        checkdate = Sick.query.filter(Sick.tgl==form.tgl.data).first()
-        if sicks is None:
-            sick = Sick(tgl=form.tgl.data,
-                        long_date=form.long_date.data,
+        checkdate = Absen.query.filter(Absen.dates==form.dates.data, Absen.member_id==g.user).first()
+        if checkdate is None:
+            sick = Absen(dates=form.dates.data,
                         keterangan=form.keterangan.data,
                         member_id=g.user)
             db.session.add(sick)
             db.session.commit()
             flash('Semoga Lekas Sembuh...')
             return redirect(url_for('.index'))
-        elif sicks:
-            if checkdate is None:
-                sick = Sick(tgl=form.tgl.data,
-                            long_date=form.long_date.data,
+        flash('Data sudah ada')
+    return render_template('hadir/sakit.html', form=form)
+
+
+@hadir.route('/izin')
+@login_required
+def izin():
+    g.user = current_user.get_id()
+    query_izin = db.session.query(User, Permit).join(Permit).order_by(Permit.start_date.desc())
+    return render_template('hadir/izin.html', query_izin=query_izin)
+
+
+@hadir.route('/izin/create', methods=['GET', 'POST'])
+@login_required
+def create_izin():
+    form = PermitForm()
+    if form.validate_on_submit():
+        g.user = current_user.get_id()
+        permits = Permit.query.filter_by(member_id=g.user).first()
+        checkdates = Permit.query.filter(Permit.start_date==form.start_date.data, Permit.member_id==g.user).first()
+        if checkdates is None:
+            permit = Permit(long_date=form.long_date.data,
+                            start_date=form.start_date.data,
                             keterangan=form.keterangan.data,
                             member_id=g.user)
-                db.session.add(sick)
-                db.session.commit()
-                flash('Semoga Lekas Sembuh...')
-                return redirect(url_for('.index'))
-            flash('Data sudah ada')
-    sicks= Sick.query.order_by(Sick.tgl.desc()).all()
-    return render_template('hadir/sakit.html', form=form, sicks=sicks)
+            db.session.add(permit)
+            db.session.commit()
+            flash('Kita coba review yah...')
+            return redirect(url_for('.index'))
+        flash('Permintaan izin sudah ada.')
+    permits = Permit.query.order_by(Permit.start_date.desc()).all()
+    return render_template('hadir/input_izin.html', form=form, permits=permits)
