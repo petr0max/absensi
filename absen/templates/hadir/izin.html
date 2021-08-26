@@ -4,6 +4,8 @@
 
 {% block head %}
 {{ super() }}
+<link rel="stylesheet" href="https://cdn.datatables.net/rowreorder/1.2.8/css/rowReorder.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css">
 {% endblock %}
 
 {% block body %}
@@ -97,11 +99,17 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
   <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>
   <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.print.min.js"></script>
+  <script src="https://cdn.datatables.net/rowreorder/1.2.8/js/dataTables.rowReorder.min.js"></script>
+  <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
   <script type="text/javascript">
       $(document).ready(function() {
           $('#data_hadir').DataTable( {
               dom: 'Bfrtip',
-              buttons: ['csv', 'excel', 'pdf', 'print']
+              buttons: ['csv', 'excel', 'pdf', 'print'],
+              responsive: true,
+              rowReorder: {
+                  selector: 'td:nth-child(2)'
+              }
           });
       });
   </script>
