@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 
+{% set active_page = 'hadir.index' %}
 {% block title %}Absen - {{ current_user.username.title() }}{% endblock %}
 
 {% block head %}
@@ -12,7 +13,7 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4">Absen</h1>
+                    <h1 class="mt-4 mb-4 text-primary">Absen</h1>
 {% for message in get_flashed_messages() %}
 <div class="alert alert-success">
     <button class="btn-close" type="button" aria-label="Close"></button>

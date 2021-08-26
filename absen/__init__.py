@@ -18,8 +18,8 @@ db = SQLAlchemy()
 bcrypt = Bcrypt()
 login_manager = LoginManager()
 login_manager.login_view = 'auth.login'
-admin = Admin(name='Dashboard',
-              template_mode='bootstrap3')
+admin = Admin(name='Admin Dashboard',
+              template_mode='bootstrap4')
 
 def create_app(config_name):
     app = Flask(__name__)

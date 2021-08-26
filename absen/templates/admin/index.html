@@ -1,4 +1,54 @@
 {% extends 'admin/master.html' %}
 
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="https://cdn.datatables.net/rowreorder/1.2.8/css/rowReorder.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+{% endblock %}
+
 {% block body %}
+                    <div class="row">
+                        <div class="col-sm-3 col-md-3">
+                            <div class="card bg-primary text-white mb-4 shadow-sm">
+                                <div class="card-body text-right"><h3>4</h3></div>
+                                <div class="text-right mr-4 mb-2">New Check In!</div>
+                                <div class="card-footer bg-light d-flex align-items-center justify-content-between">
+                                    <a class="text-primary stretched-link" href="{{ url_for('absen.index_view') }}">View Details</a>
+                                    <div class="small text-primary"><i class="fas fa-angle-right"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-md-3">
+                            <div class="card bg-success text-white mb-4 shadow-sm">
+                                <div class="card-body text-right"><h3>0</h3></div>
+                                <div class="text-right mr-4 mb-2">Check Out</div>
+                                <div class="card-footer d-flex bg-light align-items-center justify-content-between">
+                                    <a class="text-success stretched-link" href="{{ url_for('absen.index_view') }}">View Details</a>
+                                    <div class="small text-success"><i class="fas fa-angle-right"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-md-3">
+                            <div class="card bg-info text-white mb-4 shadow-sm">
+                                <div class="card-body text-right"><h3>0</h3></div>
+                                <div class="text-right mr-4 mb-2">Sakit</div>
+                                <div class="card-footer d-flex bg-light align-items-center justify-content-between">
+                                    <a class="text-info stretched-link" href="{{ url_for('absen.index_view') }}">View Details</a>
+                                    <div class="small text-info"><i class="fas fa-angle-right"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-md-3">
+                            <div class="card bg-warning text-white mb-4 shadow-sm">
+                                <div class="card-body text-right"><h3>0</h3></div>
+                                <div class="text-right mr-4 mb-2">Izin</div>
+                                <div class="card-footer d-flex bg-light align-items-center justify-content-between">
+                                    <a class="text-warning stretched-link" href="{{ url_for('permit.index_view') }}">View Details</a>
+                                    <div class="small text-warning"><i class="fas fa-angle-right"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mb-4 table-responsive shadow">
 {% endblock %}

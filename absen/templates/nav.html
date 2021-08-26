@@ -22,7 +22,7 @@
                 {% endif %}
                 {% if current_user.is_administrator() %}
                 <li>
-                    <a class="dropdown-item" href="{{ url_for('admin.index', username=current_user.username) }}">Akses Admin</a>
+                    <a class="dropdown-item" href="{{ url_for('admin.index', username=current_user.username) }}" target="_blank">Akses Admin</a>
                 </li>
                 {% endif %}
                 <li><a class="dropdown-item" href="#!">Setting</a></li>
@@ -42,11 +42,11 @@
         <nav class="sb-sidenav accordion sb-sidenav-light" id="sidenavAccordion">
             <div class="sb-sidenav-menu">
                 <div class="nav">
-                    <a class="nav-link" href="{{ url_for('main.index') }}">
+                    <a class="nav-link {% if active_page == 'main.index' %}active{% endif %}" href="{{ url_for('main.index') }}">
                         <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                         Dashboard
                     </a>
-                    <a class="nav-link" href="{{ url_for('hadir.index') }}">
+                    <a class="nav-link {% if active_page == 'hadir.index' or active_page== 'hadir.checkin' or active_page == 'hadir.checkout' or active_page == 'hadir.izin' or active_page == 'hadir.create_izin' or active_page == 'hadir.sick' %}active{% endif %}" href="{{ url_for('hadir.index') }}">
                         <div class="sb-nav-link-icon"><i class="fas fa-calendar-day"></i></div>
                         Absen
                     </a>

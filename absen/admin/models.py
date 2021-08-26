@@ -27,13 +27,13 @@ class AdminView(AdminIndexView):
             and current_user.is_administrator()
 
     def inaccesible_callback(self, name, **kwargs):
-        return redirect(url_for('auth.login', next=request.url))
+        return redirect(url_for('main.index', next=request.url))
 
     @expose('/')
     def index(self):
         if not current_user.is_authenticated \
                 and current_user.is_administrator():
-            return redirect(url_for('auth.login'))
+            return redirect(url_for('main.index'))
         return super(AdminView, self).index()
 
 
