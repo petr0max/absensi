@@ -7,10 +7,10 @@ from config import config
 from flask_bcrypt import Bcrypt
 
 # Login Manager
-from flask_login import LoginManager
+from flask_login import LoginManager, current_user
 
 # Flask Admin
-from flask_admin import Admin
+from flask_admin import Admin, AdminIndexView, expose
 
 
 mail = Mail()
@@ -18,8 +18,26 @@ db = SQLAlchemy()
 bcrypt = Bcrypt()
 login_manager = LoginManager()
 login_manager.login_view = 'auth.login'
+
+
+class AdminView(AdminIndexView):
+    def is_accessible(self):
+        return current_user.is_authenticated \
+            and current_user.is_administrator()
+
+    def inaccesible_callback(self, name, **kwargs):
+        return redirect(url_for('main.index', next=request.url))
+
+    @expose('/')
+    def index(self):
+        if not current_user.is_authenticated \
+                and current_user.is_administrator():
+            return redirect(url_for('main.index'))
+        return super(AdminView, self).index()
+
+
 admin = Admin(name='Admin Dashboard',
-              template_mode='bootstrap4')
+              template_mode='bootstrap4', index_view=AdminView())
 
 def create_app(config_name):
     app = Flask(__name__)

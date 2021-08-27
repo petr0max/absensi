@@ -5,6 +5,7 @@ from sqlalchemy.sql import func
 from ..hadir.models import Absen
 from . import admins
 import datetime
+from ..decorators import admin_required 
 from .. import db
 
 
