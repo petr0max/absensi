@@ -5,11 +5,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 class Config(object):
-<<<<<<< HEAD
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'harusdiubah'
-=======
-    SECRET_KEY = str(os.environ.get('SECRET_KEY')) or 'harus diubah'
->>>>>>> 3bbc760b399f5f21e152d7a6b1bb185d5d91992d
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
     SQLALCHEMY_TRACK_MODIFICATIONS = True
     # Email Config
