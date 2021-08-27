@@ -4,11 +4,13 @@ from absen.models import User, Role, Permission
 from absen.hadir.models import Permit, Absen
 from absen.profil.models import Profile
 from flask_migrate import Migrate
+from dotenv import load_dotenv
+
 
 
 app = create_app(os.getenv('FLASK_CONFIG') or 'default')
 migrate = Migrate(app, db)
-
+load_dotenv()
 
 @app.shell_context_processor
 def make_shell_context():
