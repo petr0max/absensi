@@ -1,4 +1,5 @@
 import os
+from dotenv import dotenv_values
 
 
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -44,6 +45,8 @@ class ProductionConfig(Config):
 
 
 config = {
+    **dotenv_values(".flaskenv"),
+    **os.environ,
     'development': DevelopmentConfig,
     'testing' : TestingConfig,
     'production': ProductionConfig,
