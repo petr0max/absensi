@@ -59,8 +59,8 @@ def sick():
     form = SickForm()
     if form.validate_on_submit():
         g.user = current_user.get_id()
-        checkdate = Absen.query.filter(Absen.dates==form.dates.data, Absen.member_id==g.user).first()
-        if checkdate is None:
+        checkdates = Absen.query.filter(Absen.dates==form.dates.data, Absen.member_id==g.user).first()
+        if checkdates is None:
             sick = Absen(dates=form.dates.data,
                         keterangan=form.keterangan.data,
                         member_id=g.user)
@@ -68,7 +68,6 @@ def sick():
             db.session.commit()
             flash('Semoga Lekas Sembuh...')
             return redirect(url_for('.index'))
-        flash('Data sudah ada')
     return render_template('hadir/sakit.html', form=form)
 
 
