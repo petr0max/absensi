@@ -148,7 +148,7 @@ class User(UserMixin, db.Model):
         user = User.query.get(data)
         if user is None:
             return False
-        user.password = new_password
+        user.password = bcrypt.generate_password_hash(new_password, rounds=10)
         db.session.add(user)
         return True
 
