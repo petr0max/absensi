@@ -1,5 +1,5 @@
 FLASK_APP=run.py
-FLASK_ENV=development
+FLASK_ENV=production
 DATABASE_URL="postgresql://devarto:udin4j4@127.0.0.1/absen"
 DEV_DATABASE_URL="postgresql://devarto:udin4j4@127.0.0.1/absendev"
 SECRET_KEY='jknbjknwoins'
