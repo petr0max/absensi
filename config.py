@@ -30,7 +30,11 @@ class Config(object):
 class DevelopmentConfig(Config):
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL') or \
+<<<<<<< HEAD
+            'postgresql://devarto:udin4j4@127.0.0.1/absen'
+=======
         'postgresql://petro:udin4j4@172.18.0.4/absendev'
+>>>>>>> 488bdae1d148e7ab68e6a7521b462a63666be89e
 
 
 class TestingConfig(Config):
