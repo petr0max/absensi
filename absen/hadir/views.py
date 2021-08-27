@@ -68,6 +68,14 @@ def sick():
             db.session.commit()
             flash('Semoga Lekas Sembuh...')
             return redirect(url_for('.index'))
+        if checkdates:
+            sick = Absen(dates=form.dates.data,
+                        keterangan=form.keterangan.data,
+                        member_id=g.user)
+            db.session.add(sick)
+            db.session.commit()
+            flash('Semoga Lekas Sembuh...')
+            return redirect(url_for('.index'))
     return render_template('hadir/sakit.html', form=form)
 
 
