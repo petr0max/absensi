@@ -1,4 +1,4 @@
-from run import app
+from hrmalr import run
 
 
 if __name__ == "__main__":
