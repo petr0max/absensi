@@ -5,7 +5,6 @@ from . import main
 from .. import db
 from ..models import User, Permission
 from ..hadir.models import Absen
-from ..profil.models import Profile
 from ..decorators import admin_required, permission_required
 from sqlalchemy.sql import func
 import datetime

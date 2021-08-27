@@ -11,8 +11,17 @@
                     <div class="row">
                         <div class="col-sm-3 col-md-3">
                             <div class="card bg-primary text-white mb-4 shadow-sm">
-                                <div class="card-body text-right"><h3>4</h3></div>
+                                {% if count_absen %}
+                                <div class="card-body text-right">
+                                    <h3>{{ count_absen.scalar() }}</h3>
+                                </div>
                                 <div class="text-right mr-4 mb-2">New Check In!</div>
+                                {% else %}
+                                <div class="card-body text-right">
+                                    <h3>0</h3>
+                                </div>
+                                <div class="text-right mr-4 mb-2">Check In</div>
+                                {% endif %}
                                 <div class="card-footer bg-light d-flex align-items-center justify-content-between">
                                     <a class="text-primary stretched-link" href="{{ url_for('absen.index_view') }}">View Details</a>
                                     <div class="small text-primary"><i class="fas fa-angle-right"></i></div>

@@ -6,6 +6,7 @@
 {{ super() }}
 <link rel="stylesheet" href="https://cdn.datatables.net/rowreorder/1.2.8/css/rowReorder.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.1.1/css/dataTables.dateTime.min.css">
 {% endblock %}
 
 {% block body %}
@@ -31,6 +32,18 @@
                         Status Izin
                       </div>
                       <div class="card-body">
+                        <div class="row mb-4">
+                          <h5>Filter Tanggal</h5>
+                          <div class="col-sm-3">Dari Tanggal :</div>
+                          <div class="col-sm-3">
+                            <input class="col-form" type="text" id="min" name="min">
+                          </div>
+                          <div class="col-sm-3">Sampai Tanggal :</div>
+                          <div class="col-sm-3">
+                            <input class="col-form" type="text" id="max" name="max">
+                          </div>
+                        </div>
+                        <hr>
                           <table id="data_hadir" class="display nowrap" style="width:100%">
                               <thead>
                                   <tr>
@@ -54,7 +67,7 @@
                                       <td>RD Development Business</td>
                                       <td>Bandung</td>
                                       <td>{{ izins.start_date }}</td>
-                                      <td>{{ izins.longdate }}</td>
+                                      <td>{{ izins.long_date }}</td>
                                       <td>{{ izins.keterangan }}</td>
                                       <td>{{ izins.disetujui }}
                                       </tr>
@@ -101,9 +114,37 @@
   <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.print.min.js"></script>
   <script src="https://cdn.datatables.net/rowreorder/1.2.8/js/dataTables.rowReorder.min.js"></script>
   <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+  <script src="https://cdn.datatables.net/datetime/1.1.1/js/dataTables.dateTime.min.js"></script>
   <script type="text/javascript">
+      $.fn.dataTable.ext.search.push(
+          function( settings, data, dataIndex ) {
+              var min = minDate.val();
+              var max = maxDate.val();
+              var date = new Date( data[4]  );
+               
+              if (
+                  ( min === null && max === null  ) ||
+                  ( min === null && date <= max  ) ||
+                  ( min <= date   && max === null  ) ||
+                  ( min <= date   && date <= max  )
+              ) {
+                  return true;
+              }
+              return false;
+          }
+      );
       $(document).ready(function() {
-          $('#data_hadir').DataTable( {
+          // Create date inputs
+          minDate = new DateTime($('#min'), {
+              format: 'Do MMMM YYYY'
+          });
+          maxDate = new DateTime($('#max'), {
+              format: 'Do MMMM YYYY'
+          });
+
+          // DataTables initialisation
+          var table = $('#data_hadir').DataTable( {
               dom: 'Bfrtip',
               buttons: ['csv', 'excel', 'pdf', 'print'],
               responsive: true,
@@ -111,6 +152,10 @@
                   selector: 'td:nth-child(2)'
               }
           });
+          // Refilter the table
+        $('#min, #max').on('change', function() {
+          table.draw();
+        });
       });
   </script>
 {% endblock %}

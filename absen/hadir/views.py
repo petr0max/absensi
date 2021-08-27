@@ -96,7 +96,7 @@ def create_izin():
             db.session.add(permit)
             db.session.commit()
             flash('Kita coba review yah...')
-            return redirect(url_for('.index'))
+            return redirect(url_for('hadir.izin'))
         flash('Permintaan izin sudah ada.')
     permits = Permit.query.order_by(Permit.start_date.desc()).all()
     return render_template('hadir/input_izin.html', form=form, permits=permits)

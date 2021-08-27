@@ -1,5 +1,5 @@
 from flask import Blueprint
 
-adm = Blueprint('adm', __name__)
+admins = Blueprint('admins', __name__)
 
-from . import models
+from . import models, views

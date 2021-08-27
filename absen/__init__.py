@@ -55,7 +55,7 @@ def create_app(config_name):
     from .profil import profil as profil_blueprint
     app.register_blueprint(profil_blueprint, url_prefix='/profile')
 
-    from .admin import adm as admin_blueprint
+    from .admin import admins as admin_blueprint
     app.register_blueprint(admin_blueprint)
 
     return app
