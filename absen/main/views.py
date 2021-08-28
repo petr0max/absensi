@@ -13,15 +13,16 @@ import datetime
 @main.route('/', methods=['GET', 'POST'])
 @login_required
 def index():
+    # mem_id is point to query member id on table User
     mem_id = db.session.query(func.count(User.id)).all()
     for x in mem_id:
         for y in x:
             ntabs = db.select([y-func.count(Absen.member_id)]).where(Absen.dates==datetime.date.today())
-            not_absen = db.session.execute(ntabs)
+            not_absen = db.session.execute(ntabs)  # counting for member not available
     cmt = db.select([func.count(Absen.member_id)]).where(
         Absen.dates==datetime.date.today())
-    count_absen = db.session.execute(cmt)
+    count_absen = db.session.execute(cmt)  # counting absen for user available now
     mtid = db.select([func.count(User.id)])
-    member = db.session.execute(mtid)
+    member = db.session.execute(mtid)  # Counting member on database register
     return render_template('index.html', not_absen=not_absen,
                            member=member, count_absen=count_absen)

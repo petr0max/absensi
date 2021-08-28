@@ -18,21 +18,63 @@
         {{ message }}
 </div>
 {% endfor %}
+                    {% if current_user.is_administrator() %}
                     <div class="row">
-                        <div class="col-xl-4 col-md-4">
-                            <div class="card mb-4 shadow">
-                                <div class="card-body bg-primary" width="100%" height="40">
-                                    <h5 class="card-title text-light mb-4">Kehadiran Hari Ini</h5>
-                                    <div class="row">
-                                        <div class="col-xl-6 col-md-6 text-light">
-                                            <h3 class="text-light">{% if count_absen %}{{ count_absen.scalar() }}{% endif %}/{% if member %}{{ member.scalar() }}{% endif %}</h3>
-                                        </div>
-                                        <div class="col-xl-6 col-md-6">
-                                            <h6 class="text-light text-end">{% if not_absen %}{{ not_absen.scalar() }}{% else %}0{% endif %} Belum Hadir</h6>
-                                        </div>
-                                    </div>
+                        <div class="col-sm-3 col-md-3">
+                            <div class="card bg-primary text-white mb-4 shadow-sm">
+                                {% if count_absen %}
+                                <div class="card-body">
+                                    <h3>{{ count_absen.scalar() }}/{% if member %}{{ member.scalar() }}{% endif %}</h3>
+                                    <h6 class="text-light">{% if not_absen %}{{ not_absen.scalar() }}{% else %}0{% endif %} Belum Hadir</h6>
+                                </div>
+                                <div class="card-body">New Check In!</div>
+                                {% else %}
+                                <div class="card-body">
+                                    <h3>{{ count_absen.scalar() }}/{% if member %}{{ member.scalar() }}{% endif %}</h3>
+                                    <h6 class="text-light">{% if not_absen %}{{ not_absen.scalar() }}{% else %}0{% endif %} Belum Hadir</h6>
+                                </div>
+                                <div class="card-body">Check In</div>
+                                {% endif %}
+                                <div class="card-footer bg-light d-flex align-items-center justify-content-between">
+                                    <a class="text-primary stretched-link" href="{{ url_for('absen.index_view') }}">View Details</a>
+                                    <div class="small text-primary"><i class="fas fa-angle-right"></i></div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="col-sm-3 col-md-3">
+                            <div class="card bg-success text-white mb-4 shadow-sm">
+                                <div class="card-body"><h3>0</h3></div>
+                                <div class="card-body">Check Out</div>
+                                <div class="card-footer d-flex bg-light align-items-center justify-content-between">
+                                    <a class="text-success stretched-link" href="{{ url_for('absen.index_view') }}">View Details</a>
+                                    <div class="small text-success"><i class="fas fa-angle-right"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-md-3">
+                            <div class="card bg-info text-white mb-4 shadow-sm">
+                                <div class="card-body"><h3>0</h3></div>
+                                <div class="card-body">Sakit</div>
+                                <div class="card-footer d-flex bg-light align-items-center justify-content-between">
+                                    <a class="text-info stretched-link" href="{{ url_for('absen.index_view') }}">View Details</a>
+                                    <div class="small text-info"><i class="fas fa-angle-right"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-md-3">
+                            <div class="card bg-warning text-white mb-4 shadow-sm">
+                                <div class="card-body"><h3>0</h3></div>
+                                <div class="card-body">Izin</div>
+                                <div class="card-footer d-flex bg-light align-items-center justify-content-between">
+                                    <a class="text-warning stretched-link" href="{{ url_for('permit.index_view') }}">View Details</a>
+                                    <div class="small text-warning"><i class="fas fa-angle-right"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    <div class="row">
+                        <div class="col-xl-4 col-md-4">
                             <div class="card mb-4 shadow">
                                 <div class="card-body bg-success" width="100%" height="40">
                                     <h5 class="card-title text-light mb-4">Total Kehadiran Bulan Ini</h5>

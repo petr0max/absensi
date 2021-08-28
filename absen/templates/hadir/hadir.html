@@ -81,11 +81,11 @@
                           <table id="data_hadir" class="display" style="width:100%">
                               <thead>
                                   <tr>
+                                      <th>Tanggal</th>
                                       <th>Nama</th>
                                       <th>Posisi</th>
                                       <th>Divisi</th>
                                       <th>Lokasi</th>
-                                      <th>Tanggal</th>
                                       <th>Jam Masuk</th>
                                       <th>Jam Pulang</th>
                                       <th>Total Lembur</th>
@@ -97,15 +97,27 @@
                                     {% if current_user.id == absens.member_id %}
                                     {% if absens.dates %}
                                       <tr>
+                                      <td>{{ absens.dates }}</td>
                                       <td>{{ user.username }}</td>
                                       <td>Staff IT</td>
                                       <td>RD Development Business</td>
                                       <td>Bandung</td>
-                                      <td>{{ absens.dates }}</td>
+                                      {% if absens.jam_datang %}
                                       <td>{{ absens.jam_datang }}</td>
-                                      <td>{{ absens.jam_pulang }}</td>
+                                      {% else %}
                                       <td></td>
+                                      {% endif %}
+                                      {% if absens.jam_pulang %}
+                                      <td>{{ absens.jam_pulang }}</td>
+                                      {% else %}
+                                      <td></td>
+                                      {% endif %}
+                                      <td></td>
+                                      {% if absens.keterangan %}
                                       <td>{{ absens.keterangan }}</td>
+                                      {% else %}
+                                      <td></td>
+                                      {% endif %}
                                       </tr>
                                     {% endif %}
                                     {% endif %}

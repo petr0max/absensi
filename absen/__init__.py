@@ -76,4 +76,7 @@ def create_app(config_name):
     from .admin import admins as admin_blueprint
     app.register_blueprint(admin_blueprint)
 
+    from .createform import createform as createform_blueprint
+    app.register_blueprint(createform_blueprint)
+
     return app
