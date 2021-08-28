@@ -2,7 +2,8 @@ import os
 from absen import create_app, db
 from absen.models import User, Role, Permission
 from absen.hadir.models import Permit, Absen
-from absen.profil.models import Profile
+from absen.profil.models import Profile, Child, Parent
+from absen.createform.models import Title, Choice, TimeHour
 from flask_migrate import Migrate
 from dotenv import load_dotenv
 
@@ -15,7 +16,8 @@ load_dotenv()
 @app.shell_context_processor
 def make_shell_context():
     return dict(db=db, User=User, Role=Role, Permission=Permission,
-                Permit=Permit, Profile=Profile, Absen=Absen)
+                Permit=Permit, Profile=Profile, Absen=Absen, Parent=Parent,
+                Child=Child, Title=Title, Choice=Choice, TimeHour=TimeHour)
 
 @app.cli.command()
 def test():

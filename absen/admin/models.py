@@ -5,6 +5,7 @@ from flask_login import current_user
 from ..models import User
 from ..profil.models import Profile
 from ..hadir.models import Permit, Absen
+from ..createform.models import Title, Choice, TimeHour
 
 
 class UserView(ModelView):
@@ -24,3 +25,6 @@ admin.add_view(UserView(User, db.session))
 admin.add_view(ModelView(Profile, db.session))
 admin.add_view(ModelView(Absen, db.session))
 admin.add_view(ModelView(Permit, db.session))
+admin.add_view(ModelView(Title, db.session))
+admin.add_view(ModelView(Choice, db.session))
+admin.add_view(ModelView(TimeHour, db.session))
