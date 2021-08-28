@@ -5,7 +5,7 @@ import datetime
 class Title(db.Model):
     __tablename__ = 'titles'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name_title = db.Column(db.String(64), index=True)
+    name_title = db.Column(db.String(64), index=True, unique=True)
     choices = db.relationship('Choice', backref='title', lazy='dynamic')
     timehours = db.relationship('TimeHour', backref='title', lazy='dynamic')
 

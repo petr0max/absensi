@@ -13,7 +13,8 @@ from .forms import (PermitForm, CheckInForm, CheckOutForm, SickForm)
 @login_required
 def index():
     g.user = current_user.get_id()
-    query_absen = db.session.query(User, Absen).join(Absen).order_by(Absen.dates.desc())
+    query_absen = db.session.query(User, Absen).join(Absen).filter(
+        Absen.member_id==g.user).order_by(Absen.dates.desc())
     return render_template('hadir/hadir.html', query_absen=query_absen)
 
 
@@ -83,7 +84,7 @@ def sick():
 @login_required
 def izin():
     g.user = current_user.get_id()
-    query_izin = db.session.query(User, Permit).join(Permit).order_by(Permit.start_date.desc())
+    query_izin = db.session.query(User, Permit).join(Permit).filter(Permit.member_id==g.user).order_by(Permit.start_date.desc())
     return render_template('hadir/izin.html', query_izin=query_izin)
 
 
