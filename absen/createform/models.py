@@ -18,7 +18,6 @@ class Choice(db.Model):
     name_choice = db.Column(db.String(64), index=True)
 
     timehours = db.relationship('TimeHour', backref='choice', lazy='dynamic')
-    #users = db.relationship('User', backref='choice', lazy='dynamic')
     choice_id = db.Column(db.Integer, db.ForeignKey('titles.id'))
 
     def __repr__(self):

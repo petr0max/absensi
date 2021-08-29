@@ -29,7 +29,6 @@ class EditProfileForm(FlaskForm):
         ('Strata II', 'Strata II'), ('Strata III', 'Strata III')
     ])
 
-    jurusan = StringField('Jurusan', validators=[Length(0, 64)])
 
     gelar = StringField('Gelar Pendidikan', validators=[Length(0, 64)])
 

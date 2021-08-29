@@ -75,16 +75,6 @@
       </div>
     </div>
     <div class="row mb-3">
-      <label class="col-form-label col-sm-3 form_text fw-bold" for=""><span>Jabatan</span>:</label>
-      <div class="col-sm-4">
-        {% if user == current_user %}
-          {% if user.member_since %}
-          <label class="mt-2 text-center" for="ForMemberSince">{{ user.member_since }}</label>
-          {% endif %}
-        {% endif %}
-      </div>
-    </div>
-    <div class="row mb-3">
       <label class="col-form-label col-sm-3 form_text fw-bold" for=""><span>Divisi</span>:</label>
       <div class="col-sm-4">
         {% if user == current_user %}
@@ -95,21 +85,31 @@
       </div>
     </div>
     <div class="row mb-3">
-      <label class="col-form-label col-sm-3 form_text fw-bold" for="ForAlmamater"><span>Universitas / Sekolah</span>:</label>
+      <label class="col-form-label col-sm-3 form_text fw-bold" for=""><span>Jabatan</span>:</label>
       <div class="col-sm-4">
         {% if user == current_user %}
-          {% if profil.study %}
-          <label class="mt-2 text-center" for="ForAlmamater">{{ profil.study }}</label>
+          {% if user.member_since %}
+          <label class="mt-2 text-center" for="ForMemberSince">{{ user.member_since }}</label>
           {% endif %}
         {% endif %}
       </div>
     </div>
     <div class="row mb-3">
-      <label class="col-form-label col-sm-3 form_text fw-bold" for="ForJurusan"><span>Jurusan</span>:</label>
+      <label class="col-form-label col-sm-3 form_text fw-bold" for=""><span>Status Kepegawaian</span>:</label>
       <div class="col-sm-4">
         {% if user == current_user %}
-          {% if profil.jurusan %}
-          <label class="mt-2 text-center" for="ForJurusan">{{ profil.jurusan }}</label>
+          {% if user.member_since %}
+          <label class="mt-2 text-center" for="ForMemberSince">{{ user.member_since }}</label>
+          {% endif %}
+        {% endif %}
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label class="col-form-label col-sm-3 form_text fw-bold" for="ForAlmamater"><span>Pendidikan Terakhir</span>:</label>
+      <div class="col-sm-4">
+        {% if user == current_user %}
+          {% if profil.study %}
+          <label class="mt-2 text-center" for="ForAlmamater">{{ profil.study }}</label>
           {% endif %}
         {% endif %}
       </div>
