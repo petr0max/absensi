@@ -62,7 +62,7 @@
                                     {% if current_user.id == izins.member_id %}
                                     {% if izins.start_date %}
                                       <tr>
-                                      <td>{{ user.username }}</td>
+                                      <td>{{ user.username.title() }}</td>
                                       <td>Staff IT</td>
                                       <td>RD Development Business</td>
                                       <td>Bandung</td>

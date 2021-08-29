@@ -36,8 +36,8 @@ class AdminView(AdminIndexView):
         return super(AdminView, self).index()
 
 
-admin = Admin(name='Admin Dashboard',
-              template_mode='bootstrap4', index_view=AdminView())
+admin = Admin(name='Backend System',
+              template_mode='bootstrap3', index_view=AdminView())
 
 def create_app(config_name):
     app = Flask(__name__)

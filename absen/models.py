@@ -86,6 +86,8 @@ class User(UserMixin, db.Model):
     last_seen = db.Column(db.DateTime(), default=datetime.datetime.now())
     
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
+    #choice_id = db.Column(db.Integer, db.ForeignKey('choices.id'))
+
     profiles = db.relationship('Profile', backref='user', uselist=False)
     permits = db.relationship('Permit', backref='user', lazy='dynamic')
     absens = db.relationship('Absen', backref='user', lazy='dynamic')

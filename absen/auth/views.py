@@ -18,6 +18,8 @@ def login():
             next = request.args.get('next')
             if next is None or not next.startswith('/'):
                 next = url_for('main.index')
+                if current_user.is_administrator():
+                    return redirect(url_for('admin.index'))
             return redirect(next)
         flash('Invalid username or password.')
     return render_template('auth/login.html', form=form)

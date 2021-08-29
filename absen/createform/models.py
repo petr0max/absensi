@@ -7,7 +7,6 @@ class Title(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name_title = db.Column(db.String(64), index=True, unique=True)
     choices = db.relationship('Choice', backref='title', lazy='dynamic')
-    timehours = db.relationship('TimeHour', backref='title', lazy='dynamic')
 
     def __repr__(self):
         return f"{self.name_title.title()}"
@@ -17,10 +16,13 @@ class Choice(db.Model):
     __tablename__ = 'choices'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name_choice = db.Column(db.String(64), index=True)
-    title_choice = db.Column(db.Integer, db.ForeignKey('titles.id'))
+
+    timehours = db.relationship('TimeHour', backref='choice', lazy='dynamic')
+    #users = db.relationship('User', backref='choice', lazy='dynamic')
+    choice_id = db.Column(db.Integer, db.ForeignKey('titles.id'))
 
     def __repr__(self):
-        return f"{self.name_choice.title()}"
+        return f"{self.name_choice}"
 
 
 class TimeHour(db.Model):
@@ -28,4 +30,4 @@ class TimeHour(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     time_start = db.Column(db.Time())
     time_end = db.Column(db.Time())
-    title_time = db.Column(db.Integer, db.ForeignKey('titles.id'))
+    choice_id = db.Column(db.Integer, db.ForeignKey('choices.id'))

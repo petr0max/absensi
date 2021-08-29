@@ -75,6 +75,26 @@
       </div>
     </div>
     <div class="row mb-3">
+      <label class="col-form-label col-sm-3 form_text fw-bold" for=""><span>Jabatan</span>:</label>
+      <div class="col-sm-4">
+        {% if user == current_user %}
+          {% if user.member_since %}
+          <label class="mt-2 text-center" for="ForMemberSince">{{ user.member_since }}</label>
+          {% endif %}
+        {% endif %}
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label class="col-form-label col-sm-3 form_text fw-bold" for=""><span>Divisi</span>:</label>
+      <div class="col-sm-4">
+        {% if user == current_user %}
+          {% if user.member_since %}
+          <label class="mt-2 text-center" for="ForMemberSince">{{ user.member_since }}</label>
+          {% endif %}
+        {% endif %}
+      </div>
+    </div>
+    <div class="row mb-3">
       <label class="col-form-label col-sm-3 form_text fw-bold" for="ForAlmamater"><span>Universitas / Sekolah</span>:</label>
       <div class="col-sm-4">
         {% if user == current_user %}

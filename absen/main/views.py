@@ -19,10 +19,17 @@ def index():
         for y in x:
             ntabs = db.select([y-func.count(Absen.member_id)]).where(Absen.dates==datetime.date.today())
             not_absen = db.session.execute(ntabs)  # counting for member not available
+
     cmt = db.select([func.count(Absen.member_id)]).where(
-        Absen.dates==datetime.date.today())
+        Absen.dates==datetime.date.today(), Absen.jam_datang.isnot(None))
     count_absen = db.session.execute(cmt)  # counting absen for user available now
+
     mtid = db.select([func.count(User.id)])
     member = db.session.execute(mtid)  # Counting member on database register
+
+    absen_now = db.session.query(User, Absen).join(Absen).filter(
+        Absen.dates==datetime.date.today()).all()
+
     return render_template('index.html', not_absen=not_absen,
-                           member=member, count_absen=count_absen)
+                           member=member, count_absen=count_absen,
+                           absen_now=absen_now)
