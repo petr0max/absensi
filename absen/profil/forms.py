@@ -2,76 +2,145 @@ from flask_wtf import FlaskForm
 from wtforms import (StringField, SubmitField, BooleanField, TextAreaField,
                      SelectField, IntegerField, DateField)
 from wtforms.validators import (DataRequired, Length, Email, Regexp,
-                                NumberRange, Optional)
+                                NumberRange, Optional, InputRequired)
+from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from . import profil
+from ..createform.models import Choice
 
 
 class EditProfileForm(FlaskForm):
-    realname = StringField('Nama Lengkap', validators=[
+
+    def status_parent_choices():
+        return Choice.query.filter(Choice.choice_id==12).all()
+
+    def divisi_choices():
+        return Choice.query.filter(Choice.choice_id==1).all()
+
+    def jabatan_choices():
+        return Choice.query.filter(Choice.choice_id==2).all()
+ 
+    def kantor_choices():
+        return Choice.query.filter(Choice.choice_id==3).all()
+
+    def stat_emp_choices():
+        return Choice.query.filter(Choice.choice_id==4).all()
+
+    def last_study_choices():
+        return Choice.query.filter(Choice.choice_id==5).all()
+    
+    def blood_choices():
+        return Choice.query.filter(Choice.choice_id==7).all()
+    
+    def gender_choices():
+        return Choice.query.filter(Choice.choice_id==6).all()
+
+    def married_choices():
+        return Choice.query.filter(Choice.choice_id==10).all()
+
+    def religion_choices():
+        return Choice.query.filter(Choice.choice_id==8).all()
+    
+    def country_choices():
+        return Choice.query.filter(Choice.choice_id==9).all()
+
+    def zone_time_choices():
+        return Choice.query.filter(Choice.choice_id==14).all()
+
+    def name_bank_choices():
+        return Choice.query.filter(Choice.choice_id==11).all()
+
+    nama_lengkap = StringField('Nama Lengkap', validators=[
         Length(0, 64),
-        Regexp(r'^[A-Za-z\s\-\']+$', message='Upss... pakai huruf yah')])
+        Regexp(r'^[A-Za-z\s\-\']+$', message='Upss... pakai huruf yah..')])
 
-    birthday = DateField('Tanggal Lahir')
-
-    status_pegawai = SelectField('Status Kepegawaian', choices=[
-        ('Pegawai Lepas', 'Pegawai Lepas'), ('Pegawai Tetap', 'Pegawai Tetap'),
-        ('Tenaga Kerja Waktu Tertentu/Kontrak', 'Tenaga Kerja Waktu Tertentu/Kontrak')
+    tempat_lahir = StringField('Tempat Lahir', validators=[
+        Length(0, 64),
+        Regexp(r'^[A-Za-z\s\-\']+$', message='Upss... pakai huruf yah..')
     ])
 
-    location = StringField('Lokasi Kantor', validators=[Length(0, 64)])
+    tanggal_lahir = DateField('Tanggal Lahir', validators=[DataRequired()])
 
-    about_me = TextAreaField('Tentang Saya', validators=[Length(0, 64)])
+    tentang_saya = TextAreaField('Tentang Saya', validators=[Length(0, 64)])
 
-    study = SelectField('Universitas / Sekolah', choices=[
-        ('SD', 'SD'), ('SMP', 'SMP'),
-        ('SMA/SMK (Sederajat)', 'SMA/SMK (Sederajat)'),
-        ('Diploma', 'Diploma'), ('Strata I', 'Strata I'),
-        ('Strata II', 'Strata II'), ('Strata III', 'Strata III')
-    ])
+    divisi = QuerySelectField('Divisi', query_factory=divisi_choices,
+                              allow_blank=True)
 
+    jabatan = QuerySelectField('Jabatan', query_factory=jabatan_choices,
+                               allow_blank=True)
 
-    gelar = StringField('Gelar Pendidikan', validators=[Length(0, 64)])
+    lokasi_kantor = QuerySelectField('Kantor', query_factory=kantor_choices,
+                                     allow_blank=True)
 
-    address_before = StringField('Alamat Asal', validators=[Length(0, 64)])
+    status_pegawai = QuerySelectField('Status Kepegawaian',
+                                      query_factory=stat_emp_choices,
+                                      allow_blank=True)
 
-    address_now = StringField('Alamat Sekarang', validators=[Length(0, 64)])
+    pendidikan_terakhir = QuerySelectField('Pendidikan Terakhir',
+                                           query_factory=last_study_choices,
+                                           allow_blank=True)
 
-    blood = SelectField('Golongan Darah', choices=[
-        ('A', 'A'), ('B', 'B'), ('AB', 'AB'), ('O', 'O'),
-        ('Tidak Tahu', 'Tidak Tahu')])
+    gelar_pendidikan = StringField('Gelar Pendidikan', validators=[Length(0, 64)])
 
-    gender = SelectField('Jenis Kelamin', choices=[
-        ('Pria', 'Pria'), ('Wanita', 'Wanita')])
+    nama_almamater = StringField('Nama Almamater', validators=[Length(0, 64)])
 
-    religion = SelectField('Agama', choices=[
-        ('Islam', 'Islam'), ('Kristen', 'Kristen'), ('Hindu', 'Hindu'),
-        ('Budha', 'Budha'), ('Konghuchu', 'Konghuchu'), ('Lainnya', 'Lainnya')
-    ])
+    jurusan = StringField('Jurusan', validators=[Length(0, 64)])
 
-    warga_negara = SelectField('Kewarganegaraan', choices=[
-        ('Warga Negara Indonesia', 'Warga Negara Indonesia'),
-        ('Warga Negara Asing', 'Warga Negara Asing')])
+    alamat_asal = TextAreaField('Alamat Asal', validators=[Length(0, 64)])
 
-    married = SelectField('Status Menikah', choices=[
-        ('Belum Nikah / Cerai', 'Belum Nikah / Cerai'),
-        ('Belum Nikah / Cerai Memiliki Anak 1', 'Belum Nikah / Cerai Memiliki Anak 1'),
-        ('Belum Nikah / Cerai Memiliki Anak 2', 'Belum Nikah / Cerai Memiliki Anak 2'),
-        ('Belum Nikah / Cerai Memiliki Anak 3', 'Belum Nikah / Cerai Memiliki Anak 3'),
-        ('Menikah Belum Memiliki Anak', 'Menikah Belum Memiliki Anak'),
-        ('Menikah Memiliki Anak 1', 'Menikah Memiliki Anak 1'),
-        ('Menikah Memiliki Anak 2', 'Menikah Memiliki Anak 2'),
-        ('Menikah Memiliki Anak 3', 'Menikah Memiliki Anak 3')
-    ])
+    alamat_domisili = TextAreaField('Alamat Domisili', validators=[Length(0, 64)])
+
+    golongan_darah = QuerySelectField('Golongan Darah',
+                                      query_factory=blood_choices,
+                                      allow_blank=True)
+
+    jenis_kelamin = QuerySelectField('Jenis Kelamin',
+                                     query_factory=gender_choices,
+                                     allow_blank=True)
+
+    status_pernikahan = QuerySelectField('Status Pernikahan',
+                                         query_factory=married_choices,
+                                         allow_blank=True)
 
     nama_pasangan = StringField('Nama Suami/Istri', validators=[Length(0, 64)])
 
-    no_hp = IntegerField('No. Handphone', validators=[Optional()])
+    agama = QuerySelectField('Agama', query_factory=religion_choices,
+                             allow_blank=True)
+
+    warga_negara = QuerySelectField('Warga Negara',
+                                    query_factory=country_choices,
+                                    allow_blank=True)
 
     nik = IntegerField('NIK KTP', validators=[Optional()])
 
     npwp = IntegerField('NPWP', validators=[Optional()])
 
-    zone = SelectField('Zona Waktu', choices=[
-        ('WIB', 'WIB'), ('WITA', 'WITA'), ('WIT', 'WIT')])
+    no_bpjs_ketenagakerjaan = IntegerField('No. BPJS Ketenagakerjaan',
+                                           validators=[Optional()])
+
+    no_bpjs_kesehatan = IntegerField('No. BPJS Kesehatan',
+                                     validators=[Optional()])
+
+    no_hp = IntegerField('No. Handphone', validators=[Optional()])
+
+    zona_waktu = QuerySelectField('Zona Waktu', query_factory=zone_time_choices,
+                                  allow_blank=True)
+
+    nama_bank = QuerySelectField('Nama Bank', query_factory=name_bank_choices,
+                                 allow_blank=True)
+    nama_rekening = StringField('Nama Rekening', validators=[Length(0, 64)])
+
+    no_rekening = IntegerField('Nomor Rekening', validators=[Optional()])
+
+    # nama_anak = StringField('Nama Anak', validators=[Length(0, 64)])
+
+    nama_wali = StringField('Nama Wali', validators=[Length(0, 64)])
+
+    hubungan_wali = QuerySelectField('Hubungan Wali',
+                                     query_factory=status_parent_choices,
+                                     allow_blank=True)
+
+    alamat_wali = TextAreaField('Alamat Wali', validators=[Length(0, 64)])
+    
+    no_kontak_wali = IntegerField('Nomor Kontak Wali', validators=[Optional()])
 
     submit = SubmitField('Ubah Data')

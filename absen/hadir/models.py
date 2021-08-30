@@ -15,6 +15,8 @@ class Permit(db.Model):
 class Absen(db.Model):
     __tablename__ = 'absens'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    input_date = db.Column(db.DateTime(), default=datetime.datetime.now(),
+                           unique=True)
     dates = db.Column(db.Date())
     jam_datang = db.Column(db.Time())
     jam_pulang = db.Column(db.Time())

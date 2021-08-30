@@ -21,6 +21,9 @@ login_manager.login_view = 'auth.login'
 
 
 class AdminView(AdminIndexView):
+    def is_visible(self):
+        return False
+
     def is_accessible(self):
         return current_user.is_authenticated \
             and current_user.is_administrator()
@@ -37,7 +40,7 @@ class AdminView(AdminIndexView):
 
 
 admin = Admin(name='Backend System',
-              template_mode='bootstrap3', index_view=AdminView())
+              template_mode='bootstrap4', index_view=AdminView())
 
 def create_app(config_name):
     app = Flask(__name__)

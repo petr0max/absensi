@@ -22,7 +22,7 @@
                 {% endif %}
                 {% if current_user.is_administrator() %}
                 <li>
-                    <a class="dropdown-item" href="{{ url_for('admin.index', username=current_user.username) }}" target="_blank">Akses Admin</a>
+                    <a class="dropdown-item" href="{{ url_for('admin.index', username=current_user.username) }}" target="_blank">Akses Backend</a>
                 </li>
                 {% endif %}
                 <li><a class="dropdown-item" href="{{ url_for('auth.change_password') }}">Ubah Password</a></li>

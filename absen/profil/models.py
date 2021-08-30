@@ -8,10 +8,10 @@ class Profile(db.Model):
     nama_lengkap = db.Column(db.String(64), index=True)
     tempat_lahir = db.Column(db.String(64), index=True)
     tanggal_lahir = db.Column(db.Date(), default=datetime.date.today())
-    lokasi = db.Column(db.String(64), index=True)
     tentang_saya = db.Column(db.Text())
     divisi = db.Column(db.String(64), index=True)
     jabatan = db.Column(db.String(64), index=True)
+    lokasi_kantor = db.Column(db.String(64), index=True)
     status_pegawai = db.Column(db.String(64), index=True)
     pendidikan_terakhir = db.Column(db.String(64), index=True)
     gelar_pendidikan = db.Column(db.String(64), index=True)
@@ -22,6 +22,7 @@ class Profile(db.Model):
     golongan_darah = db.Column(db.String(64), index=True)
     jenis_kelamin = db.Column(db.String(64), index=True)
     status_pernikahan = db.Column(db.String(64), index=True)
+    nama_pasangan = db.Column(db.String(64), index=True)
     agama = db.Column(db.String(64), index=True)
     warga_negara = db.Column(db.String(64), index=True)
     nik = db.Column(db.Integer, index=True)
@@ -35,16 +36,14 @@ class Profile(db.Model):
     nama_bank = db.Column(db.String(64), index=True)
     nama_rekening = db.Column(db.String(64), index=True)
     no_rekening = db.Column(db.Integer, index=True)
-
-    # Create for parent profile user
+    
     nama_wali = db.Column(db.String(64), index=True)
     hubungan_wali = db.Column(db.String(64), index=True)
     alamat_wali = db.Column(db.String(64), index=True)
     no_kontak_wali = db.Column(db.Integer, index=True)
 
     member_id = db.Column(db.Integer, db.ForeignKey('users.id'), unique=True)
-    childs = db.relationship('Child', backref='profile', lazy='dynamic')
-    parents = db.relationship('Parent', backref='profile', lazy='dynamic')
+    child_id = db.Column(db.Integer, db.ForeignKey('childs.id'))
 
     def __repr__(self):
         return f"{self.nama_lengkap.title()}"
@@ -53,14 +52,10 @@ class Profile(db.Model):
 class Child(db.Model):
     __tablename__ = 'childs'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    profile_id = db.Column(db.Integer, db.ForeignKey('profiles.id'))
+    member_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     nama_anak = db.Column(db.String(64), index=True)
+    
+    profiles = db.relationship('Profile', backref='child', lazy='dynamic')
 
-
-class Parent(db.Model):
-    __tablename__ = 'parents'
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    profile_id = db.Column(db.Integer, db.ForeignKey('profiles.id'))
-    nama_wali = db.Column(db.String(64), index=True)
-    hubungan_wali = db.Column(db.String(64), index=True)
-    alamat_wali = db.Column(db.String(64), index=True)
+    def __repr__(self):
+        return f"{self.nama_anak.title()}"

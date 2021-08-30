@@ -7,20 +7,6 @@
                 <main>
                     <div class="container-fluid px-4">
                         <h1 class="mt-4">Profil {{ user.username.title() }}</h1>
-{% if user == current_user %}
-  {% if profil.realname or profil.location %}
-  <ol class="breadcrumb mb-4">
-    {% if profil.realname %}<li class="breadcrumb-item active">{{ profil.realname.title() }}{% endif %}
-    {% if profil.location %}
-    dari <a href="https://google.com/maps/search/{{ profil.location }}/">{{ profil.location }}</a>
-    {% endif %}
-    <li class="breadcrumb-item">
-    Terlihat {{ user.last_seen }}.
-    </li>
-    </li>
-  </ol>
-  {% endif %}
-{% endif %}
 {% if current_user.is_administrator() %}
 <p><a href="mailto:{{ user.email }}">{{ user.email }}</a></p>
 {% endif %}
@@ -38,8 +24,18 @@
       <label class="col-form-label col-sm-3 form_text fw-bold" for=""><span>Nama Lengkap</span>:</label>
       <div class="col-sm-4">
         {% if user == current_user %}
-          {% if profil.realname %}
-          <label class="text-center mt-2" for="ForFullname">{{ profil.realname.upper() }}</label>
+          {% if profil.nama_lengkap %}
+          <label class="text-center mt-2" for="ForFullname">{{ profil.nama_lengkap.title() }}</label>
+          {% endif %}
+        {% endif %}
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label class="col-form-label col-sm-3 form_text fw-bold" for=""><span>Tempat Lahir</span>:</label>
+      <div class="col-sm-4">
+        {% if user == current_user %}
+          {% if profil.tempat_lahir %}
+          <label class="mt-2 text-center" for="ForAboutMe">{{ profil.tempat_lahir }}</label>
           {% endif %}
         {% endif %}
       </div>
@@ -48,8 +44,8 @@
       <label class="col-form-label col-sm-3 form_text fw-bold" for=""><span>Tanggal Lahir</span>:</label>
       <div class="col-sm-4">
         {% if user == current_user %}
-          {% if profil.birthday %}
-          <label class="mt-2 text-center" for="ForAboutMe">{{ profil.birthday }}</label>
+          {% if profil.tanggal_lahir %}
+          <label class="mt-2 text-center" for="ForAboutMe">{{ profil.tanggal_lahir }}</label>
           {% endif %}
         {% endif %}
       </div>
@@ -58,8 +54,8 @@
       <label class="col-form-label col-sm-3 form_text fw-bold" for=""><span>Tentang Saya</span>:</label>
       <div class="col-sm-4">
         {% if user == current_user %}
-          {% if profil.about_me %}
-          <label class="mt-2 text-center" for="ForAboutMe">{{ profil.about_me }}</label>
+          {% if profil.tentang_saya %}
+          <label class="mt-2 text-center" for="ForAboutMe">{{ profil.tentang_saya }}</label>
           {% endif %}
         {% endif %}
       </div>
@@ -78,8 +74,8 @@
       <label class="col-form-label col-sm-3 form_text fw-bold" for=""><span>Divisi</span>:</label>
       <div class="col-sm-4">
         {% if user == current_user %}
-          {% if user.member_since %}
-          <label class="mt-2 text-center" for="ForMemberSince">{{ user.member_since }}</label>
+          {% if profil.divisi %}
+          <label class="mt-2 text-center" for="ForDivisi">{{ profil.divisi }}</label>
           {% endif %}
         {% endif %}
       </div>
@@ -88,8 +84,18 @@
       <label class="col-form-label col-sm-3 form_text fw-bold" for=""><span>Jabatan</span>:</label>
       <div class="col-sm-4">
         {% if user == current_user %}
-          {% if user.member_since %}
-          <label class="mt-2 text-center" for="ForMemberSince">{{ user.member_since }}</label>
+          {% if profil.jabatan %}
+          <label class="mt-2 text-center" for="ForJabatan">{{ profil.jabatan }}</label>
+          {% endif %}
+        {% endif %}
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label class="col-form-label col-sm-3 form_text fw-bold" for=""><span>Lokasi Kantor</span>:</label>
+      <div class="col-sm-4">
+        {% if user == current_user %}
+          {% if profil.lokasi_kantor %}
+          <label class="mt-2 text-center" for="ForLokasi">{{ profil.lokasi_kantor }}</label>
           {% endif %}
         {% endif %}
       </div>
@@ -98,18 +104,18 @@
       <label class="col-form-label col-sm-3 form_text fw-bold" for=""><span>Status Kepegawaian</span>:</label>
       <div class="col-sm-4">
         {% if user == current_user %}
-          {% if user.member_since %}
-          <label class="mt-2 text-center" for="ForMemberSince">{{ user.member_since }}</label>
+          {% if profil.status_pegawai %}
+          <label class="mt-2 text-center" for="ForStatusPegwai">{{ profil.status_pegawai }}</label>
           {% endif %}
         {% endif %}
       </div>
     </div>
     <div class="row mb-3">
-      <label class="col-form-label col-sm-3 form_text fw-bold" for="ForAlmamater"><span>Pendidikan Terakhir</span>:</label>
+      <label class="col-form-label col-sm-3 form_text fw-bold" for="ForLastStudy"><span>Pendidikan Terakhir</span>:</label>
       <div class="col-sm-4">
         {% if user == current_user %}
-          {% if profil.study %}
-          <label class="mt-2 text-center" for="ForAlmamater">{{ profil.study }}</label>
+          {% if profil.pendidikan_terakhir %}
+          <label class="mt-2 text-center" for="ForLastStudy">{{ profil.pendidikan_terakhir }}</label>
           {% endif %}
         {% endif %}
       </div>
@@ -118,8 +124,28 @@
       <label class="col-form-label col-sm-3 form_text fw-bold" for="ForGelar"><span>Gelar Pendidikan</span>:</label>
       <div class="col-sm-4">
         {% if user == current_user %}
-          {% if profil.gelar %}
-          <label class="mt-2 text-center" for="ForGelar">{{ profil.gelar }}</label>
+          {% if profil.gelar_pendidikan %}
+          <label class="mt-2 text-center" for="ForGelar">{{ profil.gelar_pendidikan }}</label>
+          {% endif %}
+        {% endif %}
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label class="col-form-label col-sm-3 form_text fw-bold" for="ForGelar"><span>Nama Almamater</span>:</label>
+      <div class="col-sm-4">
+        {% if user == current_user %}
+          {% if profil.nama_almamater %}
+          <label class="mt-2 text-center" for="ForAlmamater">{{ profil.nama_almamater }}</label>
+          {% endif %}
+        {% endif %}
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label class="col-form-label col-sm-3 form_text fw-bold" for="ForJurusan"><span>Jurusan</span>:</label>
+      <div class="col-sm-4">
+        {% if user == current_user %}
+          {% if profil.jurusan %}
+          <label class="mt-2 text-center" for="ForJurusan">{{ profil.jurusan }}</label>
           {% endif %}
         {% endif %}
       </div>
@@ -128,18 +154,18 @@
       <label class="col-form-label col-sm-3 form_text fw-bold" for="ForAddresBefore"><span>Alamat Asal</span>:</label>
       <div class="col-sm-4">
         {% if user == current_user %}
-          {% if profil.address_before %}
-          <label class="mt-2 text-center" for="ForAddressBefore">{{ profil.address_before }}</label>
+          {% if profil.alamat_asal %}
+          <label class="mt-2 text-center" for="ForAddressBefore">{{ profil.alamat_asal }}</label>
           {% endif %}
         {% endif %}
       </div>
     </div>
     <div class="row mb-3">
-      <label class="col-form-label col-sm-3 form_text fw-bold" for="ForAddresNow"><span>Alamat Sekarang</span>:</label>
+      <label class="col-form-label col-sm-3 form_text fw-bold" for="ForAddresNow"><span>Alamat Domisili</span>:</label>
       <div class="col-sm-4">
         {% if user == current_user %}
-          {% if profil.address_now %}
-          <label class="mt-2 text-center" for="ForAddressNow">{{ profil.address_now }}</label>
+          {% if profil.alamat_domisili %}
+          <label class="mt-2 text-center" for="ForAddressNow">{{ profil.alamat_domisili }}</label>
           {% endif %}
         {% endif %}
       </div>
@@ -148,8 +174,8 @@
       <label class="col-form-label col-sm-3 form_text fw-bold" for="ForBlood"><span>Golongan Darah</span>:</label>
       <div class="col-sm-4">
         {% if user == current_user %}
-          {% if profil.blood %}
-          <label class="mt-2 text-center" for="ForBlood">{{ profil.blood }}</label>
+          {% if profil.golongan_darah %}
+          <label class="mt-2 text-center" for="ForBlood">{{ profil.golongan_darah }}</label>
           {% endif %}
         {% endif %}
       </div>
@@ -158,8 +184,8 @@
       <label class="col-form-label col-sm-3 form_text fw-bold" for="ForBlood"><span>Jenis Kelamin</span>:</label>
       <div class="col-sm-4">
         {% if user == current_user %}
-          {% if profil.gender %}
-          <label class="mt-2 text-center" for="ForGender">{{ profil.gender }}</label>
+          {% if profil.jenis_kelamin %}
+          <label class="mt-2 text-center" for="ForGender">{{ profil.jenis_kelamin }}</label>
           {% endif %}
         {% endif %}
       </div>
@@ -168,18 +194,30 @@
       <label class="col-form-label col-sm-3 fw-bold form_text" for="ForBlood"><span>Status Menikah</span>:</label>
       <div class="col-sm-4">
         {% if user == current_user %}
-          {% if profil.married %}
-          <label class="mt-2 text-center" for="ForBlood">{{ profil.married }}</label>
+          {% if profil.status_pernikahan %}
+          <label class="mt-2 text-center" for="ForBlood">{{ profil.status_pernikahan }}</label>
           {% endif %}
         {% endif %}
       </div>
     </div>
+    {% if profil.nama_pasangan %}
+    <div class="row mb-3">
+      <label class="col-form-label col-sm-3 fw-bold form_text" for="ForNamaPasangan"><span>Nama Suami/Istri</span>:</label>
+      <div class="col-sm-4">
+        {% if user == current_user %}
+          {% if profil.nama_pasangan %}
+          <label class="mt-2 text-center" for="ForBlood">{{ profil.nama_pasangan }}</label>
+          {% endif %}
+        {% endif %}
+      </div>
+    </div>
+    {% endif %}
     <div class="row mb-3">
       <label class="fw-bold col-form-label col-sm-3 form_text" for="ForReligion"><span>Agama</span>:</label>
       <div class="col-sm-4">
         {% if user == current_user %}
-          {% if profil.religion %}
-          <label class="mt-2 text-center" for="ForReligion">{{ profil.religion }}</label>
+          {% if profil.agama %}
+          <label class="mt-2 text-center" for="ForReligion">{{ profil.agama }}</label>
           {% endif %}
         {% endif %}
       </div>
@@ -215,6 +253,26 @@
       </div>
     </div>
     <div class="row mb-3">
+      <label class="col-form-label fw-bold col-sm-3 form_text" for="ForBPJSTK"><span>No. BPJS Ketenagakerjaan</span>:</label>
+      <div class="col-sm-4">
+        {% if user == current_user %}
+          {% if profil.no_bpjs_ketenagakerjaan %}
+          <label class="mt-2 text-center" for="ForBPJSTK">{{ profil.no_bpjs_ketenagakerjaan }}</label>
+          {% endif %}
+        {% endif %}
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label class="col-form-label fw-bold col-sm-3 form_text" for="ForBPJSKes"><span>No. BPJS Kesehatan</span>:</label>
+      <div class="col-sm-4">
+        {% if user == current_user %}
+          {% if profil.no_bpjs_kesehatan %}
+          <label class="mt-2 text-center" for="ForBPJSKes">{{ profil.no_bpjs_kesehatan }}</label>
+          {% endif %}
+        {% endif %}
+      </div>
+    </div>
+    <div class="row mb-3">
       <label class="col-form-label fw-bold col-sm-3 form_text" for="ForNoHP"><span>No Handphone</span>:</label>
       <div class="col-sm-4">
         {% if user == current_user %}
@@ -228,8 +286,50 @@
       <label class="col-form-label fw-bold col-sm-3 form_text" for="ForZone"><span>Zona Waktu</span>:</label>
       <div class="col-sm-4">
         {% if user == current_user %}
-          {% if profil.zone %}
-          <label class="mt-2 text-center" for="ForZone">{{ profil.zone }}</label>
+          {% if profil.zona_waktu %}
+          <label class="mt-2 text-center" for="ForZone">{{ profil.zona_waktu }}</label>
+          {% endif %}
+        {% endif %}
+      </div>
+    </div>
+    {% if nama_anak %}
+    <div class="row mb-3">
+      <label class="col-form-label fw-bold col-sm-3 form_text" for="ForChild"><span>Nama Anak</span>:</label>
+      <div class="col-sm-4">
+        {% if user == current_user %}
+          {% if profil.zona_waktu %}
+          <label class="mt-2 text-center" for="ForChild">{{ profil.zona_waktu }}</label>
+          {% endif %}
+        {% endif %}
+      </div>
+    </div>
+    {% endif %}
+    <div class="row mb-3">
+      <label class="col-form-label fw-bold col-sm-3 form_text" for="ForWali"><span>Nama Wali</span>:</label>
+      <div class="col-sm-4">
+        {% if user == current_user %}
+          {% if profil.nama_wali %}
+          <label class="mt-2 text-center" for="ForWali">{{ profil.nama_wali }}</label>
+          {% endif %}
+        {% endif %}
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label class="col-form-label fw-bold col-sm-3 form_text" for="ForHubWali"><span>Hubungan Wali</span>:</label>
+      <div class="col-sm-4">
+        {% if user == current_user %}
+          {% if profil.hubungan_wali %}
+          <label class="mt-2 text-center" for="ForHubWali">{{ profil.hubungan_wali }}</label>
+          {% endif %}
+        {% endif %}
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label class="col-form-label fw-bold col-sm-3 form_text" for="ForAlamatWali"><span>Alamat Wali</span>:</label>
+      <div class="col-sm-4">
+        {% if user == current_user %}
+          {% if profil.alamat_wali %}
+          <label class="mt-2 text-center" for="ForAlamatWali">{{ profil.alamat_wali }}</label>
           {% endif %}
         {% endif %}
       </div>
