@@ -102,6 +102,7 @@
                                                 {{ form.gelar_pendidikan.label(class='col-form-label col-sm-3 fw-bold') }}
                                                 <div class="col-sm-4">
                                                     {{ form.gelar_pendidikan(class='form-control', placeholder='ex: Sarjana Teknik (S.T.)') }}
+                                                    <small>Bagi yang tidak memiliki gelar harap kosongkan saja.</small>
                                                 {% for error in form.gelar_pendidikan.errors %}
                                                 <span style="color:red;">[{{ error }}]</span>
                                                 {% endfor %}
@@ -120,7 +121,7 @@
                                                 {{ form.jurusan.label(class='col-form-label col-sm-3 fw-bold') }}
                                                 <div class="col-sm-4">
                                                     {{ form.jurusan(class='form-control') }}
-                                                    <small>Bagi yang tidak memiliki jurusan harap isi dengan "Tidak Ada"</small>
+                                                    <small>Bagi yang tidak memiliki jurusan harap kosongkan saja.</small>
                                                 {% for error in form.jurusan.errors %}
                                                 <span style="color:red;">[{{ error }}]</span>
                                                 {% endfor %}
