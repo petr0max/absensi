@@ -19,12 +19,12 @@ class UserView(ModelView):
     def on_model_change(self, form, model, is_created):
         model.password = bcrypt.generate_password_hash(
             model.password, rounds=10)
+    
+    def is_accessible(self):
+        return current_user.is_authenticated \
+            and current_user.is_administrator()
 
+    def inaccesible_callback(self, name, **kwargs):
+        return redirect(url_for('main.index', next=request.url))
 
 admin.add_view(UserView(User, db.session))
-admin.add_view(ModelView(Profile, db.session))
-admin.add_view(ModelView(Absen, db.session))
-admin.add_view(ModelView(Permit, db.session))
-admin.add_view(ModelView(Title, db.session))
-admin.add_view(ModelView(Choice, db.session))
-admin.add_view(ModelView(TimeHour, db.session))

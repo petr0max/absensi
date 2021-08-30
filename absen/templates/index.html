@@ -129,15 +129,20 @@
                                   </tr>
                               </thead>
                               <tbody>
-                                  {% for user, absens, profils in absen_now %}
+                                  {% for user, absens, profil in absen_now %}
                                     {% if absens.member_id %}
                                     {% if absens.dates %}
                                       <tr>
+                                      {% if profil.id %}
+                                      <td>{{ profil.nama_lengkap }}</td>
+                                      <td>{{ profil.jabatan }}</td>
+                                      <td>{{ profil.divisi }}</td>
+                                      <td>{{ profil.lokasi_kantor }}</td>
+                                      {% else %}
                                       <td>{{ user.username.title() }}</td>
-                                      {% if profils.id %}
-                                      <td>{{ profils.jabatan }}</td>
-                                      <td>{{ profils.divisi }}</td>
-                                      <td>{{ profils.lokasi_kantor }}</td>
+                                      <td></td>
+                                      <td></td>
+                                      <td></td>
                                       {% endif %}
                                       <td>{{ absens.dates }}</td>
                                       {% if absens.jam_datang %}
