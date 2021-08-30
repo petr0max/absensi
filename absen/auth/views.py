@@ -53,7 +53,7 @@ def register():
 @login_required
 def confirm(token):
     if current_user.confirmed:
-        return redirect(url_for('main.index'))
+        return redirect(url_for('hadir.index'))
     if current_user.confirm(token):
         db.session.commit()
         flash('You have confirmed your account. Thanks')
@@ -76,7 +76,7 @@ def before_request():
 @auth.route('/unconfirmed')
 def unconfirmed():
     if current_user.is_anonymous or current_user.confirmed:
-        return redirect(url_for('main.index'))
+        return redirect(url_for('hadir.index'))
     return render_template('auth/unconfirmed.html')
 
 
@@ -100,7 +100,7 @@ def change_password():
             db.session.add(current_user)
             db.session.commit()
             flash('Password anda telah terupdate')
-            return redirect(url_for('main.index'))
+            return redirect(url_for('hadir.index'))
         else:
             flash('Invalid password.')
     return render_template('auth/change_password.html', form=form)
@@ -109,7 +109,7 @@ def change_password():
 @auth.route('/reset_password_request', methods=['GET', 'POST'])
 def reset_password_request():
     if not current_user.is_anonymous:
-        return redirect(url_for('main.index'))
+        return redirect(url_for('hadir.index'))
     form = ForgetPasswordRequestForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data.lower()).first()
@@ -126,7 +126,7 @@ def reset_password_request():
 @auth.route('/reset_password/<token>', methods=['GET', 'POST'])
 def reset_password(token):
     if not current_user.is_anonymous:
-        return redirect(url_for('main.index'))
+        return redirect(url_for('hadir.index'))
     form = ForgetPasswordForm()
     if form.validate_on_submit():
         if User.reset_password(token, form.pass_hash.data):
