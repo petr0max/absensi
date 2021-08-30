@@ -13,6 +13,7 @@ import datetime
 
 @main.route('/', methods=['GET', 'POST'])
 @login_required
+@admin_required
 def index():
     # mem_id is point to query member id on table User
     mem_id = db.session.query(func.count(User.id)).all()

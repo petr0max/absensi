@@ -41,11 +41,11 @@
         <nav class="sb-sidenav accordion sb-sidenav-light" id="sidenavAccordion">
             <div class="sb-sidenav-menu">
                 <div class="nav">
+                    {% if current_user.is_administrator() %}
                     <a class="nav-link {% if active_page == 'main.index' %}active{% endif %}" href="{{ url_for('main.index') }}">
                         <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                         Dashboard
                     </a>
-                    {% if current_user.is_administrator() %}
                     <a class="nav-link" href="#">
                         <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                         Users
