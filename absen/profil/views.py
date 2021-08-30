@@ -14,7 +14,7 @@ def index(username):
     user = User.query.filter_by(username=username).first_or_404()
     g.user = current_user.get_id()
     profil = Profile.query.filter(Profile.member_id==g.user).first()
-    return render_template('user.html', user=user, profil=profil)
+    return render_template('account/profile.html', user=user, profil=profil)
 
 
 @profil.route('/edit_profile', methods=['GET', 'POST'])
