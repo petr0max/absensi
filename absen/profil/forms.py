@@ -63,21 +63,21 @@ class EditProfileForm(FlaskForm):
     tentang_saya = TextAreaField('Tentang Saya', validators=[Length(0, 64)])
 
     divisi = QuerySelectField('Divisi', query_factory=divisi_choices,
-                              allow_blank=True)
+                              allow_blank=False)
 
     jabatan = QuerySelectField('Jabatan', query_factory=jabatan_choices,
-                               allow_blank=True)
+                               allow_blank=False)
 
     lokasi_kantor = QuerySelectField('Kantor', query_factory=kantor_choices,
-                                     allow_blank=True)
+                                     allow_blank=False)
 
     status_pegawai = QuerySelectField('Status Kepegawaian',
                                       query_factory=stat_emp_choices,
-                                      allow_blank=True)
+                                      allow_blank=False)
 
     pendidikan_terakhir = QuerySelectField('Pendidikan Terakhir',
                                            query_factory=last_study_choices,
-                                           allow_blank=True)
+                                           allow_blank=False)
 
     gelar_pendidikan = StringField('Gelar Pendidikan', validators=[Length(0, 64)])
 
@@ -91,24 +91,24 @@ class EditProfileForm(FlaskForm):
 
     golongan_darah = QuerySelectField('Golongan Darah',
                                       query_factory=blood_choices,
-                                      allow_blank=True)
+                                      allow_blank=False)
 
     jenis_kelamin = QuerySelectField('Jenis Kelamin',
                                      query_factory=gender_choices,
-                                     allow_blank=True)
+                                     allow_blank=False)
 
     status_pernikahan = QuerySelectField('Status Pernikahan',
                                          query_factory=married_choices,
-                                         allow_blank=True)
+                                         allow_blank=False)
 
     nama_pasangan = StringField('Nama Suami/Istri', validators=[Length(0, 64)])
 
     agama = QuerySelectField('Agama', query_factory=religion_choices,
-                             allow_blank=True)
+                             allow_blank=False)
 
     warga_negara = QuerySelectField('Warga Negara',
                                     query_factory=country_choices,
-                                    allow_blank=True)
+                                    allow_blank=False)
 
     nik = IntegerField('NIK KTP', validators=[Optional()])
 
@@ -123,10 +123,10 @@ class EditProfileForm(FlaskForm):
     no_hp = IntegerField('No. Handphone', validators=[Optional()])
 
     zona_waktu = QuerySelectField('Zona Waktu', query_factory=zone_time_choices,
-                                  allow_blank=True)
+                                  allow_blank=False)
 
     nama_bank = QuerySelectField('Nama Bank', query_factory=name_bank_choices,
-                                 allow_blank=True)
+                                 allow_blank=False)
     nama_rekening = StringField('Nama Rekening', validators=[Length(0, 64)])
 
     no_rekening = IntegerField('Nomor Rekening', validators=[Optional()])
@@ -137,7 +137,7 @@ class EditProfileForm(FlaskForm):
 
     hubungan_wali = QuerySelectField('Hubungan Wali',
                                      query_factory=status_parent_choices,
-                                     allow_blank=True)
+                                     allow_blank=False)
 
     alamat_wali = TextAreaField('Alamat Wali', validators=[Length(0, 240)])
     
