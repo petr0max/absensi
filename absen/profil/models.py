@@ -46,7 +46,7 @@ class Profile(db.Model):
     child_id = db.Column(db.Integer, db.ForeignKey('childs.id'))
 
     def __repr__(self):
-        return f"{self.nama_lengkap.title()}"
+        return f"{self.nama_lengkap}"
 
 
 class Child(db.Model):
@@ -58,4 +58,4 @@ class Child(db.Model):
     profiles = db.relationship('Profile', backref='child', lazy='dynamic')
 
     def __repr__(self):
-        return f"{self.nama_anak.title()}"
+        return f"{self.nama_anak}"
