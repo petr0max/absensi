@@ -1,14 +1,7 @@
-<<<<<<< HEAD
 __pycache__
 *.sqlite
 venv
 tests
 migrations
 absen/node_modules/
-=======
-*.db
-__pycacche__/
-absen/node_modules/
-migrations
-__pycache__/
->>>>>>> frontend
+.flaskenv
