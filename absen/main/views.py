@@ -28,11 +28,11 @@ def index():
     mtid = db.select([func.count(User.id)])
     member = db.session.execute(mtid)  # Counting member on database register
 
-    absen_now = db.session.query(User, Absen).join(Absen).filter(
-        Absen.dates==datetime.date.today()).all()
+    absen_now = db.session.query(User, Absen, Profile).join(Absen, Profile).filter(
+        Absen.dates==datetime.date.today(), Profile.member_id==User.id).all()
 
     profil = db.session.query(User, Profile).join(Profile).filter(
         Profile.member_id==User.id)
     return render_template('index.html', not_absen=not_absen,
                            member=member, count_absen=count_absen,
-                           absen_now=absen_now, profil=profil)
+                           absen_now=absen_now)
