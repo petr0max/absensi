@@ -5,6 +5,7 @@ from datetime import datetime
 from . import hadir
 from .. import db
 from ..models import User
+from ..profil.models import Profile
 from .models import Permit, Absen
 from .forms import (PermitForm, CheckInForm, CheckOutForm, SickForm)
 
@@ -13,9 +14,11 @@ from .forms import (PermitForm, CheckInForm, CheckOutForm, SickForm)
 @login_required
 def index():
     g.user = current_user.get_id()
+    profil = Profile.query.filter(Profile.member_id==g.user).first()
     query_absen = db.session.query(User, Absen).join(Absen).filter(
         Absen.member_id==g.user).order_by(Absen.dates.desc())
-    return render_template('hadir/hadir.html', query_absen=query_absen)
+    return render_template('hadir/hadir.html', query_absen=query_absen,
+                           profil=profil)
 
 
 @hadir.route('/checkin', methods=['GET', 'POST'])
@@ -25,6 +28,7 @@ def checkin():
     if form.validate_on_submit():
         g.user = current_user.get_id()
         checkdates = Absen.query.filter(Absen.dates==form.dates.data, Absen.member_id==g.user).first()
+
         if checkdates is None:
             checkin = Absen(dates=form.dates.data,
                             jam_datang=form.jam_datang.data,
@@ -34,7 +38,9 @@ def checkin():
             flash('Semangat ...!')
             return redirect(url_for('.index'))
         flash('Upss.. data sudah ada')
-    return render_template('hadir/masuk.html', form=form)
+    g.user = current_user.get_id()
+    profil = Profile.query.filter(Profile.member_id==g.user).first()
+    return render_template('hadir/masuk.html', form=form, profil=profil)
 
 
 @hadir.route('/checkout', methods=['GET', 'POST'])
@@ -51,7 +57,9 @@ def checkout():
             flash('Selamat Beristirahat...')
             return redirect(url_for('.index'))
         flash('Anda belum checkin tanggal tersebut...')
-    return render_template('hadir/pulang.html', form=form)
+    g.user = current_user.get_id()
+    profil = Profile.query.filter(Profile.member_id==g.user).first()
+    return render_template('hadir/pulang.html', form=form, profil=profil)
 
 
 @hadir.route('/sick', methods=['GET', 'POST'])
@@ -77,21 +85,26 @@ def sick():
             db.session.commit()
             flash('Semoga Lekas Sembuh...')
             return redirect(url_for('.index'))
-    return render_template('hadir/sakit.html', form=form)
+    g.user = current_user.get_id()
+    profil = Profile.query.filter(Profile.member_id==g.user).first()
+    return render_template('hadir/sakit.html', form=form, profil=profil)
 
 
 @hadir.route('/izin')
 @login_required
 def izin():
     g.user = current_user.get_id()
+    profil = Profile.query.filter(Profile.member_id==g.user).first()
     query_izin = db.session.query(User, Permit).join(Permit).filter(Permit.member_id==g.user).order_by(Permit.start_date.desc())
-    return render_template('hadir/izin.html', query_izin=query_izin)
+    return render_template('hadir/izin.html', query_izin=query_izin,
+                           profil=profil)
 
 
 @hadir.route('/izin/create', methods=['GET', 'POST'])
 @login_required
 def create_izin():
     form = PermitForm()
+    g.user = current_user.get_id()
     if form.validate_on_submit():
         g.user = current_user.get_id()
         permits = Permit.query.filter_by(member_id=g.user).first()
@@ -107,4 +120,6 @@ def create_izin():
             return redirect(url_for('hadir.izin'))
         flash('Permintaan izin sudah ada.')
     permits = Permit.query.order_by(Permit.start_date.desc()).all()
-    return render_template('hadir/input_izin.html', form=form, permits=permits)
+    profil = Profile.query.filter(Profile.member_id==g.user).first()
+    return render_template('hadir/input_izin.html', form=form, permits=permits,
+                           profil=profil)

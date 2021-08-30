@@ -98,9 +98,11 @@
                                     {% if absens.dates %}
                                       <tr>
                                       <td>{{ user.username.title() }}</td>
-                                      <td>Staff IT</td>
-                                      <td>RD Development Business</td>
-                                      <td>Bandung</td>
+                                      {% if profil.id %}
+                                      <td>{{ profil.jabatan }}</td>
+                                      <td>{{ profil.divisi }}</td>
+                                      <td>{{ profil.lokasi_kantor }}</td>
+                                      {% endif %}
                                       <td>{{ absens.dates }}</td>
                                       {% if absens.jam_datang %}
                                       <td>{{ absens.jam_datang }}</td>

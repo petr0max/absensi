@@ -17,8 +17,8 @@ class Profile(db.Model):
     gelar_pendidikan = db.Column(db.String(64), index=True)
     nama_almamater = db.Column(db.String(64), index=True)
     jurusan = db.Column(db.String(64), index=True)
-    alamat_asal = db.Column(db.String(64), index=True)
-    alamat_domisili = db.Column(db.String(64), index=True)
+    alamat_asal = db.Column(db.String(240), index=True)
+    alamat_domisili = db.Column(db.String(240), index=True)
     golongan_darah = db.Column(db.String(64), index=True)
     jenis_kelamin = db.Column(db.String(64), index=True)
     status_pernikahan = db.Column(db.String(64), index=True)
@@ -39,7 +39,7 @@ class Profile(db.Model):
     
     nama_wali = db.Column(db.String(64), index=True)
     hubungan_wali = db.Column(db.String(64), index=True)
-    alamat_wali = db.Column(db.String(64), index=True)
+    alamat_wali = db.Column(db.String(240), index=True)
     no_kontak_wali = db.Column(db.Integer, index=True)
 
     member_id = db.Column(db.Integer, db.ForeignKey('users.id'), unique=True)

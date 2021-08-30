@@ -85,9 +85,9 @@ class EditProfileForm(FlaskForm):
 
     jurusan = StringField('Jurusan', validators=[Length(0, 64)])
 
-    alamat_asal = TextAreaField('Alamat Asal', validators=[Length(0, 64)])
+    alamat_asal = TextAreaField('Alamat Asal', validators=[Length(0, 240)])
 
-    alamat_domisili = TextAreaField('Alamat Domisili', validators=[Length(0, 64)])
+    alamat_domisili = TextAreaField('Alamat Domisili', validators=[Length(0, 240)])
 
     golongan_darah = QuerySelectField('Golongan Darah',
                                       query_factory=blood_choices,
@@ -139,7 +139,7 @@ class EditProfileForm(FlaskForm):
                                      query_factory=status_parent_choices,
                                      allow_blank=True)
 
-    alamat_wali = TextAreaField('Alamat Wali', validators=[Length(0, 64)])
+    alamat_wali = TextAreaField('Alamat Wali', validators=[Length(0, 240)])
     
     no_kontak_wali = IntegerField('Nomor Kontak Wali', validators=[Optional()])
 

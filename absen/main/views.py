@@ -5,6 +5,7 @@ from . import main
 from .. import db
 from ..models import User, Permission
 from ..hadir.models import Absen
+from ..profil.models import Profile
 from ..decorators import admin_required, permission_required
 from sqlalchemy.sql import func
 import datetime
@@ -30,6 +31,8 @@ def index():
     absen_now = db.session.query(User, Absen).join(Absen).filter(
         Absen.dates==datetime.date.today()).all()
 
+    profil = db.session.query(User, Profile).join(Profile).filter(
+        Profile.member_id==User.id)
     return render_template('index.html', not_absen=not_absen,
                            member=member, count_absen=count_absen,
-                           absen_now=absen_now)
+                           absen_now=absen_now, profil=profil)

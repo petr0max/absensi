@@ -63,9 +63,11 @@
                                     {% if izins.start_date %}
                                       <tr>
                                       <td>{{ user.username.title() }}</td>
-                                      <td>Staff IT</td>
-                                      <td>RD Development Business</td>
-                                      <td>Bandung</td>
+                                      {% if profil.id %}
+                                      <td>{{ profil.jabatan }}</td>
+                                      <td>{{ profil.divisi }}</td>
+                                      <td>{{ profil.lokasi_kantor }}</td>
+                                      {% endif %}
                                       <td>{{ izins.start_date }}</td>
                                       <td>{{ izins.long_date }}</td>
                                       <td>{{ izins.keterangan }}</td>
