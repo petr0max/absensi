@@ -66,29 +66,49 @@ def checkout():
     return render_template('hadir/pulang.html', form=form, profil=profil)
 
 
-@hadir.route('/sick/<int:id>', methods=['GET', 'POST'])
+@hadir.route('/sick', methods=['GET', 'POST'])
 @login_required
-def sick(id):
+def sick():
     form = SickForm()
-    users = User.query.get_or_404(id)
-    profil = Profile.query.filter(Profile.member_id==users.id).first()
+    g.user = current_user.get_id()
+    profil = Profile.query.filter(Profile.member_id==g.user).first()
+    sakit = Sick.query.filter(Sick.input_date==form.input_date.data,
+                              Sick.member_id==g.user).first()
     if request.method=='POST':
-        sakit = Sick()
-        sakit.diagnosa=form.diagnosa.data
-        sakit.long_date=form.long_date.data
-        sakit.member_id=users.id
-        try:
-            db.session.add(sakit)
-            db.session.commit()
-            flash('Semoga Lekas Sembuh...')
-            return redirect(url_for('.index'))
-            return render_template('hadir/sakit.html', form=form,
-                                   sakit=sakit, profil=profil)
-        except:
-            flash('Error! Looks like there was a problem. Try again...')
-            return redirect(url_for('.index'))
-            return render_template('hadir/sakit.html', form=form,
-                                   sakit=sakit, profil=profil)
+        if sakit is None:
+            sakit = Sick()
+            sakit.input_date=form.input_date.data
+            sakit.diagnosa=form.diagnosa.data
+            sakit.long_date=form.long_date.data
+            sakit.member_id=g.user
+            try:
+                db.session.add(sakit)
+                db.session.commit()
+                flash('Semoga Lekas Sembuh...')
+                return redirect(url_for('.index'))
+                return render_template('hadir/sakit.html', form=form,
+                                       sakit=sakit, profil=profil)
+            except:
+                flash('Error! Looks like there was a problem. Try again...')
+                return redirect(url_for('.index'))
+                return render_template('hadir/sakit.html', form=form,
+                                       sakit=sakit, profil=profil)
+        else:
+            sakit.input_date=form.input_date.data
+            sakit.diagnosa=form.diagnosa.data
+            sakit.long_date=form.long_date.data
+            try:
+                db.session.commit()
+                flash('Semoga Lekas Sembuh...')
+                return redirect(url_for('.index'))
+                return render_template('hadir/sakit.html', form=form,
+                                       sakit=sakit, profil=profil)
+            except:
+                flash('Error! Looks like there was a problem. Try again...')
+                return redirect(url_for('.index'))
+                return render_template('hadir/sakit.html', form=form,
+                                       sakit=sakit, profil=profil)
+
     else:
         return render_template('hadir/sakit.html', form=form,
                                profil=profil)
@@ -98,21 +118,43 @@ def sick(id):
 def create_izin():
     form = PermitForm()
     g.user = current_user.get_id()
-    if form.validate_on_submit():
-        g.user = current_user.get_id()
-        permits = Permit.query.filter_by(member_id=g.user).first()
-        checkdates = Permit.query.filter(Permit.start_date==form.start_date.data, Permit.member_id==g.user).first()
-        if checkdates is None:
-            permit = Permit(long_date=form.long_date.data,
-                            start_date=form.start_date.data,
-                            keterangan=form.keterangan.data,
-                            member_id=g.user)
-            db.session.add(permit)
-            db.session.commit()
-            flash('Kita coba review yah...')
-            return redirect(url_for('hadir.index'))
-        flash('Permintaan izin sudah ada.')
-    permits = Permit.query.order_by(Permit.start_date.desc()).all()
     profil = Profile.query.filter(Profile.member_id==g.user).first()
-    return render_template('hadir/input_izin.html', form=form, permits=permits,
-                           profil=profil)
+    permits = Permit.query.filter(Permit.start_date==form.start_date.data, Permit.member_id==g.user).first()
+    if request.method=='POST':
+        if permits is None:
+            permits = Permit()
+            permits.long_date=form.long_date.data
+            permits.start_date=form.start_date.data
+            permits.keterangan=form.keterangan.data
+            permits.member_id=g.user
+            try:
+                db.session.add(permit)
+                db.session.commit()
+                flash('Kita coba review yah...')
+                return redirect(url_for('hadir.index'))
+                return render_template('hadir/input_izin.html', form=form,
+                                       permits=permits, profil=profil)
+            except:
+                flash('Error! Looks like there was a problem. Try again...')
+                return redirect(url_for('.index'))
+                return render_template('hadir/input_izin.html', form=form,
+                                       permits=permits, profil=profil)
+        else:
+            permits.long_date=form.long_date.data
+            permits.start_date=form.start_date.data
+            permits.keterangan=form.keterangan.data
+            try:
+                db.session.commit()
+                flash('Update berhasil...')
+                return redirect(url_for('hadir.index'))
+                return render_template('hadir/input_izin.html', form=form,
+                                       permits=permits, profil=profil)
+            except:
+                flash('Error! Looks like there was a problem. Try again...')
+                return redirect(url_for('.index'))
+                return render_template('hadir/input_izin.html', form=form,
+                                       permits=permits, profil=profil)
+
+        flash('Permintaan izin sudah ada.')
+    else:
+        return render_template('hadir/input_izin.html', form=form, profil=profil)

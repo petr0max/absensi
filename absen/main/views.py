@@ -37,15 +37,14 @@ def index():
     count_sick_now = db.session.execute(s_now)
 
     sick_now = db.session.query(User, Profile, Sick).join(Profile, Sick).filter(
-        Sick.input_date==datetime.date.today()
-    )
+        Sick.input_date==datetime.date.today()).order_by(Sick.input_date.desc())
 
     p_now = db.select([func.count(Permit.member_id)]).where(
         Permit.disetujui==False)  # Counting Permit Not Yet
     count_permit_now = db.session.execute(p_now)
 
     permit_false = db.session.query(User, Profile, Permit).join(Profile, Permit).filter(
-        Permit.disetujui==False)
+        Permit.disetujui==False).order_by(Permit.start_date.desc())
 
     return render_template('index.html', not_absen=not_absen,
                            member=member, count_absen=count_absen,
@@ -56,4 +55,7 @@ def index():
 @main.route('/reports')
 @login_required
 def reports():
-    return render_template('report/index.html')
+    query_izin = db.session.query(User, Profile, Permit).join(Profile, Permit).order_by(Permit.start_date.desc()).all()
+    query_sick = db.session.query(User, Profile, Sick).join(Profile, Sick).order_by(Sick.input_date.desc()).all()
+    return render_template('report/index.html', query_izin=query_izin,
+                           query_sick=query_sick)

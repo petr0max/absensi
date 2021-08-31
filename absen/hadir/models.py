@@ -31,8 +31,7 @@ class Absen(db.Model):
 class Sick(db.Model):
     __tablename__ = 'sicks'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    input_date = db.Column(db.Date(), default=datetime.date.today(),
-                           unique=True)
+    input_date = db.Column(db.Date(), default=datetime.date.today())
     diagnosa = db.Column(db.String(64), index=True)
     long_date = db.Column(db.Integer)
     member_id = db.Column(db.Integer, db.ForeignKey('users.id'))

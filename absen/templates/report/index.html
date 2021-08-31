@@ -4,100 +4,236 @@
 
 {% block head %}
 {{ super() }}
+<link rel="stylesheet" href="https://cdn.datatables.net/rowreorder/1.2.8/css/rowReorder.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.1.1/css/dataTables.dateTime.min.css">
 {% endblock %}
 
 {% block body %}
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <div class="card mb-4 table-responsive shadow">
-                      <div class="card-header">
-                        <i class="fas fa-table"></i>
-                        Data Laporan Absen
-                      </div>
-                      <div class="card-body">
-                        <div class="row mb-4">
-                          <h5>Filter Tanggal</h5>
-                          <div class="col-sm-3">Dari Tanggal :</div>
-                          <div class="col-sm-3">
-                            <input class="col-form" type="text" id="min" name="min">
-                          </div>
-                          <div class="col-sm-3">Sampai Tanggal :</div>
-                          <div class="col-sm-3">
-                            <input class="col-form" type="text" id="max" name="max">
-                          </div>
+                  <h1 class="mt-4 mb-4 text-primary">Report Pegawai</h1>
+                  <hr>
+                  <div class="row">
+                        <div class="col-xl-8 col-md-8">
+                            <div class="card mb-4 table-responsive shadow">
+                              <div class="card-header">
+                                <i class="fas fa-table"></i>
+                                Data Laporan Izin                              </div>
+                              <div class="card-body">
+                                  <table id="data_izin" class="display nowrap" style="width:100%">
+                                      <thead>
+                                          <tr>
+                                              <th>Nama</th>
+                                              <th>Posisi</th>
+                                              <th>Divisi</th>
+                                              <th>Kantor</th>
+                                              <th>Tanggal</th>
+                                              <th>Berapa Hari</th>
+                                              <th>Keterangan</th>
+                                              <th>Disetujui</th>
+                                          </tr>
+                                      </thead>
+                                      <tbody>
+                                          {% for user, profiles, izins in query_izin %}
+                                            {% if izins.member_id %}
+                                            {% if izins.start_date %}
+                                              <tr>
+                                              <td>{{ user.username.title() }}</td>
+                                              {% if profiles.id %}
+                                              <td>{{ profiles.jabatan }}</td>
+                                              <td>{{ profiles.divisi }}</td>
+                                              <td>{{ profiles.lokasi_kantor }}</td>
+                                              {% endif %}
+                                              <td>{{ izins.start_date }}</td>
+                                              <td>{{ izins.long_date }}</td>
+                                              <td>{{ izins.keterangan }}</td>
+                                              <td>{{ izins.disetujui }}
+                                              </tr>
+                                            {% endif %}
+                                            {% endif %}
+                                          {% endfor %}
+                                      </tbody>
+                                      <tfoot>
+                                          <tr>
+                                              <th>Nama</th>
+                                              <th>Posisi</th>
+                                              <th>Divisi</th>
+                                              <th>Kantor</th>
+                                              <th>Tanggal</th>
+                                              <th>Berapa Hari</th>
+                                              <th>Keterangan</th>
+                                              <th>Disetujui</th>
+                                          </tr>
+                                      </tfoot>
+                                  </table>
+                              </div>
+                            </div>
                         </div>
-                        <hr>
-              
-                          <table id="data_hadir" class="display" style="width:100%">
-                              <thead>
-                                  <tr>
-                                      <th>Nama</th>
-                                      <th>Posisi</th>
-                                      <th>Divisi</th>
-                                      <th>Lokasi</th>
-                                      <th>Tanggal</th>
-                                      <th>Jam Masuk</th>
-                                      <th>Jam Pulang</th>
-                                      <th>Total Lembur</th>
-                                      <th>Keterangan</th>
-                                  </tr>
-                              </thead>
-                              <tbody>
-                                  {% for user, absens in query_absen %}
-                                    {% if current_user.id == absens.member_id %}
-                                    {% if absens.dates %}
-                                      <tr>
-                                      {% if profil.id %}
-                                      <td>{{ profil.nama_lengkap }}
-                                      <td>{{ profil.jabatan }}</td>
-                                      <td>{{ profil.divisi }}</td>
-                                      <td>{{ profil.lokasi_kantor }}</td>
-                                      {% else %}
-                                      <td>{{ user.username.title() }}</td>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
+                        <div class="col-xl-4 col-md-4">
+                            <div class="card mb-4 table-responsive shadow">
+                              <div class="card-header">
+                                <i class="fas fa-table"></i>
+                                Data Laporan Sakit 
+                              </div>
+                              <div class="card-body">
+                      
+                                  <table id="data_sakit" class="display" style="width:100%">
+                                      <thead>
+                                          <tr>
+                                              <th>Nama</th>
+                                              <th>Posisi</th>
+                                              <th>Divisi</th>
+                                              <th>Kantor</th>
+                                              <th>Tanggal</th>
+                                              <th>Diagnosa</th>
+                                              <th>Izin Istirahat</th>
+                                          </tr>
+                                      </thead>
+                                      <tbody>
+                                          {% for user, profiles, sicks in query_sick %}
+                                            {% if sicks.member_id %}
+                                            {% if sicks.input_date %}
+                                              <tr>
+                                              {% if profiles.id %}
+                                                  <td>{{ profiles.nama_lengkap }}</td>
+                                                  <td>{{ profiles.jabatan }}</td>
+                                                  <td>{{ profiles.divisi }}</td>
+                                                  <td>{{ profiles.lokasi_kantor }}</td>
+                                              {% else %}
+                                                  <td>{{ user.username.title() }}</td>
+                                                  <td></td>
+                                                  <td></td>
+                                                  <td></td>
+                                              {% endif %}
+                                              <td>{{ sicks.input_date }}</td>
+                                              <td>{{ sicks.diagnosa }}</td>
+                                              <td>{{ sicks.long_date }}</td>
+                                              </tr>
+                                            {% endif %}
+                                            {% endif %}
+                                          {% endfor %}
+                                      </tbody>
+                                      <tfoot>
+                                          <tr>
+                                              <th>Nama</th>
+                                              <th>Posisi</th>
+                                              <th>Divisi</th>
+                                              <th>Kantor</th>
+                                              <th>Tanggal</th>
+                                              <th>Diagnosa</th>
+                                              <th>Izin Istirahat</th>
+                                          </tr>
+                                      </tfoot>
+                                  </table>
+                              </div>
+                            </div>
+                            <!--
+                          <div class="card mb-4 shadow">
+                            <div class="card-header">
+                              <i class="fas fa-chart-area me-1"></i>
+                              Trafik Rate Lemburan
+                            </div>
+                            <div class="card-body">
+                              <canvas id="myAreaChart" width="100%" height="40"></canvas>
+                            </div>
+                          </div>
+                          <!-- end -->
+                        </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-12 col-sm-12">
+                      <div class="card mb-4 table-responsive shadow">
+                        <div class="card-header">
+                          <i class="fas fa-table"></i>
+                          Data Laporan Absen
+                        </div>
+                        <div class="card-body">
+                          <div class="row mb-4">
+                            <h5>Filter Tanggal</h5>
+                            <div class="col-sm-3">Dari Tanggal :</div>
+                            <div class="col-sm-3">
+                              <input class="col-form" type="text" id="min" name="min">
+                            </div>
+                            <div class="col-sm-3">Sampai Tanggal :</div>
+                            <div class="col-sm-3">
+                              <input class="col-form" type="text" id="max" name="max">
+                            </div>
+                          </div>
+                          <hr>
+                
+                            <table id="data_hadir" class="display" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Nama</th>
+                                        <th>Posisi</th>
+                                        <th>Divisi</th>
+                                        <th>Lokasi</th>
+                                        <th>Tanggal</th>
+                                        <th>Jam Masuk</th>
+                                        <th>Jam Pulang</th>
+                                        <th>Total Lembur</th>
+                                        <th>Keterangan</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for user, absens in query_absen %}
+                                      {% if current_user.id == absens.member_id %}
+                                      {% if absens.dates %}
+                                        <tr>
+                                        {% if profil.id %}
+                                        <td>{{ profil.nama_lengkap }}
+                                        <td>{{ profil.jabatan }}</td>
+                                        <td>{{ profil.divisi }}</td>
+                                        <td>{{ profil.lokasi_kantor }}</td>
+                                        {% else %}
+                                        <td>{{ user.username.title() }}</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        {% endif %}
+                                        <td>{{ absens.dates }}</td>
+                                        {% if absens.jam_datang %}
+                                        <td>{{ absens.jam_datang }}</td>
+                                        {% else %}
+                                        <td></td>
+                                        {% endif %}
+                                        {% if absens.jam_pulang %}
+                                        <td>{{ absens.jam_pulang }}</td>
+                                        {% else %}
+                                        <td></td>
+                                        {% endif %}
+                                        <td></td>
+                                        {% if absens.keterangan %}
+                                        <td>{{ absens.keterangan }}</td>
+                                        {% else %}
+                                        <td></td>
+                                        {% endif %}
+                                        </tr>
                                       {% endif %}
-                                      <td>{{ absens.dates }}</td>
-                                      {% if absens.jam_datang %}
-                                      <td>{{ absens.jam_datang }}</td>
-                                      {% else %}
-                                      <td></td>
                                       {% endif %}
-                                      {% if absens.jam_pulang %}
-                                      <td>{{ absens.jam_pulang }}</td>
-                                      {% else %}
-                                      <td></td>
-                                      {% endif %}
-                                      <td></td>
-                                      {% if absens.keterangan %}
-                                      <td>{{ absens.keterangan }}</td>
-                                      {% else %}
-                                      <td></td>
-                                      {% endif %}
-                                      </tr>
-                                    {% endif %}
-                                    {% endif %}
-                                  {% endfor %}
-                              </tbody>
-                              <tfoot>
-                                  <tr>
-                                      <th>Nama</th>
-                                      <th>Posisi</th>
-                                      <th>Divisi</th>
-                                      <th>Lokasi</th>
-                                      <th>Tanggal</th>
-                                      <th>Jam Masuk</th>
-                                      <th>Jam Pulang</th>
-                                      <th>Total Lembur</th>
-                                      <th>Keterangan</th>
-                                  </tr>
-                              </tfoot>
-                          </table>
+                                    {% endfor %}
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Nama</th>
+                                        <th>Posisi</th>
+                                        <th>Divisi</th>
+                                        <th>Lokasi</th>
+                                        <th>Tanggal</th>
+                                        <th>Jam Masuk</th>
+                                        <th>Jam Pulang</th>
+                                        <th>Total Lembur</th>
+                                        <th>Keterangan</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
                       </div>
                     </div>
-                    <!-- end table absen -->
+                  </div>
+                      <!-- end table absen -->
                 </div>
             </main>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
@@ -145,6 +281,22 @@
 
           // DataTables initialisation
           var table = $('#data_hadir').DataTable( {
+              dom: 'Bfrtip',
+              buttons: ['csv', 'excel', 'pdf', 'print'],
+              responsive: true,
+              rowReorder: {
+                  selector: 'td:nth-child(2)'
+              }
+          });
+          var table = $('#data_sakit').DataTable( {
+              dom: 'Bfrtip',
+              buttons: ['csv', 'excel', 'pdf', 'print'],
+              responsive: true,
+              rowReorder: {
+                  selector: 'td:nth-child(2)'
+              }
+          });
+          var table = $('#data_izin').DataTable( {
               dom: 'Bfrtip',
               buttons: ['csv', 'excel', 'pdf', 'print'],
               responsive: true,

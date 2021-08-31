@@ -28,6 +28,7 @@ class CheckOutForm(FlaskForm):
 
 
 class SickForm(FlaskForm):
+    input_date = DateField('Tanggal', validators=[DataRequired()])
     diagnosa = StringField('Diagnosa', validators=[DataRequired(),
                                                    Length(1, 64)])
     long_date = IntegerField('Izin Hari', validators=[Optional()])
