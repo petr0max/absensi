@@ -128,10 +128,10 @@ def create_izin():
             permits.keterangan=form.keterangan.data
             permits.member_id=g.user
             try:
-                db.session.add(permit)
+                db.session.add(permits)
                 db.session.commit()
                 flash('Kita coba review yah...')
-                return redirect(url_for('hadir.index'))
+                return redirect(url_for('.index'))
                 return render_template('hadir/input_izin.html', form=form,
                                        permits=permits, profil=profil)
             except:
@@ -146,7 +146,7 @@ def create_izin():
             try:
                 db.session.commit()
                 flash('Update berhasil...')
-                return redirect(url_for('hadir.index'))
+                return redirect(url_for('.index'))
                 return render_template('hadir/input_izin.html', form=form,
                                        permits=permits, profil=profil)
             except:
