@@ -16,7 +16,7 @@ def login():
         if user is not None and user.verify_password(form.pass_hash.data):
             login_user(user, form.remember_me.data)
             next = request.args.get('next')
-            if next is None or not next.startswith('/'):
+            if next is None or not next.startswith('/absen'):
                 next = url_for('hadir.index')
             return redirect(next)
         flash('Invalid username or password.')
