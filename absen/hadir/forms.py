@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import (StringField, SubmitField, DateField, DateTimeField,
                      IntegerField, TimeField)
-from wtforms.validators import DataRequired, Length
+from wtforms.validators import DataRequired, Length, Optional
 
 
 class PermitForm(FlaskForm):
@@ -28,7 +28,7 @@ class CheckOutForm(FlaskForm):
 
 
 class SickForm(FlaskForm):
-    dates = DateField('Tanggal', validators=[DataRequired()])
-    keterangan = StringField('Diagnosa', validators=[DataRequired(),
+    diagnosa = StringField('Diagnosa', validators=[DataRequired(),
                                                    Length(1, 64)])
+    long_date = IntegerField('Izin Hari', validators=[Optional()])
     submit = SubmitField('Kirim')

@@ -46,9 +46,9 @@
                         <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                         Dashboard
                     </a>
-                    <a class="nav-link" href="#">
+                    <a class="nav-link {% if active_page == 'main.reports' %}active{% endif %}" href="{{ url_for('main.reports') }}">
                         <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
-                        Report Member
+                        Report Pegawai
                     </a>
                     {% endif %}
                     <a class="nav-link {% if active_page == 'hadir.index' or active_page== 'hadir.checkin' or active_page == 'hadir.checkout' or active_page == 'hadir.izin' or active_page == 'hadir.create_izin' or active_page == 'hadir.sick' %}active{% endif %}" href="{{ url_for('hadir.index') }}">

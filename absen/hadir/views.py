@@ -6,7 +6,7 @@ from . import hadir
 from .. import db
 from ..models import User
 from ..profil.models import Profile
-from .models import Permit, Absen
+from .models import Permit, Absen, Sick
 from .forms import (PermitForm, CheckInForm, CheckOutForm, SickForm)
 
 
@@ -17,8 +17,12 @@ def index():
     profil = Profile.query.filter(Profile.member_id==g.user).first()
     query_absen = db.session.query(User, Absen).join(Absen).filter(
         Absen.member_id==g.user).order_by(Absen.dates.desc())
+    query_izin = db.session.query(User, Permit).join(Permit).filter(Permit.member_id==g.user).order_by(Permit.start_date.desc())
+
+    query_sick = db.session.query(User, Sick).join(Sick).filter(Sick.member_id==g.user).order_by(Sick.input_date.desc())
     return render_template('hadir/hadir.html', query_absen=query_absen,
-                           profil=profil)
+                           profil=profil, query_izin=query_izin,
+                           query_sick=query_sick)
 
 
 @hadir.route('/checkin', methods=['GET', 'POST'])
@@ -62,45 +66,34 @@ def checkout():
     return render_template('hadir/pulang.html', form=form, profil=profil)
 
 
-@hadir.route('/sick', methods=['GET', 'POST'])
+@hadir.route('/sick/<int:id>', methods=['GET', 'POST'])
 @login_required
-def sick():
+def sick(id):
     form = SickForm()
-    if form.validate_on_submit():
-        g.user = current_user.get_id()
-        checkdates = Absen.query.filter(Absen.dates==form.dates.data, Absen.member_id==g.user).first()
-        if checkdates is None:
-            sick = Absen(dates=form.dates.data,
-                        keterangan=form.keterangan.data,
-                        member_id=g.user)
-            db.session.add(sick)
+    users = User.query.get_or_404(id)
+    profil = Profile.query.filter(Profile.member_id==users.id).first()
+    if request.method=='POST':
+        sakit = Sick()
+        sakit.diagnosa=form.diagnosa.data
+        sakit.long_date=form.long_date.data
+        sakit.member_id=users.id
+        try:
+            db.session.add(sakit)
             db.session.commit()
             flash('Semoga Lekas Sembuh...')
             return redirect(url_for('.index'))
-        if checkdates:
-            sick = Absen(dates=form.dates.data,
-                        keterangan=form.keterangan.data,
-                        member_id=g.user)
-            db.session.add(sick)
-            db.session.commit()
-            flash('Semoga Lekas Sembuh...')
+            return render_template('hadir/sakit.html', form=form,
+                                   sakit=sakit, profil=profil)
+        except:
+            flash('Error! Looks like there was a problem. Try again...')
             return redirect(url_for('.index'))
-    g.user = current_user.get_id()
-    profil = Profile.query.filter(Profile.member_id==g.user).first()
-    return render_template('hadir/sakit.html', form=form, profil=profil)
+            return render_template('hadir/sakit.html', form=form,
+                                   sakit=sakit, profil=profil)
+    else:
+        return render_template('hadir/sakit.html', form=form,
+                               profil=profil)
 
-
-@hadir.route('/izin')
-@login_required
-def izin():
-    g.user = current_user.get_id()
-    profil = Profile.query.filter(Profile.member_id==g.user).first()
-    query_izin = db.session.query(User, Permit).join(Permit).filter(Permit.member_id==g.user).order_by(Permit.start_date.desc())
-    return render_template('hadir/izin.html', query_izin=query_izin,
-                           profil=profil)
-
-
-@hadir.route('/izin/create', methods=['GET', 'POST'])
+@hadir.route('/izin', methods=['GET', 'POST'])
 @login_required
 def create_izin():
     form = PermitForm()
@@ -117,7 +110,7 @@ def create_izin():
             db.session.add(permit)
             db.session.commit()
             flash('Kita coba review yah...')
-            return redirect(url_for('hadir.izin'))
+            return redirect(url_for('hadir.index'))
         flash('Permintaan izin sudah ada.')
     permits = Permit.query.order_by(Permit.start_date.desc()).all()
     profil = Profile.query.filter(Profile.member_id==g.user).first()

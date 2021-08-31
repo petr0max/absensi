@@ -4,7 +4,7 @@ from flask_login import login_required, current_user
 from . import main
 from .. import db
 from ..models import User, Permission
-from ..hadir.models import Absen
+from ..hadir.models import Absen, Sick, Permit
 from ..profil.models import Profile
 from ..decorators import admin_required, permission_required
 from sqlalchemy.sql import func
@@ -29,8 +29,31 @@ def index():
     mtid = db.select([func.count(User.id)])
     member = db.session.execute(mtid)  # Counting member on database register
 
-    absen_now = db.session.query(User, Absen, Profile).join(Absen, Profile).filter(
+    absen_now = db.session.query(User, Profile, Absen).join(Profile, Absen).filter(
         Absen.dates==datetime.date.today()).all()
+
+    s_now = db.select([func.count(Sick.member_id)]).where(
+        Sick.input_date==datetime.date.today())  # Counting sick dates
+    count_sick_now = db.session.execute(s_now)
+
+    sick_now = db.session.query(User, Profile, Sick).join(Profile, Sick).filter(
+        Sick.input_date==datetime.date.today()
+    )
+
+    p_now = db.select([func.count(Permit.member_id)]).where(
+        Permit.disetujui==False)  # Counting Permit Not Yet
+    count_permit_now = db.session.execute(p_now)
+
+    permit_false = db.session.query(User, Profile, Permit).join(Profile, Permit).filter(
+        Permit.disetujui==False)
+
     return render_template('index.html', not_absen=not_absen,
                            member=member, count_absen=count_absen,
-                           absen_now=absen_now)
+                           absen_now=absen_now, count_sick_now=count_sick_now,
+                           sick_now=sick_now, count_permit_now=count_permit_now,
+                           permit_false=permit_false)
+
+@main.route('/reports')
+@login_required
+def reports():
+    return render_template('report/index.html')

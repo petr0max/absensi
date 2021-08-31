@@ -26,3 +26,16 @@ class Absen(db.Model):
 
     def __repr__(self):
         return f"<{self.dates}>"
+
+
+class Sick(db.Model):
+    __tablename__ = 'sicks'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    input_date = db.Column(db.Date(), default=datetime.date.today(),
+                           unique=True)
+    diagnosa = db.Column(db.String(64), index=True)
+    long_date = db.Column(db.Integer)
+    member_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+
+    def __repr__(self):
+        return f"{self.diagnosa.title()}"

@@ -90,7 +90,7 @@ class User(UserMixin, db.Model):
     profiles = db.relationship('Profile', backref='user', uselist=False)
     permits = db.relationship('Permit', backref='user', lazy='dynamic')
     absens = db.relationship('Absen', backref='user', lazy='dynamic')
-
+    sicks = db.relationship('Sick', backref='user', lazy='dynamic')
 
     def __init__(self, **kwargs):
         super(User, self).__init__(**kwargs)
