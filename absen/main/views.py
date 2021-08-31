@@ -57,5 +57,6 @@ def index():
 def reports():
     query_izin = db.session.query(User, Profile, Permit).join(Profile, Permit).order_by(Permit.start_date.desc()).all()
     query_sick = db.session.query(User, Profile, Sick).join(Profile, Sick).order_by(Sick.input_date.desc()).all()
+    query_absen = db.session.query(User, Profile, Absen).join(Profile, Absen).order_by(Absen.dates.desc()).all()
     return render_template('report/index.html', query_izin=query_izin,
-                           query_sick=query_sick)
+                           query_sick=query_sick, query_absen=query_absen)
