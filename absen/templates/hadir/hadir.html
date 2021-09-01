@@ -89,6 +89,10 @@
                                               <td>{{ profil.jabatan }}</td>
                                               <td>{{ profil.divisi }}</td>
                                               <td>{{ profil.lokasi_kantor }}</td>
+                                              {% else %}
+                                              <td></td>
+                                              <td></td>
+                                              <td></td>
                                               {% endif %}
                                               <td>{{ izins.start_date }}</td>
                                               <td>{{ izins.long_date }}</td>
