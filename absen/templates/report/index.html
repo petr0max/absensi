@@ -36,7 +36,7 @@
                                           </tr>
                                       </thead>
                                       <tbody>
-                                          {% for user, profiles, izins in query_izin %}
+                                          {% for izins, user, profiles in query_izin %}
                                             {% if izins.member_id %}
                                             {% if izins.start_date %}
                                               <tr>
@@ -45,6 +45,10 @@
                                               <td>{{ profiles.jabatan }}</td>
                                               <td>{{ profiles.divisi }}</td>
                                               <td>{{ profiles.lokasi_kantor }}</td>
+                                              {% else %}
+                                              <td></td>
+                                              <td></td>
+                                              <td></td>
                                               {% endif %}
                                               <td>{{ izins.start_date }}</td>
                                               <td>{{ izins.long_date }}</td>
@@ -92,7 +96,7 @@
                                           </tr>
                                       </thead>
                                       <tbody>
-                                          {% for user, profiles, sicks in query_sick %}
+                                          {% for sicks, user, profiles in query_sick %}
                                             {% if sicks.member_id %}
                                             {% if sicks.input_date %}
                                               <tr>
@@ -178,7 +182,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {% for user, profiles, absens in query_absen %}
+                                    {% for absens, user, profiles in query_absen %}
                                       {% if absens.member_id %}
                                       {% if absens.dates %}
                                         <tr>

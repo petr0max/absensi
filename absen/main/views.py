@@ -8,6 +8,7 @@ from ..hadir.models import Absen, Sick, Permit
 from ..profil.models import Profile
 from ..decorators import admin_required, permission_required
 from sqlalchemy.sql import func
+from sqlalchemy.orm import outerjoin
 import datetime
 
 
@@ -29,21 +30,24 @@ def index():
     mtid = db.select([func.count(User.id)])
     member = db.session.execute(mtid)  # Counting member on database register
 
-    absen_now = db.session.query(User, Profile, Absen).join(Profile, Absen).filter(
+    absen_now = db.session.query(Absen, User, Profile).select_from(Absen).outerjoin(
+        User, Profile).filter(
         Absen.dates==datetime.date.today()).all()
 
     s_now = db.select([func.count(Sick.member_id)]).where(
         Sick.input_date==datetime.date.today())  # Counting sick dates
     count_sick_now = db.session.execute(s_now)
 
-    sick_now = db.session.query(User, Profile, Sick).join(Profile, Sick).filter(
+    sick_now = db.session.query(Sick, User, Profile).select_from(Sick).outerjoin(
+        User, Profile).filter(
         Sick.input_date==datetime.date.today()).order_by(Sick.input_date.desc())
 
     p_now = db.select([func.count(Permit.member_id)]).where(
         Permit.disetujui==False)  # Counting Permit Not Yet
     count_permit_now = db.session.execute(p_now)
 
-    permit_false = db.session.query(User, Profile, Permit).join(Profile, Permit).filter(
+    permit_false = db.session.query(Permit, User, Profile).select_from(Permit).outerjoin(
+        User, Profile).filter(
         Permit.disetujui==False).order_by(Permit.start_date.desc())
 
     return render_template('index.html', not_absen=not_absen,
@@ -55,8 +59,11 @@ def index():
 @main.route('/reports')
 @login_required
 def reports():
-    query_izin = db.session.query(User, Profile, Permit).join(Profile, Permit).order_by(Permit.start_date.desc()).all()
-    query_sick = db.session.query(User, Profile, Sick).join(Profile, Sick).order_by(Sick.input_date.desc()).all()
-    query_absen = db.session.query(User, Profile, Absen).join(Profile, Absen).order_by(Absen.dates.desc()).all()
+    query_izin = db.session.query(Permit, User, Profile).select_from(Permit).outerjoin(
+        User, Profile).order_by(Permit.start_date.desc())
+    query_sick = db.session.query(Sick, User, Profile).select_from(Sick).outerjoin(
+        User, Profile).order_by(Sick.input_date.desc())
+    query_absen = db.session.query(Absen, User, Profile).select_from(Absen).outerjoin(
+        User, Profile).order_by(Absen.dates.desc())
     return render_template('report/index.html', query_izin=query_izin,
                            query_sick=query_sick, query_absen=query_absen)

@@ -87,7 +87,7 @@
                                           </tr>
                                       </thead>
                                       <tbody>
-                                          {% for user, profiles, izins in permit_false %}
+                                          {% for izins, user, profiles in permit_false %}
                                             {% if izins.member_id %}
                                             {% if izins.start_date %}
                                               <tr>
@@ -96,6 +96,10 @@
                                               <td>{{ profiles.jabatan }}</td>
                                               <td>{{ profiles.divisi }}</td>
                                               <td>{{ profiles.lokasi_kantor }}</td>
+                                              {% else %}
+                                              <td></td>
+                                              <td></td>
+                                              <td></td>
                                               {% endif %}
                                               <td>{{ izins.start_date }}</td>
                                               <td>{{ izins.long_date }}</td>
@@ -143,7 +147,7 @@
                                           </tr>
                                       </thead>
                                       <tbody>
-                                          {% for user, profiles, sicks in sick_now %}
+                                          {% for sicks, user, profiles in sick_now %}
                                             {% if sicks.member_id %}
                                             {% if sicks.input_date %}
                                               <tr>
@@ -220,7 +224,7 @@
                                           </tr>
                                       </thead>
                                       <tbody>
-                                          {% for user, profiles, absens in absen_now %}
+                                          {% for absens, user, profiles in absen_now %}
                                             {% if absens.member_id %}
                                             {% if absens.dates %}
                                               <tr>

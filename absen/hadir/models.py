@@ -11,6 +11,15 @@ class Permit(db.Model):
     disetujui = db.Column(db.Boolean, default=False)
     member_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
+    def __init__(self, keterangan, long_date, start_date, disetujui):
+        self.keterangan = keterangan
+        self.long_date = long_date
+        self.start_date = start_date
+        self.disetujui = disetujui
+
+    def __repr__(self):
+        return f'{self.keterangan}'
+
 
 class Absen(db.Model):
     __tablename__ = 'absens'
