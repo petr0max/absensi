@@ -183,7 +183,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {% for absens, user, profiles in query_absen %}
+                                    {% for absens, user, profiles, checkins, checkouts in query_absen %}
                                       {% if absens.member_id %}
                                       {% if absens.dates %}
                                         <tr>
@@ -199,13 +199,13 @@
                                         <td></td>
                                         {% endif %}
                                         <td>{{ absens.dates }}</td>
-                                        {% if absens.jam_datang %}
-                                        <td>{{ absens.jam_datang }}</td>
+                                        {% if checkins %}
+                                        <td>{{ checkins }}</td>
                                         {% else %}
                                         <td></td>
                                         {% endif %}
-                                        {% if absens.jam_pulang %}
-                                        <td>{{ absens.jam_pulang }}</td>
+                                        {% if checkouts %}
+                                        <td>{{ checkouts }}</td>
                                         {% else %}
                                         <td></td>
                                         {% endif %}

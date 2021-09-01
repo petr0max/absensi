@@ -7,6 +7,7 @@ from ..models import User
 from ..profil.models import Profile
 from .models import Permit, Absen, Sick
 from .forms import (PermitForm, CheckInForm, CheckOutForm, SickForm)
+from sqlalchemy import cast, Time
 import datetime
 
 
@@ -15,8 +16,10 @@ import datetime
 def index():
     g.user = current_user.get_id()
     profil = Profile.query.filter(Profile.member_id==g.user).first()
-    
-    query_absen = db.session.query(Absen, User, Profile).select_from(
+
+    checkins = cast(Absen.jam_datang, Time)
+    checkouts = cast(Absen.jam_pulang, Time)
+    query_absen = db.session.query(Absen, User, Profile, checkins, checkouts).select_from(
         Absen).outerjoin(User, Profile).filter(Absen.member_id==g.user).order_by(Absen.dates.desc())
 
     query_izin = db.session.query(Permit, User, Profile).select_from(

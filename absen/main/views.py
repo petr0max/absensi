@@ -7,7 +7,7 @@ from ..models import User, Permission
 from ..hadir.models import Absen, Sick, Permit
 from ..profil.models import Profile
 from ..decorators import admin_required, permission_required
-from sqlalchemy.sql import func
+from sqlalchemy import cast, func, Time
 from sqlalchemy.orm import outerjoin
 import datetime
 
@@ -30,7 +30,9 @@ def index():
     mtid = db.select([func.count(User.id)])
     member = db.session.execute(mtid)  # Counting member on database register
 
-    absen_now = db.session.query(Absen, User, Profile).select_from(Absen).outerjoin(
+    checkins = cast(Absen.jam_datang, Time)
+    checkouts = cast(Absen.jam_pulang, Time)
+    absen_now = db.session.query(Absen, User, Profile, checkins, checkouts).select_from(Absen).outerjoin(
         User, Profile).filter(
         Absen.dates==datetime.date.today()).all()
 
@@ -61,9 +63,14 @@ def index():
 def reports():
     query_izin = db.session.query(Permit, User, Profile).select_from(Permit).outerjoin(
         User, Profile).order_by(Permit.start_date.desc())
+    
     query_sick = db.session.query(Sick, User, Profile).select_from(Sick).outerjoin(
         User, Profile).order_by(Sick.input_date.desc())
-    query_absen = db.session.query(Absen, User, Profile).select_from(Absen).outerjoin(
+    
+
+    checkins = cast(Absen.jam_datang, Time)
+    checkouts = cast(Absen.jam_pulang, Time)
+    query_absen = db.session.query(Absen, User, Profile, checkins, checkouts).select_from(Absen).outerjoin(
         User, Profile).order_by(Absen.dates.desc())
     return render_template('report/index.html', query_izin=query_izin,
                            query_sick=query_sick, query_absen=query_absen)
