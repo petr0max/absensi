@@ -15,11 +15,12 @@ from .forms import (PermitForm, CheckInForm, CheckOutForm, SickForm)
 def index():
     g.user = current_user.get_id()
     profil = Profile.query.filter(Profile.member_id==g.user).first()
-    query_absen = db.session.query(User, Absen).join(Absen).filter(
+    query_absen = db.session.query(Absen, User, Profile).select_from(Absen).outerjoin(User, Profile).filter(
         Absen.member_id==g.user).order_by(Absen.dates.desc())
-    query_izin = db.session.query(User, Permit).join(Permit).filter(Permit.member_id==g.user).order_by(Permit.start_date.desc())
+    query_izin = db.session.query(Permit, User, Profile).select_from(Permit).outerjoin(User, Profile).filter(Permit.member_id==g.user).order_by(Permit.start_date.desc())
 
-    query_sick = db.session.query(User, Sick).join(Sick).filter(Sick.member_id==g.user).order_by(Sick.input_date.desc())
+    query_sick = db.session.query(Sick, User, Profile).select_from(Sick).outerjoin(
+        User, Profile).filter(Sick.member_id==g.user).order_by(Sick.input_date.desc())
     return render_template('hadir/hadir.html', query_absen=query_absen,
                            profil=profil, query_izin=query_izin,
                            query_sick=query_sick)

@@ -80,16 +80,17 @@
                                           </tr>
                                       </thead>
                                       <tbody>
-                                          {% for user, izins in query_izin %}
+                                          {% for izins, user, profiles in query_izin %}
                                             {% if current_user.id == izins.member_id %}
                                             {% if izins.start_date %}
                                               <tr>
-                                              <td>{{ user.username.title() }}</td>
-                                              {% if profil.id %}
-                                              <td>{{ profil.jabatan }}</td>
-                                              <td>{{ profil.divisi }}</td>
-                                              <td>{{ profil.lokasi_kantor }}</td>
+                                              {% if profiles.id %}
+                                              <td>{{ profiles.nama_lengkap.title() }}</td>
+                                              <td>{{ profiles.jabatan }}</td>
+                                              <td>{{ profiles.divisi }}</td>
+                                              <td>{{ profiles.lokasi_kantor }}</td>
                                               {% else %}
+                                              <td>{{ user.username.title() }}</td>
                                               <td></td>
                                               <td></td>
                                               <td></td>
@@ -140,15 +141,15 @@
                                           </tr>
                                       </thead>
                                       <tbody>
-                                          {% for user, sicks in query_sick %}
+                                          {% for sicks, user, profiles in query_sick %}
                                             {% if current_user.id == sicks.member_id %}
                                             {% if sicks.input_date %}
                                               <tr>
-                                              {% if profil.id %}
-                                                  <td>{{ profil.nama_lengkap }}</td>
-                                                  <td>{{ profil.jabatan }}</td>
+                                              {% if profiles.id %}
+                                                  <td>{{ profiles.nama_lengkap.title() }}</td>
+                                                  <td>{{ profiles.jabatan }}</td>
                                                   <td>{{ profil.divisi }}</td>
-                                                  <td>{{ profil.lokasi_kantor }}</td>
+                                                  <td>{{ profiles.lokasi_kantor }}</td>
                                               {% else %}
                                                   <td>{{ user.username.title() }}</td>
                                                   <td></td>
@@ -227,16 +228,16 @@
                                           </tr>
                                       </thead>
                                       <tbody>
-                                          {% for user, absens in query_absen %}
+                                          {% for absens, user, profiles in query_absen %}
                                             {% if current_user.id == absens.member_id %}
                                             {% if absens.dates %}
                                               <tr>
                                               <td>{{ absens.input_date }}</td>
-                                              {% if profil.id %}
-                                              <td>{{ profil.nama_lengkap }}
-                                              <td>{{ profil.jabatan }}</td>
-                                              <td>{{ profil.divisi }}</td>
-                                              <td>{{ profil.lokasi_kantor }}</td>
+                                              {% if profiles.id %}
+                                              <td>{{ profiles.nama_lengkap.title() }}</td>
+                                              <td>{{ profiles.jabatan }}</td>
+                                              <td>{{ profiles.divisi }}</td>
+                                              <td>{{ profiles.lokasi_kantor }}</td>
                                               {% else %}
                                               <td>{{ user.username.title() }}</td>
                                               <td></td>

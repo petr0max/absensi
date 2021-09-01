@@ -40,12 +40,13 @@
                                             {% if izins.member_id %}
                                             {% if izins.start_date %}
                                               <tr>
-                                              <td>{{ user.username.title() }}</td>
                                               {% if profiles.id %}
+                                              <td>{{ profiles.nama_lengkap.title() }}</td>
                                               <td>{{ profiles.jabatan }}</td>
                                               <td>{{ profiles.divisi }}</td>
                                               <td>{{ profiles.lokasi_kantor }}</td>
                                               {% else %}
+                                              <td>{{ user.username.title() }}</td>
                                               <td></td>
                                               <td></td>
                                               <td></td>
