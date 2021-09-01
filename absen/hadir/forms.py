@@ -14,14 +14,15 @@ class PermitForm(FlaskForm):
 
 class CheckInForm(FlaskForm):
     dates = DateField('Tanggal', validators=[DataRequired()])
-    jam_datang = TimeField('Jam Datang', validators=[DataRequired()],
+    jam_input = TimeField('Jam Datang', validators=[DataRequired()],
                            format='%H:%M')
     submit = SubmitField('Kirim')
 
 
 class CheckOutForm(FlaskForm):
     dates = DateField('Tanggal', validators=[DataRequired()])
-    jam_pulang = TimeField('Jam Pulang', validators=[DataRequired()])
+    jam_pulang = TimeField('Jam Pulang', validators=[DataRequired()],
+                           format='%H:%M')
     keterangan = StringField('Keterangan',
                              validators=[DataRequired(), Length(1, 64)])
     submit = SubmitField('Kirim')

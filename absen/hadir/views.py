@@ -1,13 +1,13 @@
 from flask import (render_template, redirect, request, url_for, flash, g,
                    session)
 from flask_login import login_required, current_user
-from datetime import datetime
 from . import hadir
 from .. import db
 from ..models import User
 from ..profil.models import Profile
 from .models import Permit, Absen, Sick
 from .forms import (PermitForm, CheckInForm, CheckOutForm, SickForm)
+import datetime
 
 
 @hadir.route('/')
@@ -15,12 +15,16 @@ from .forms import (PermitForm, CheckInForm, CheckOutForm, SickForm)
 def index():
     g.user = current_user.get_id()
     profil = Profile.query.filter(Profile.member_id==g.user).first()
-    query_absen = db.session.query(Absen, User, Profile).select_from(Absen).outerjoin(User, Profile).filter(
-        Absen.member_id==g.user).order_by(Absen.dates.desc())
-    query_izin = db.session.query(Permit, User, Profile).select_from(Permit).outerjoin(User, Profile).filter(Permit.member_id==g.user).order_by(Permit.start_date.desc())
+    
+    query_absen = db.session.query(Absen, User, Profile).select_from(
+        Absen).outerjoin(User, Profile).filter(Absen.member_id==g.user).order_by(Absen.dates.desc())
 
-    query_sick = db.session.query(Sick, User, Profile).select_from(Sick).outerjoin(
-        User, Profile).filter(Sick.member_id==g.user).order_by(Sick.input_date.desc())
+    query_izin = db.session.query(Permit, User, Profile).select_from(
+        Permit).outerjoin(User, Profile).filter(Permit.member_id==g.user).order_by(Permit.start_date.desc())
+
+    query_sick = db.session.query(Sick, User, Profile).select_from(
+        Sick).outerjoin(User, Profile).filter(Sick.member_id==g.user).order_by(Sick.input_date.desc())
+    
     return render_template('hadir/hadir.html', query_absen=query_absen,
                            profil=profil, query_izin=query_izin,
                            query_sick=query_sick)
@@ -30,41 +34,65 @@ def index():
 @login_required
 def checkin():
     form = CheckInForm()
-    if form.validate_on_submit():
-        g.user = current_user.get_id()
-        checkdates = Absen.query.filter(Absen.dates==form.dates.data, Absen.member_id==g.user).first()
-
-        if checkdates is None:
-            checkin = Absen(dates=form.dates.data,
-                            jam_datang=form.jam_datang.data,
-                            member_id=g.user)
+    g.user = current_user.get_id()
+    profil = Profile.query.filter(Profile.member_id==g.user).first()
+    checkin = Absen.query.filter(Absen.dates==form.dates.data, Absen.member_id==g.user).first()
+    if request.method == 'POST':
+        if checkin is None:
+            jam_input = form.jam_input.data
+            clock_input = datetime.datetime.strptime(str(jam_input), '%H:%M:%S')
+            date_input = form.dates.data
+            tgl_input = datetime.datetime.strptime(str(date_input), "%Y-%m-%d")
+            checkin = Absen()
+            checkin.dates=date_input
+            checkin.jam_datang=datetime.datetime.combine(datetime.date(
+                tgl_input.year, tgl_input.month, tgl_input.day), datetime.time(clock_input.hour, clock_input.minute))
+            checkin.member_id=g.user
             db.session.add(checkin)
             db.session.commit()
             flash('Semangat ...!')
             return redirect(url_for('.index'))
-        flash('Upss.. data sudah ada')
-    g.user = current_user.get_id()
-    profil = Profile.query.filter(Profile.member_id==g.user).first()
-    return render_template('hadir/masuk.html', form=form, profil=profil)
+            return render_template('hadir/masuk.html', form=form,
+                                   checkin=checkin, profil=profil)
+        else:
+            flash('Upss... sudah checkin kak!')
+            return redirect(url_for('.index'))
+            return render_template('hadir/masuk.html', form=form,
+                                   checkin=checkin, profil=profil)
+    
+    else:
+        return render_template('hadir/masuk.html', form=form, profil=profil)
 
 
 @hadir.route('/checkout', methods=['GET', 'POST'])
 @login_required
 def checkout():
     form = CheckOutForm()
-    if form.validate_on_submit():
-        g.user = current_user.get_id()
-        checkdates = Absen.query.filter(Absen.dates==form.dates.data, Absen.member_id==g.user).first()
-        if checkdates:
-            checkdates.jam_pulang = form.jam_pulang.data
-            checkdates.keterangan = form.keterangan.data
+    g.user = current_user.get_id()
+    profil = Profile.query.filter(Profile.member_id==g.user).first()
+    checkouts = Absen.query.filter(Absen.dates==form.dates.data, Absen.member_id==g.user).first()
+    
+    if request.method == 'POST':
+        if checkouts:
+            jam_input = form.jam_pulang.data
+            clock_input = datetime.datetime.strptime(str(jam_input), '%H:%M:%S')
+            date_input = form.dates.data
+            tgl_input = datetime.datetime.strptime(str(date_input), "%Y-%m-%d")
+            
+            checkouts.jam_pulang=datetime.datetime.combine(datetime.date(
+                tgl_input.year, tgl_input.month, tgl_input.day), datetime.time(clock_input.hour, clock_input.minute))
+            checkouts.keterangan = form.keterangan.data
             db.session.commit()
             flash('Selamat Beristirahat...')
             return redirect(url_for('.index'))
-        flash('Anda belum checkin tanggal tersebut...')
-    g.user = current_user.get_id()
-    profil = Profile.query.filter(Profile.member_id==g.user).first()
-    return render_template('hadir/pulang.html', form=form, profil=profil)
+            return render_template('hadir/pulang.html', form=form,
+                                   checkouts=checkouts, profil=profil)
+        else:
+            flash('Anda belum checkin tanggal tersebut...')
+            return redirect(url_for('.index'))
+    
+    else:
+        return render_template('hadir/pulang.html', form=form, profil=profil)
 
 
 @hadir.route('/sick', methods=['GET', 'POST'])

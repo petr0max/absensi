@@ -27,10 +27,10 @@ class Absen(db.Model):
     input_date = db.Column(db.DateTime(), default=datetime.datetime.now(),
                            unique=True)
     dates = db.Column(db.Date())
-    jam_datang = db.Column(db.Time())
-    jam_pulang = db.Column(db.Time())
+    jam_datang = db.Column(db.DateTime())
+    jam_pulang = db.Column(db.DateTime())
+    #overtime = db.Column(db.DateTime())
     keterangan = db.Column(db.String(64), index=True)
-    #surat_sakit
     member_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     def __repr__(self):
