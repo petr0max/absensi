@@ -305,6 +305,12 @@
                   selector: 'td:nth-child(2)'
               }
           });
+          // Refilter the table
+        $('#min, #max').on('change', function() {
+          table.draw();
+        });
+      });
+      $(document).ready(function() {
           var table = $('#data_sakit').DataTable( {
               dom: 'Bfrtip',
               buttons: ['csv', 'excel', 'pdf', 'print'],
@@ -321,10 +327,6 @@
                   selector: 'td:nth-child(2)'
               }
           });
-          // Refilter the table
-        $('#min, #max').on('change', function() {
-          table.draw();
-        });
       });
   </script>
 {% endblock %}
