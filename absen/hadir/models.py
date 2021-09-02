@@ -8,14 +8,9 @@ class Permit(db.Model):
     keterangan = db.Column(db.String(64), index=True)
     long_date = db.Column(db.Integer)
     start_date = db.Column(db.Date(), default=datetime.date.today())
-    disetujui = db.Column(db.Boolean, default=False)
+    confirm_manager = db.Column(db.Boolean, default=False)
+    agree_hrd = db.Column(db.Boolean, default=False)
     member_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-
-    def __init__(self, keterangan, long_date, start_date, disetujui):
-        self.keterangan = keterangan
-        self.long_date = long_date
-        self.start_date = start_date
-        self.disetujui = disetujui
 
     def __repr__(self):
         return f'{self.keterangan}'
@@ -29,7 +24,6 @@ class Absen(db.Model):
     dates = db.Column(db.Date())
     jam_datang = db.Column(db.DateTime())
     jam_pulang = db.Column(db.DateTime())
-    #overtime = db.Column(db.DateTime())
     keterangan = db.Column(db.String(64), index=True)
     member_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 

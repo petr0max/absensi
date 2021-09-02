@@ -76,7 +76,8 @@
                                               <th>Tanggal</th>
                                               <th>Berapa Hari</th>
                                               <th>Keterangan</th>
-                                              <th>Disetujui</th>
+                                              <th>Konfirm Manager</th>
+                                              <th>Disetujui HRD</th>
                                           </tr>
                                       </thead>
                                       <tbody>
@@ -98,7 +99,16 @@
                                               <td>{{ izins.start_date }}</td>
                                               <td>{{ izins.long_date }}</td>
                                               <td>{{ izins.keterangan }}</td>
-                                              <td>{{ izins.disetujui }}
+                                              {% if izins.confirm_manager %}
+                                              <td><i class="fas fa-check-circle text-success"</td>
+                                              {% else %}
+                                              <td><i class="fas fa-times-circle text-danger"></i></td>
+                                              {% endif %}
+                                              {% if izins.agree_hrd %}
+                                              <td><i class="fas fa-check-circle text-success"</td>
+                                              {% else %}
+                                              <td><i class="fas fa-times-circle text-danger"></i></td>
+                                              {% endif %}
                                               </tr>
                                             {% endif %}
                                             {% endif %}
@@ -113,7 +123,8 @@
                                               <th>Tanggal</th>
                                               <th>Berapa Hari</th>
                                               <th>Keterangan</th>
-                                              <th>Disetujui</th>
+                                              <th>Konfirm Manager</th>
+                                              <th>Disetujui HRD</th>
                                           </tr>
                                       </tfoot>
                                   </table>
@@ -215,7 +226,6 @@
                                   <table id="data_hadir" class="display" style="width:100%">
                                       <thead>
                                           <tr>
-                                              <th>Date Log</th>
                                               <th>Nama</th>
                                               <th>Posisi</th>
                                               <th>Divisi</th>
@@ -232,7 +242,6 @@
                                             {% if current_user.id == absens.member_id %}
                                             {% if absens.dates %}
                                               <tr>
-                                              <td>{{ absens.input_date }}</td>
                                               {% if profiles.id %}
                                               <td>{{ profiles.nama_lengkap.title() }}</td>
                                               <td>{{ profiles.jabatan }}</td>
@@ -268,7 +277,6 @@
                                       </tbody>
                                       <tfoot>
                                           <tr>
-                                              <th>Date Log</th>
                                               <th>Nama</th>
                                               <th>Posisi</th>
                                               <th>Divisi</th>
@@ -342,6 +350,12 @@
                   selector: 'td:nth-child(2)'
               }
           });
+          // Refilter the table
+        $('#min, #max').on('change', function() {
+          table.draw();
+        });
+      });
+      $(document).ready(function() {
           var table = $('#data_sakit').DataTable( {
               dom: 'Bfrtip',
               buttons: ['csv', 'excel', 'pdf', 'print'],
@@ -358,10 +372,6 @@
                   selector: 'td:nth-child(2)'
               }
           });
-          // Refilter the table
-        $('#min, #max').on('change', function() {
-          table.draw();
-        });
       });
   </script>
 {% endblock %}

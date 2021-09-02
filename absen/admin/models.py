@@ -28,3 +28,8 @@ class UserView(ModelView):
         return redirect(url_for('main.index', next=request.url))
 
 admin.add_view(UserView(User, db.session))
+admin.add_view(ModelView(TimeHour, db.session))
+admin.add_view(ModelView(Title, db.session))
+admin.add_view(ModelView(Choice, db.session))
+admin.add_view(ModelView(Permit, db.session))
+admin.add_view(ModelView(Absen, db.session))

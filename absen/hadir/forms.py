@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import (StringField, SubmitField, DateField, DateTimeField,
-                     IntegerField, TimeField)
+                     IntegerField, TimeField, BooleanField)
 from wtforms.validators import DataRequired, Length, Optional
 
 
@@ -9,6 +9,10 @@ class PermitForm(FlaskForm):
     start_date = DateField('Mulai Tanggal', validators=[DataRequired()])
     keterangan = StringField('Keperluan Izin', validators=[DataRequired(),
                                                        Length(1, 125)])
+    submit = SubmitField('Kirim')
+
+class PermitConfirmForm(FlaskForm):
+    checkbox = BooleanField("Disetujui ?")
     submit = SubmitField('Kirim')
 
 

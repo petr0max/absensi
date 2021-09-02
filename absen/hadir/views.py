@@ -6,8 +6,10 @@ from .. import db
 from ..models import User
 from ..profil.models import Profile
 from .models import Permit, Absen, Sick
-from .forms import (PermitForm, CheckInForm, CheckOutForm, SickForm)
+from .forms import (PermitForm, CheckInForm, CheckOutForm, SickForm,
+                    PermitConfirmForm)
 from sqlalchemy import cast, Time
+from ..decorators import admin_required
 import datetime
 
 
@@ -46,6 +48,7 @@ def checkin():
             clock_input = datetime.datetime.strptime(str(jam_input), '%H:%M:%S')
             date_input = form.dates.data
             tgl_input = datetime.datetime.strptime(str(date_input), "%Y-%m-%d")
+            
             checkin = Absen()
             checkin.dates=date_input
             checkin.jam_datang=datetime.datetime.combine(datetime.date(
@@ -57,9 +60,10 @@ def checkin():
             return redirect(url_for('.index'))
             return render_template('hadir/masuk.html', form=form,
                                    checkin=checkin, profil=profil)
+        
         else:
             flash('Upss... sudah checkin kak!')
-            return redirect(url_for('.index'))
+            return redirect(url_for('hadir.checkin'))
             return render_template('hadir/masuk.html', form=form,
                                    checkin=checkin, profil=profil)
     
@@ -150,7 +154,7 @@ def sick():
 def create_izin():
     form = PermitForm()
     g.user = current_user.get_id()
-    profil = Profile.query.filter(Profile.member_id==g.user).first()
+    profiles = Profile.query.filter(Profile.member_id==g.user).first()
     permits = Permit.query.filter(Permit.start_date==form.start_date.data, Permit.member_id==g.user).first()
     if request.method=='POST':
         if permits is None:
@@ -165,12 +169,12 @@ def create_izin():
                 flash('Kita coba review yah...')
                 return redirect(url_for('.index'))
                 return render_template('hadir/input_izin.html', form=form,
-                                       permits=permits, profil=profil)
+                                       permits=permits, profiles=profiles)
             except:
                 flash('Error! Looks like there was a problem. Try again...')
                 return redirect(url_for('.index'))
                 return render_template('hadir/input_izin.html', form=form,
-                                       permits=permits, profil=profil)
+                                       permits=permits, profiles=profiles)
         else:
             permits.long_date=form.long_date.data
             permits.start_date=form.start_date.data
@@ -180,13 +184,42 @@ def create_izin():
                 flash('Update berhasil...')
                 return redirect(url_for('.index'))
                 return render_template('hadir/input_izin.html', form=form,
-                                       permits=permits, profil=profil)
+                                       permits=permits, profiles=profiles)
             except:
                 flash('Error! Looks like there was a problem. Try again...')
                 return redirect(url_for('.index'))
                 return render_template('hadir/input_izin.html', form=form,
-                                       permits=permits, profil=profil)
+                                       permits=permits, profiles=profiles)
 
         flash('Permintaan izin sudah ada.')
     else:
-        return render_template('hadir/input_izin.html', form=form, profil=profil)
+        return render_template('hadir/input_izin.html', form=form,
+                               profiles=profiles)
+
+@hadir.route('/izin/edit/<int:id>')
+@login_required
+@admin_required
+def confirmed(id):
+    form = PermitConfirmForm()
+    users = User.query.filter(User.id==id).first()
+    profiles = Profile.query.filter(Profile.member_id==users.id).first()
+    permits = Permit.query.filter(Permit.id==id).first()
+    if request.method=='POST':
+        if permits:
+            permits.agree = form.checkbox.data
+            try:
+                db.session.commit()
+                flash('Data telah terkonfirmasi')
+                return redirect(url_for('.index'))
+                return render_template('hadir/input_izin.html', form=form,
+                                       permits=permits, users=users,
+                                       profiles=profiles)
+            except:
+                flash('Data tidak disetujui')
+                return redirect(url_for('.index'))
+                return render_template('hadir/input_izin.html', form=form,
+                                       permits=permits, users=users,
+                                       profiles=profiles)
+    else:
+        return render_template('hadir/input_izin.html', form=form,
+                               profiles=profiles)

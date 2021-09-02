@@ -45,12 +45,12 @@ def index():
         Sick.input_date==datetime.date.today()).order_by(Sick.input_date.desc())
 
     p_now = db.select([func.count(Permit.member_id)]).where(
-        Permit.disetujui==False)  # Counting Permit Not Yet
+        Permit.agree_hrd==False)  # Counting Permit Not Yet
     count_permit_now = db.session.execute(p_now)
 
     permit_false = db.session.query(Permit, User, Profile).select_from(Permit).outerjoin(
         User, Profile).filter(
-        Permit.disetujui==False).order_by(Permit.start_date.desc())
+        Permit.agree_hrd==False).order_by(Permit.start_date.desc())
 
     return render_template('index.html', not_absen=not_absen,
                            member=member, count_absen=count_absen,

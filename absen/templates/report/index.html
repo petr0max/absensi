@@ -32,7 +32,8 @@
                                               <th>Tanggal</th>
                                               <th>Berapa Hari</th>
                                               <th>Keterangan</th>
-                                              <th>Disetujui</th>
+                                              <th>Konfirm Manager</th>
+                                              <th>Disetujui HRD</th>
                                           </tr>
                                       </thead>
                                       <tbody>
@@ -54,7 +55,16 @@
                                               <td>{{ izins.start_date }}</td>
                                               <td>{{ izins.long_date }}</td>
                                               <td>{{ izins.keterangan }}</td>
-                                              <td>{{ izins.disetujui }}
+                                              {% if izins.confirm_manager %}
+                                              <td><i class="fas fa-check-circle text-success"></i></td>
+                                              {% else %}
+                                              <td><i class="fas fa-times-circle text-danger"></i></td>
+                                              {% endif %}
+                                              {% if izins.agree_hrd %}
+                                              <td><i class="fas fa-check-circle text-success"></i></td>
+                                              {% else %}
+                                              <td><i class="fas fa-times-circle text-danger"></i></td>
+                                              {% endif %}
                                               </tr>
                                             {% endif %}
                                             {% endif %}
@@ -69,7 +79,8 @@
                                               <th>Tanggal</th>
                                               <th>Berapa Hari</th>
                                               <th>Keterangan</th>
-                                              <th>Disetujui</th>
+                                              <th>Konfirm Manager</th>
+                                              <th>Disetujui HRD</th>
                                           </tr>
                                       </tfoot>
                                   </table>
