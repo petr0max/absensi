@@ -17,8 +17,8 @@ class Config(object):
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
     ABSEN_MAIL_SUBJECT_PREFIX ='[ABSENAPP]'
-    ABSEN_MAIL_SENDER = 'AbsenApp Admin <dev@artolanggengrejeki.com>'
-    ABSEN_ADMIN = os.environ.get('ABSEN_ADMIN') or 'dev@artolanggengrejeki.com'
+    ABSEN_MAIL_SENDER = 'AbsenApp Admin'
+    ABSEN_ADMIN = os.environ.get('ABSEN_ADMIN')
 
     # BCRYPT_LOG_ROUNDS = 15
 
