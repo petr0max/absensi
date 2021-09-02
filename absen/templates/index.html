@@ -312,33 +312,5 @@
   <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
   <script src="https://cdn.datatables.net/datetime/1.1.1/js/dataTables.dateTime.min.js"></script>
-  <script type="text/javascript">
-      $(document).ready(function() {
-          // DataTables initialisation
-          var table = $('#data_hadir').DataTable( {
-              dom: 'Bfrtip',
-              buttons: ['csv', 'excel', 'pdf', 'print'],
-              responsive: true,
-              rowReorder: {
-                  selector: 'td:nth-child(2)'
-              }
-          });
-          var table = $('#data_sakit').DataTable( {
-              dom: 'Bfrtip',
-              buttons: ['csv', 'excel', 'pdf', 'print'],
-              responsive: true,
-              rowReorder: {
-                  selector: 'td:nth-child(2)'
-              }
-          });
-          var table = $('#data_izin').DataTable( {
-              dom: 'Bfrtip',
-              buttons: ['csv', 'excel', 'pdf', 'print'],
-              responsive: true,
-              rowReorder: {
-                  selector: 'td:nth-child(2)'
-              }
-          });
-      });
-  </script>
+  <script src="{{ url_for('static', filename='js/tables.js') }}"></script>
 {% endblock %}
