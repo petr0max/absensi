@@ -1,9 +1,0 @@
-FLASK_APP=run.py
-FLASK_ENV=development
-DATABASE_URL="postgresql://petro:udin4j4@172.18.0.4/absendev"
-DEV_DATABASE_URL="postgresql://petro:udin4j4@172.18.0.4/absendev"
-SECRET_KEY='jknbjknwoins'
-MAIL_SERVER='smtp.office365.com'
-MAIL_USERNAME='dev@artolanggengrejeki.com'
-MAIL_PASSWORD='basket26QW'
-ABSEN_ADMIN='dev@artolanggengrejeki.com'
