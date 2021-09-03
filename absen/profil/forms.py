@@ -112,7 +112,7 @@ class EditProfileForm(FlaskForm):
 
     nik = IntegerField('NIK KTP', validators=[Optional()])
 
-    npwp = IntegerField('NPWP', validators=[Optional()])
+    npwp = StringField('NPWP', validators=[Optional()])
 
     no_bpjs_ketenagakerjaan = IntegerField('No. BPJS Ketenagakerjaan',
                                            validators=[Optional()])
