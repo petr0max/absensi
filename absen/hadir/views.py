@@ -9,7 +9,7 @@ from .models import Permit, Absen, Sick
 from .forms import (PermitForm, CheckInForm, CheckOutForm, SickForm,
                     PermitConfirmForm)
 from sqlalchemy import cast, Time
-from ..decorators import admin_required
+from ..decorators import admin_required, moderate_required
 import datetime
 
 
@@ -196,9 +196,9 @@ def create_izin():
         return render_template('hadir/input_izin.html', form=form,
                                profiles=profiles)
 
-@hadir.route('/izin/edit/<int:id>')
+@hadir.route('/izin/<int:id>/edit', methods=['POST'])
 @login_required
-@admin_required
+@moderate_required
 def confirmed(id):
     form = PermitConfirmForm()
     users = User.query.filter(User.id==id).first()
@@ -206,7 +206,10 @@ def confirmed(id):
     permits = Permit.query.filter(Permit.id==id).first()
     if request.method=='POST':
         if permits:
-            permits.agree = form.checkbox.data
+            if current_user.is_moderator:
+                permits.confirm_manager = form.checkbox.data
+            elif current_user.is_administrator():
+                permits.agree = form.checkbox.data
             try:
                 db.session.commit()
                 flash('Data telah terkonfirmasi')
