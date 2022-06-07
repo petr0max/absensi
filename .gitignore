@@ -3,5 +3,5 @@ __pycache__
 venv
 tests
 migrations
-absen/node_modules/
+absen/node_modules
 .flaskenv
